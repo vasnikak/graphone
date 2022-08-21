@@ -1,5 +1,5 @@
-import Path from "./path"
-import Vertex, { VertexLabelType } from "./vertex"
+import Path from "./Path"
+import Vertex, { VertexLabelType } from "./Vertex"
 
 /**
  * Base class for each graph class.

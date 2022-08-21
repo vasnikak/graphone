@@ -1,4 +1,4 @@
-import AlgorithmExecutionStats from "./algorithmExecutionStats";
+import AlgorithmExecutionStats from "./AlgorithmExecutionStats";
 
 export default class FindPathAlgorithmExecutionStats extends AlgorithmExecutionStats {
 

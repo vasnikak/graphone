@@ -1,10 +1,10 @@
-import Edge from './edge'
+import Edge from './Edge'
 
 /**
  * The label of a node is a string.
  * Strict type checking will be applied in all operations.
  */
-export type VertexLabelType = string
+export type VertexLabelType = string;
 
 /**
  * The vertex of a graph.

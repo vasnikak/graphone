@@ -1,4 +1,4 @@
-import UndirectedGraph from "../src/undirectedGraph"
+import UndirectedGraph from "../src/UndirectedGraph";
 
 export default class Maze {
 

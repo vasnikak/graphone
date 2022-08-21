@@ -1,4 +1,4 @@
-import DirectedGraph from '../src/directedGraph'
+import DirectedGraph from '../src/DirectedGraph';
 
 describe('DirectedGraph tests', () => {
     it('should create a directed graph with 2 edges', () => {

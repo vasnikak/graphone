@@ -1,6 +1,6 @@
-import Graph from "../graph"
-import Vertex from "../vertex"
-import AlgorithmExecutionStats from "./algorithmExecutionStats"
+import Graph from "../Graph"
+import Vertex from "../Vertex"
+import AlgorithmExecutionStats from "./AlgorithmExecutionStats"
 
 /**
  * The base class for all graph algorithms.

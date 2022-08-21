@@ -1,10 +1,10 @@
-import Graph from './graph'
-import { VertexLabelType } from './vertex'
+import Graph from './Graph'
+import { VertexLabelType } from './Vertex'
 
 /**
- * An undirected graph class.
+ * A directed graph class.
  */
-export default class UndirectedGraph extends Graph {
+export default class DirectedGraph extends Graph {
 
     /** @inheritdoc */
     constructor(name?: string) {
@@ -20,7 +20,6 @@ export default class UndirectedGraph extends Graph {
         if (!v2)
             return this;
         v1.addEdgeWith(v2, weight);
-        v2.addEdgeWith(v1, weight);
         return this;
     }
 
@@ -33,7 +32,6 @@ export default class UndirectedGraph extends Graph {
         if (!v2)
             return this;
         v1.removeEdgeWith(v2);
-        v2.removeEdgeWith(v1);
         return this;
     }
 

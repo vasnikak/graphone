@@ -1,4 +1,4 @@
-import Vertex from "./vertex"
+import Vertex from "./Vertex"
 
 export default class Path {
 
