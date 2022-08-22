@@ -8,16 +8,16 @@ import Vertex, { VertexLabelType } from "./Vertex"
 export default abstract class Graph {
 
     /**
-     * The default name of a graph, in case that is not given
+     * The default name of a graph, in case that is not given.
      */
     public static readonly DEFAULT_GRAPH_NAME = 'Graph';
 
     /**
-     * The name of the graph
+     * The name of the graph.
      */
     private name: string;
     /**
-     * The set of vertices
+     * The set of vertices.
      */
     protected vertices: { [label in VertexLabelType]: Vertex };
 

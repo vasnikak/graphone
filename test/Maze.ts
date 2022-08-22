@@ -1,5 +1,11 @@
 import UndirectedGraph from "../src/UndirectedGraph";
 
+export interface MazeCell {
+    x: number;
+    y: number;
+    value: number;
+};
+
 export default class Maze {
 
     private maze: number[][];
@@ -12,7 +18,7 @@ export default class Maze {
         const graph = new UndirectedGraph(name);
         for (let i = 0; i < this.maze.length; i++) { 
             for (let j = 0; j < this.maze[i].length; j++)
-                graph.addVertex('(' + i + ', ' + j + ')', this.maze[i][j]);
+                graph.addVertex('(' + i + ', ' + j + ')', {x: i, y: j, value: this.maze[i][j]});
         }
         for (let i = 0; i < this.maze.length; i++) {
             for (let j = 0; j < this.maze[i].length; j++) {

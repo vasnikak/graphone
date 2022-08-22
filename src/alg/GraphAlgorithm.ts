@@ -7,9 +7,12 @@ import AlgorithmExecutionStats from "./AlgorithmExecutionStats"
  */
 export default abstract class GraphAlgorithm {
 
+    /**
+     * The graph that the algorithm will be executed on.
+     */
     protected graph: Graph;
     /**
-     * Algorithm execution statistics
+     * Algorithm execution statistics.
      */
     protected execStats: AlgorithmExecutionStats | undefined
 

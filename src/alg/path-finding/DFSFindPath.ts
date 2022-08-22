@@ -16,7 +16,7 @@ interface StackItem {
 export default class DFSFindPath extends GraphAlgorithm {
 
     /**
-     * Collision resolution function
+     * Collision resolution function.
      */
     private collisionRes: CollisionResolutionFunc | undefined;
 
@@ -47,12 +47,12 @@ export default class DFSFindPath extends GraphAlgorithm {
         // We need a stack to store the nodes that wait to be examined
         const stack: StackItem[] = [];
         // We need an index to be able to extract the path after the execution of the algorithm
-        const visited: { [label in VertexLabelType]: StackItem } = {};
+        const visited: Map<VertexLabelType, StackItem> = new Map();
 
         // Push the starting node in the stack
         const first: StackItem = { node: start, parent: null };
         stack.push(first);
-        visited[startLabel] = first;
+        visited.set(startLabel, first);
         // We will assign the destination stack item to this variable
         let target: StackItem | null = null;
         // While the stack is not empty
@@ -70,12 +70,12 @@ export default class DFSFindPath extends GraphAlgorithm {
             if (!this.collisionRes) {
                 current?.node.getEdges().forEach(edge => {
                     // If we haven't visited yet the child node
-                    if (!visited[edge.getVertex().getLabel()]) {
+                    if (!visited.has(edge.getVertex().getLabel())) {
                         // Push the node in the stack
                         const child: StackItem = { node: edge.getVertex(), parent: current.node };
                         stack.unshift(child);
                         // Mark the node as visited
-                        visited[edge.getVertex().getLabel()] = child;
+                        visited.set(edge.getVertex().getLabel(), child);
                     }
                 });
             // If a collision resolution function was defined
@@ -84,12 +84,12 @@ export default class DFSFindPath extends GraphAlgorithm {
                 const children: StackItem[] = []
                 current?.node.getEdges().forEach(edge => {
                     // If we haven't visited yet the child node
-                    if (!visited[edge.getVertex().getLabel()]) {
+                    if (!visited.has(edge.getVertex().getLabel())) {
                         // Add the node in the temporary list
                         const child: StackItem = { node: edge.getVertex(), parent: current.node };
                         children.push(child);
                         // Mark the node as visited
-                        visited[edge.getVertex().getLabel()] = child;
+                        visited.set(edge.getVertex().getLabel(), child);
                     }
                 });
                 // Sort the list using the collision resolution comparator
@@ -108,7 +108,7 @@ export default class DFSFindPath extends GraphAlgorithm {
         let run = target;
         while (run) { 
             path.prepend(run.node);
-            run = run.parent ? visited[run.parent.getLabel()] : null;
+            run = run.parent ? visited.get(run.parent.getLabel()) as StackItem : null;
         }
 
         // Exec stats

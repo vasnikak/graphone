@@ -13,15 +13,15 @@ export type VertexLabelType = string;
 export default class Vertex {
     
     /**
-     * The label of the vertex
+     * The label of the vertex.
      */
     private label: VertexLabelType;
     /**
-     * The data that the vertex contains
+     * The data that the vertex contains.
      */
     private data: any;
     /**
-     * The outgoing edges of the vertex
+     * The outgoing edges of the vertex.
      */
     private edges: { [label in VertexLabelType | number]: Edge };
 

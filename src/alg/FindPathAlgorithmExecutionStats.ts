@@ -3,11 +3,11 @@ import AlgorithmExecutionStats from "./AlgorithmExecutionStats";
 export default class FindPathAlgorithmExecutionStats extends AlgorithmExecutionStats {
 
     /**
-     * Path's length (find path algorithms)
+     * Path's length (find path algorithms).
      */
     private pathLength: number;
     /**
-     * Solution found (find path algorithms)
+     * Solution found (find path algorithms).
      */
     private solutionFound: boolean;
 

@@ -3,7 +3,7 @@ import FindPathAlgorithmExecutionStats from '../../../src/alg/FindPathAlgorithmE
 import Vertex from '../../../src/Vertex';
 import Maze from '../../Maze';
 
-describe('DFS Find path test', () => {
+describe('DFS find path test', () => {
     const maze = new Maze([
         [0,0,0,0,0,0,0,0,0,1],
         [0,1,1,0,0,0,0,0,1,0],
@@ -24,6 +24,7 @@ describe('DFS Find path test', () => {
         const dfsFindPath = new DFSFindPath(graph, (a: Vertex, b: Vertex) => { return b.getLabel().localeCompare(a.getLabel() )});
         dfsFindPath.findPath(startNode, endNode);
         const stats = dfsFindPath.getExecStats() as FindPathAlgorithmExecutionStats;
+        expect(stats.wasSolutionFound()).toBe(true);
         expect(stats.getPathLength()).toBe(19);
     });
 
@@ -33,6 +34,7 @@ describe('DFS Find path test', () => {
         const dfsFindPath = new DFSFindPath(graph);
         dfsFindPath.findPath(startNode, endNode);
         const stats = dfsFindPath.getExecStats() as FindPathAlgorithmExecutionStats;
+        expect(stats.wasSolutionFound()).toBe(false);
         expect(stats.getNodesVisitedNum()).toBe(79);
     });
 });

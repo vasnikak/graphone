@@ -4,19 +4,19 @@
 export default class AlgorithmExecutionStats {
 
     /**
-     * Algorithm's name
+     * Algorithm's name.
      */
      private algorithmName: string | undefined;
      /**
-      * Execution start timestamp
+      * Execution start timestamp.
       */
      private execStart: number;
      /**
-      * Total execution time (ms)
+      * Total execution time (ms).
       */
      private execTime: number;
      /**
-      * Number of the vertices that the algorithm visited
+      * Number of the vertices that the algorithm visited.
       */
      private nodesVisitedNum: number;
 

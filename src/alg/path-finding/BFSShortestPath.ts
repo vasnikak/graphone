@@ -13,10 +13,10 @@ interface QueueItem {
  * BFS (Breadth First Search) algorithm. 
  * It discovers at path in a graph between two vertices using the BFS algorithm.
  */
-export default class BFSFindPath extends GraphAlgorithm {
+export default class BFSShortestPath extends GraphAlgorithm {
 
     /**
-     * Collision resolution function
+     * Collision resolution function.
      */
     private collisionRes: CollisionResolutionFunc | undefined;
 
@@ -41,18 +41,18 @@ export default class BFSFindPath extends GraphAlgorithm {
             return new Path();
         
         // Exec stats
-        this.execStats = new FindPathAlgorithmExecutionStats('BFS find path');
+        this.execStats = new FindPathAlgorithmExecutionStats('BFS shortest path');
         this.execStats.reset();
 
         // We need a queue to store the nodes that wait to be examined
         const queue: QueueItem[] = [];
         // We need an index to be able to extract the path after the execution of the algorithm
-        const visited: { [label in VertexLabelType]: QueueItem } = {};
+        const visited: Map<VertexLabelType, QueueItem> = new Map();
 
-        // Push the starting node in the queue
+        // Push the starting node into the queue
         const first: QueueItem = { node: start, parent: null };
         queue.push(first);
-        visited[startLabel] = first;
+        visited.set(startLabel, first);
         // We will assign the destination queue item to this variable
         let target: QueueItem | null = null;
         // While the queue is not empty
@@ -70,12 +70,12 @@ export default class BFSFindPath extends GraphAlgorithm {
             if (!this.collisionRes) {
                 current?.node.getEdges().forEach(edge => {
                     // If we haven't visited yet the child node
-                    if (!visited[edge.getVertex().getLabel()]) {
+                    if (!visited.has(edge.getVertex().getLabel())) {
                         // Push the node in the queue
                         const child: QueueItem = { node: edge.getVertex(), parent: current.node };
                         queue.unshift(child);
                         // Mark the node as visited
-                        visited[edge.getVertex().getLabel()] = child;
+                        visited.set(edge.getVertex().getLabel(), child);
                     }
                 });
             // If a collision resolution function was defined
@@ -84,12 +84,12 @@ export default class BFSFindPath extends GraphAlgorithm {
                 const children: QueueItem[] = []
                 current?.node.getEdges().forEach(edge => {
                     // If we haven't visited yet the child node
-                    if (!visited[edge.getVertex().getLabel()]) {
+                    if (!visited.has(edge.getVertex().getLabel())) {
                         // Add the node in the temporary list
                         const child: QueueItem = { node: edge.getVertex(), parent: current.node };
                         children.push(child);
                         // Mark the node as visited
-                        visited[edge.getVertex().getLabel()] = child;
+                        visited.set(edge.getVertex().getLabel(), child);
                     }
                 });
                 // Sort the list using the collision resolution comparator
@@ -106,7 +106,7 @@ export default class BFSFindPath extends GraphAlgorithm {
         let run = target;
         while (run) { 
             path.prepend(run.node);
-            run = run.parent ? visited[run.parent.getLabel()] : null;
+            run = run.parent ? visited.get(run.parent.getLabel()) as QueueItem : null;
         }
 
         // Exec stats
