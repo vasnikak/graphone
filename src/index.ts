@@ -8,3 +8,4 @@ export * from "./heuristics/heuristics";
 export * from "./alg/GraphAlgorithm";
 export * from "./alg/path-finding/DFSFindPath";
 export * from "./alg/path-finding/AStarShortestPath";
+export * from "./alg/path-finding/UCSShortestPath";

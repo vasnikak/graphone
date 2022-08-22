@@ -1,7 +1,6 @@
 import DFSFindPath from '../../../src/alg/path-finding/DFSFindPath';
 import FindPathAlgorithmExecutionStats from '../../../src/alg/FindPathAlgorithmExecutionStats';
-import Vertex from '../../../src/Vertex';
-import Maze from '../../Maze';
+import Maze, { MazeCell } from '../../Maze';
 
 describe('DFS find path test', () => {
     const maze = new Maze([
@@ -19,9 +18,9 @@ describe('DFS find path test', () => {
     const graph = maze.generateGraph();
 
     it('should find a solution', () => {
-        const startNode = '(0, 0)';
-        const endNode = '(9, 9)';
-        const dfsFindPath = new DFSFindPath(graph, (a: Vertex, b: Vertex) => { return b.getLabel().localeCompare(a.getLabel() )});
+        const startNode = '(0,0)';
+        const endNode = '(9,9)';
+        const dfsFindPath = new DFSFindPath(graph, (a: MazeCell, b: MazeCell) => (a.x !== b.x) ? b.x - a.x : b.y - a.y);
         dfsFindPath.findPath(startNode, endNode);
         const stats = dfsFindPath.getExecStats() as FindPathAlgorithmExecutionStats;
         expect(stats.wasSolutionFound()).toBe(true);
@@ -29,8 +28,8 @@ describe('DFS find path test', () => {
     });
 
     it('should not find a solution', () => {
-        const startNode = '(0, 0)';
-        const endNode = '(0, 9)';
+        const startNode = '(0,0)';
+        const endNode = '(0,9)';
         const dfsFindPath = new DFSFindPath(graph);
         dfsFindPath.findPath(startNode, endNode);
         const stats = dfsFindPath.getExecStats() as FindPathAlgorithmExecutionStats;

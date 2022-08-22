@@ -60,7 +60,7 @@ export default class AStarShortestPath extends GraphAlgorithm {
     /**
      * Collision resolution function.
      */
-    private collisionRes: CollisionResolutionFunc | undefined;
+    protected collisionRes: CollisionResolutionFunc | undefined;
     /**
      * Heuristic function.
      */
@@ -78,24 +78,28 @@ export default class AStarShortestPath extends GraphAlgorithm {
      * @param endLabel the label of the destination vertex
      * @return the shortest path from start to end
      */
-     public findPath(startLabel: VertexLabelType, endLabel: VertexLabelType): Path { 
-        // Find the corresponding vertices
-        const start = this.graph.getVertex(startLabel);
-        if (!start)
-            return new Path();
-        const end = this.graph.getVertex(endLabel);
-        if (!end)
-            return new Path();
-        
+     public findPath(startLabel: VertexLabelType, endLabel: VertexLabelType): Path {
         // Exec stats
         this.execStats = new FindPathAlgorithmExecutionStats('A* shortest path');
         this.execStats.reset();
 
+        // Find the corresponding vertices
+        const start = this.graph.getVertex(startLabel);
+        if (!start) {
+            this.execStats.stopExecution();
+            return new Path();
+        }
+        const end = this.graph.getVertex(endLabel);
+        if (!end) {
+            this.execStats.stopExecution();
+            return new Path();
+        }
+        
         // We need a priority queue to store the nodes that wait to be examined
         const aStarComparator = (a: QueueItem, b: QueueItem) => {
             return (a.eval !== b.eval || !this.collisionRes) ?
                     (a.eval - b.eval) :
-                    this.collisionRes(a.node, b.node);
+                    this.collisionRes(a.node.getData(), b.node.getData());
         };
         const queue = new PriorityQueue(aStarComparator);
         // We need an index to be able to extract the path after the execution of the algorithm
@@ -144,7 +148,7 @@ export default class AStarShortestPath extends GraphAlgorithm {
         // Build the path from start to end
         const path = new Path();
         let run = target;
-        while (run) { 
+        while (run) {
             path.prepend(run.node);
             run = run.parent ? visited.get(run.parent.getLabel()) as QueueItem : null;
         }

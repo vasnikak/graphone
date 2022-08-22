@@ -31,18 +31,22 @@ export default class BFSShortestPath extends GraphAlgorithm {
      * @param endLabel the label of the destination vertex
      * @return the shortest path from start to end
      */
-     public findPath(startLabel: VertexLabelType, endLabel: VertexLabelType): Path { 
-        // Find the corresponding vertices
-        const start = this.graph.getVertex(startLabel);
-        if (!start)
-            return new Path();
-        const end = this.graph.getVertex(endLabel);
-        if (!end)
-            return new Path();
-        
+     public findPath(startLabel: VertexLabelType, endLabel: VertexLabelType): Path {
         // Exec stats
         this.execStats = new FindPathAlgorithmExecutionStats('BFS shortest path');
         this.execStats.reset();
+
+        // Find the corresponding vertices
+        const start = this.graph.getVertex(startLabel);
+        if (!start) {
+            this.execStats.stopExecution();
+            return new Path();
+        }
+        const end = this.graph.getVertex(endLabel);
+        if (!end) {
+            this.execStats.stopExecution();
+            return new Path();
+        }
 
         // We need a queue to store the nodes that wait to be examined
         const queue: QueueItem[] = [];
@@ -94,7 +98,7 @@ export default class BFSShortestPath extends GraphAlgorithm {
                 });
                 // Sort the list using the collision resolution comparator
                 children.sort((a: QueueItem, b: QueueItem): number => {
-                    return this.collisionRes ? this.collisionRes(a.node, b.node) : 0;
+                    return this.collisionRes ? this.collisionRes(a.node.getData(), b.node.getData()) : 0;
                 });
                 // Push the list items into the queue
                 children.forEach(child => queue.unshift(child));
@@ -104,7 +108,7 @@ export default class BFSShortestPath extends GraphAlgorithm {
         // Build the path from start to end
         const path = new Path();
         let run = target;
-        while (run) { 
+        while (run) {
             path.prepend(run.node);
             run = run.parent ? visited.get(run.parent.getLabel()) as QueueItem : null;
         }

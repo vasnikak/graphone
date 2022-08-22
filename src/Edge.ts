@@ -7,7 +7,13 @@ import Vertex from './Vertex'
  */
 export default class Edge {
     
+    /**
+     * The destination vertex.
+     */
     private vertex: Vertex;
+    /**
+     * The weight of the edge. Default value is 1.
+     */
     private weight: number;
 
     public constructor(vertex: Vertex, weight: number = 1) {

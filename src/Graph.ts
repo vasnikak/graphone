@@ -70,7 +70,7 @@ export default abstract class Graph {
      * Returns the number of edges of the graph.
      * @return the number of edges of the graph
      */
-     public getEdgesNum(): number { 
+     public getEdgesNum(): number {
         let edgesNum = 0;
         this.getVertices().forEach(vertex => edgesNum += vertex.getEdgesNum());
         return edgesNum;

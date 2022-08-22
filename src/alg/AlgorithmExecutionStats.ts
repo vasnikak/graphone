@@ -31,7 +31,7 @@ export default class AlgorithmExecutionStats {
      * Resets the stats for the current object.
      * @returns the current stats instance
      */
-    public reset(): AlgorithmExecutionStats { 
+    public reset(): AlgorithmExecutionStats {
         this.execStart = Date.now();
         this.execTime = 0;
         this.nodesVisitedNum = 0;
@@ -40,6 +40,11 @@ export default class AlgorithmExecutionStats {
 
     public getAlgorithmName() {
         return this.algorithmName;
+    }
+
+    public setAlgorithmName(algorithmName: string) {
+        this.algorithmName = algorithmName;
+        return this;
     }
 
     /**
@@ -51,7 +56,7 @@ export default class AlgorithmExecutionStats {
         return this;
     }
 
-    public getExecTime(): number {
+    public getExecTime() {
         return this.execTime;
     }
 
@@ -71,7 +76,7 @@ export default class AlgorithmExecutionStats {
     /**
      * @returns the number of vertices that the algorithm visited
      */
-    public getNodesVisitedNum(): number {
+    public getNodesVisitedNum() {
         return this.nodesVisitedNum;
     }
 

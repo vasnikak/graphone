@@ -24,9 +24,9 @@ describe('A* shortest path test', () => {
     };
 
     it('should find a solution', () => {
-        const startNode = '(0, 0)';
+        const startNode = '(0,0)';
         const endNodeX = 9, endNodeY = 9;
-        const endNode = '(' + endNodeX + ', ' + endNodeY + ')';
+        const endNode = '(' + endNodeX + ',' + endNodeY + ')';
         const heuristicFunc = manhattanDistanceFunc(endNodeX, endNodeY);
         const aStarShortestPath = new AStarShortestPath(graph, heuristicFunc);
         aStarShortestPath.findPath(startNode, endNode);
@@ -36,9 +36,9 @@ describe('A* shortest path test', () => {
     });
 
     it('should not find a solution', () => {
-        const startNode = '(0, 0)';
+        const startNode = '(0,0)';
         const endNodeX = 0, endNodeY = 9;
-        const endNode = '(' + endNodeX + ', ' + endNodeY + ')';
+        const endNode = '(' + endNodeX + ',' + endNodeY + ')';
         const heuristicFunc = manhattanDistanceFunc(endNodeX, endNodeY);
         const aStarShortestPath = new AStarShortestPath(graph, heuristicFunc);
         aStarShortestPath.findPath(startNode, endNode);
