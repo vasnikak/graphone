@@ -72,28 +72,28 @@ export default class DFSFindPath extends GraphAlgorithm {
             }
             // If no collision resolution function was defined
             if (!this.collisionRes) {
-                current?.node.getEdges().forEach(edge => {
+                current?.node.getOutEdges().forEach(edge => {
                     // If we haven't visited yet the child node
-                    if (!visited.has(edge.getVertex().getLabel())) {
+                    if (!visited.has(edge.getDestination().getLabel())) {
                         // Push the node in the stack
-                        const child: StackItem = { node: edge.getVertex(), parent: current.node };
+                        const child: StackItem = { node: edge.getDestination(), parent: current.node };
                         stack.unshift(child);
                         // Mark the node as visited
-                        visited.set(edge.getVertex().getLabel(), child);
+                        visited.set(edge.getDestination().getLabel(), child);
                     }
                 });
             // If a collision resolution function was defined
             } else {
                 // Create a temporary list to resolve collisions
                 const children: StackItem[] = []
-                current?.node.getEdges().forEach(edge => {
+                current?.node.getOutEdges().forEach(edge => {
                     // If we haven't visited yet the child node
-                    if (!visited.has(edge.getVertex().getLabel())) {
+                    if (!visited.has(edge.getDestination().getLabel())) {
                         // Add the node in the temporary list
-                        const child: StackItem = { node: edge.getVertex(), parent: current.node };
+                        const child: StackItem = { node: edge.getDestination(), parent: current.node };
                         children.push(child);
                         // Mark the node as visited
-                        visited.set(edge.getVertex().getLabel(), child);
+                        visited.set(edge.getDestination().getLabel(), child);
                     }
                 });
                 // Sort the list using the collision resolution comparator

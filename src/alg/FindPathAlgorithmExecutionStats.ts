@@ -17,7 +17,7 @@ export default class FindPathAlgorithmExecutionStats extends AlgorithmExecutionS
         this.solutionFound = false;
     }
 
-    /** @inheritDoc */
+    /** {@inheritDoc} */
     public reset(): AlgorithmExecutionStats {
         super.reset();
         this.pathLength = 0;

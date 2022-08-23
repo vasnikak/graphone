@@ -1,5 +1,4 @@
 import Graph from "../Graph"
-import Vertex from "../Vertex"
 import AlgorithmExecutionStats from "./AlgorithmExecutionStats"
 
 /**

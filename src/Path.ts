@@ -94,7 +94,7 @@ export default class Path {
      */
      public validate(): boolean {
         for (let i = 0; i < this.path.length - 1; i++) {
-            if (!this.path[i].hasEdgeWith(this.path[i + 1]))
+            if (!this.path[i].hasOutEdgeWith(this.path[i + 1]))
                 return false;
         }
         return true;
@@ -108,7 +108,7 @@ export default class Path {
     public getTotalCost(): number {
         let totalCost = 0;
         for (let i = 0; i < this.path.length - 1; i++) {
-            const edge = this.path[i].getEdgeWith(this.path[i + 1]);
+            const edge = this.path[i].getOutEdgeWith(this.path[i + 1]);
             if (!edge)
                 return 0;
             totalCost += edge.getWeight();

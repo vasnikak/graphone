@@ -3,26 +3,35 @@ import Vertex from './Vertex'
 /**
  * The edge between two vertices.
  * Each edge has a direction from a vertex A to a vertex B.
- * The edge has knowledge only of vertex B.
+ * Both A and B vertices are stored.
  */
 export default class Edge {
     
     /**
+     * The origin vertex.
+     */
+    private origin: Vertex;
+    /**
      * The destination vertex.
      */
-    private vertex: Vertex;
+    private destination: Vertex;
     /**
      * The weight of the edge. Default value is 1.
      */
     private weight: number;
 
-    public constructor(vertex: Vertex, weight: number = 1) {
-        this.vertex = vertex;
+    public constructor(origin: Vertex, destination: Vertex, weight: number = 1) {
+        this.origin = origin;
+        this.destination = destination;
         this.weight = weight;
     }
 
-    public getVertex() {
-        return this.vertex;
+    public getOrigin() {
+        return this.origin;
+    }
+
+    public getDestination() {
+        return this.destination;
     }
 
     public getWeight() {
@@ -35,7 +44,7 @@ export default class Edge {
     }
 
     public toString(): string {
-        return 'Edge[' + this.vertex.toString() + ', weight: ' + this.weight + ']';
+        return 'Edge[' + this.destination.toString() + ', weight: ' + this.weight + ']';
     }
 
 }

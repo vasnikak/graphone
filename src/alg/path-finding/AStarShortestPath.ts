@@ -122,18 +122,18 @@ export default class AStarShortestPath extends GraphAlgorithm {
                 target = current;
                 break;
             }
-            // Add the neighbors in the queue
-            current?.node.getEdges().forEach(edge => {
+            // Add the neighbors of all outgoing edges in the queue
+            current?.node.getOutEdges().forEach(edge => {
                 // Calculate the total cost
                 const totalCost = current.totalCost + edge.getWeight();
                 // If we haven't visited yet the child node
-                const child = visited.get(edge.getVertex().getLabel());
+                const child = visited.get(edge.getDestination().getLabel());
                 if (!child) {
                      // Push the node into the queue
-                     const child = new QueueItem(edge.getVertex(), current.node, totalCost, this.heuristicFunc);
+                     const child = new QueueItem(edge.getDestination(), current.node, totalCost, this.heuristicFunc);
                      queue.push(child);
                      // Mark the node as visited
-                     visited.set(edge.getVertex().getLabel(), child);
+                     visited.set(edge.getDestination().getLabel(), child);
                 // If we have already visited the child node, we have to
                 // check if its path from the root node has to be updated
                 } else {

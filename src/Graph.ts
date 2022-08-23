@@ -70,11 +70,7 @@ export default abstract class Graph {
      * Returns the number of edges of the graph.
      * @return the number of edges of the graph
      */
-     public getEdgesNum(): number {
-        let edgesNum = 0;
-        this.getVertices().forEach(vertex => edgesNum += vertex.getEdgesNum());
-        return edgesNum;
-    }
+     public abstract getEdgesNum(): number;
 
     /**
      * Adds a new vertex to the graph.
@@ -84,6 +80,28 @@ export default abstract class Graph {
      */
     public addVertex(label: VertexLabelType, data?: any): Graph {
         this.vertices[label] = new Vertex(label, data);
+        return this;
+    }
+
+    /**
+     * Adds one or more vertices to the graph.
+     * The labels are provided as an array. Each array item can either be an item
+     * of type VertexLabelType, in case that the vertex has no additional data or
+     * an array of exactly two items: the label of the vertex and its corresponding data.
+     * @param vertexData the labels of the vertices
+     * @returns the current graph
+     */
+    public addVertices(vertexData: (VertexLabelType | [VertexLabelType, any])[]): Graph {
+        vertexData.forEach(v => {
+            let label: VertexLabelType;
+            let data = undefined;
+            if (Array.isArray(v)) {
+                label = v[0];
+                data = v[1];
+            } else
+                label = v[0];
+            this.addVertex(label, data);
+        });
         return this;
     }
 
@@ -127,7 +145,7 @@ export default abstract class Graph {
         const v2 = this.getVertex(label2);
         if (!v2)
             return false;
-        return v1.hasEdgeWith(v2);
+        return v1.hasOutEdgeWith(v2);
     }
 
     /**
@@ -140,12 +158,37 @@ export default abstract class Graph {
     public abstract addEdge(label1: VertexLabelType, label2: VertexLabelType, weight?: number): Graph;
 
     /**
+     * Adds one or more edges to the graph.
+     * The necessary data is provided as an array.
+     * Each array item is as well an array, where the first two elements are the origin
+     * and destination vertices of the edge and the third element, if present, is the edge's weight.
+     * @param edgeData the edges to be added
+     * @return the current graph
+     */
+    public addEdges(edgeData: [VertexLabelType, VertexLabelType, number?][]): Graph {
+        edgeData.forEach(e => this.addEdge(e[0], e[1], e[2]));
+        return this;
+    }
+
+    /**
      * Removes an edge between two vertices.
      * @param label1 the label of the first vertex
      * @param label2 the label of the second vertex
      * @return the current graph
      */
     public abstract removeEdge(label1: VertexLabelType, label2: VertexLabelType): Graph;
+
+    /**
+     * Remove one or more edges from the graph.
+     * The necessary data is provided as an array.
+     * Each array item is as well an array, that contains the origin and destination vertices.
+     * @param edgeData the edges to be added
+     * @return the current graph
+     */
+    public removeEdges(edgeData: [VertexLabelType, VertexLabelType][]): Graph {
+        edgeData.forEach(e => this.removeEdge(e[0], e[1]));
+        return this;
+    }
 
     /**
      * Removes all vertices (and the corresponding edges) from the graph.
@@ -179,7 +222,7 @@ export default abstract class Graph {
         let vertexCount = 0;
         this.getVertices().forEach(vertex => {
             str += vertex.toString() + '\n';
-            vertex.getEdges().forEach(edge => {
+            vertex.getOutEdges().forEach(edge => {
                 str += '   ' + edge.toString() + '\n';
                 if (++vertexCount < vertexNum)
                     str += '\n';
