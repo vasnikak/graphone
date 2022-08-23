@@ -12,20 +12,20 @@ import AStarShortestPath from "./AStarShortestPath";
  */
 export default class UCSShortestPath extends AStarShortestPath {
 
+    /**
+     * The name of the algorithm.
+     */
+     public static readonly algorithmName: string = 'UCS shortest path';
+
     constructor(graph: Graph, collisionRes?: CollisionResolutionFunc) {
         super(graph, zeroHeuristicFunction, collisionRes);
         this.collisionRes = collisionRes;
     }
 
-    /**
-     * Finds a path between two nodes in a graph using the DFS algorithm.
-     * @param startLabel the label of the starting vertex
-     * @param endLabel the label of the destination vertex
-     * @return the shortest path from start to end
-     */
-     public findPath(startLabel: VertexLabelType, endLabel: VertexLabelType): Path {
+    /** {@inheritdoc} */
+    public findPath(startLabel: VertexLabelType, endLabel: VertexLabelType): Path {
         const path = super.findPath(startLabel, endLabel);
-        this.execStats?.setAlgorithmName('UCS shortest path');
+        this.execStats?.setAlgorithmName(UCSShortestPath.algorithmName);
         return path;
     }
 

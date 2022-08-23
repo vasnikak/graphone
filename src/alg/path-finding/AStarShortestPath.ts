@@ -2,8 +2,9 @@ import Graph from "../../Graph";
 import Path from "../../Path";
 import Vertex, { VertexLabelType } from "../../Vertex";
 import FindPathAlgorithmExecutionStats from "../FindPathAlgorithmExecutionStats";
-import GraphAlgorithm, { CollisionResolutionFunc } from "../GraphAlgorithm";
+import { CollisionResolutionFunc } from "../GraphAlgorithm";
 import { HeuristicFunction, zeroHeuristicFunction } from "../../heuristics/heuristics";
+import FindPathGraphAlgorithm from "./FindPathGraphAlgorithm";
 
 class QueueItem {
 
@@ -55,7 +56,12 @@ class PriorityQueue {
  * It discovers the shortest path in a graph between two vertices using the
  * A* heuristic algorithm.
  */
-export default class AStarShortestPath extends GraphAlgorithm {
+export default class AStarShortestPath extends FindPathGraphAlgorithm {
+
+    /**
+     * The name of the algorithm.
+     */
+     public static readonly algorithmName: string = 'A* shortest path';
 
     /**
      * Collision resolution function.
@@ -72,15 +78,10 @@ export default class AStarShortestPath extends GraphAlgorithm {
         this.collisionRes = collisionRes;
     }
 
-    /**
-     * Finds a path between two nodes in a graph using the A* algorithm.
-     * @param startLabel the label of the starting vertex
-     * @param endLabel the label of the destination vertex
-     * @return the shortest path from start to end
-     */
+    /** {@inheritdoc} */
      public findPath(startLabel: VertexLabelType, endLabel: VertexLabelType): Path {
         // Exec stats
-        this.execStats = new FindPathAlgorithmExecutionStats('A* shortest path');
+        this.execStats = new FindPathAlgorithmExecutionStats(AStarShortestPath.algorithmName);
         this.execStats.reset();
 
         // Find the corresponding vertices

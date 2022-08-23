@@ -1,4 +1,4 @@
-import UndirectedGraph from '../src/UndirectedGraph';
+import UndirectedGraph from "../src/UndirectedGraph";
 
 describe('UndirectedGraph tests', () => {
     it('should create an undirected graph with 3 edges', () => {

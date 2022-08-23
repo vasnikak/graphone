@@ -1,11 +1,10 @@
-export * from "./Edge";
-export * from "./Vertex";
-export * from "./Graph";
-export * from "./UndirectedGraph";
-export * from "./DirectedGraph";
-export * from "./Path";
+export { default as Edge } from "./Edge";
+export { default as Vertex } from "./Vertex";
+export { default as Graph } from "./Graph";
+export { default as UndirectedGraph } from "./UndirectedGraph";
+export { default as DirectedGraph } from "./DirectedGraph";
+export { default as Path } from "./Path";
+
 export * from "./heuristics/heuristics";
+
 export * from "./alg/GraphAlgorithm";
-export * from "./alg/path-finding/DFSFindPath";
-export * from "./alg/path-finding/AStarShortestPath";
-export * from "./alg/path-finding/UCSShortestPath";

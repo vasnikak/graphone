@@ -1,4 +1,4 @@
-import Vertex from './Vertex'
+import Vertex from "./Vertex";
 
 /**
  * The edge between two vertices.

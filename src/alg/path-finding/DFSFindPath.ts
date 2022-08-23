@@ -2,7 +2,8 @@ import Graph from "../../Graph";
 import Path from "../../Path";
 import Vertex, { VertexLabelType } from "../../Vertex";
 import FindPathAlgorithmExecutionStats from "../FindPathAlgorithmExecutionStats";
-import GraphAlgorithm, { CollisionResolutionFunc } from "../GraphAlgorithm";
+import { CollisionResolutionFunc } from "../GraphAlgorithm";
+import FindPathGraphAlgorithm from "./FindPathGraphAlgorithm";
 
 interface StackItem {
     node: Vertex;
@@ -13,7 +14,12 @@ interface StackItem {
  * DFS (Depth First Search) algorithm. 
  * It discovers at path in a graph between two vertices using the DFS algorithm.
  */
-export default class DFSFindPath extends GraphAlgorithm {
+export default class DFSFindPath extends FindPathGraphAlgorithm {
+
+    /**
+     * The name of the algorithm.
+     */
+     public static readonly algorithmName: string = 'BFS shortest path';
 
     /**
      * Collision resolution function.
@@ -25,15 +31,10 @@ export default class DFSFindPath extends GraphAlgorithm {
         this.collisionRes = collisionRes;
     }
 
-    /**
-     * Finds a path between two nodes in a graph using the DFS algorithm.
-     * @param startLabel the label of the starting vertex
-     * @param endLabel the label of the destination vertex
-     * @return the shortest path from start to end
-     */
-     public findPath(startLabel: VertexLabelType, endLabel: VertexLabelType): Path {
+    /** {@inheritdoc} */
+    public findPath(startLabel: VertexLabelType, endLabel: VertexLabelType): Path {
         // Exec stats
-        this.execStats = new FindPathAlgorithmExecutionStats('DFS find path');
+        this.execStats = new FindPathAlgorithmExecutionStats(DFSFindPath.algorithmName);
         this.execStats.reset();
 
         // Find the corresponding vertices

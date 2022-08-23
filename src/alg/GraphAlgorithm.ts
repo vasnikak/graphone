@@ -7,13 +7,18 @@ import AlgorithmExecutionStats from "./AlgorithmExecutionStats"
 export default abstract class GraphAlgorithm {
 
     /**
+     * The name of the algorithm.
+     */
+    public static readonly algorithmName: string;
+
+    /**
      * The graph that the algorithm will be executed on.
      */
     protected graph: Graph;
     /**
      * Algorithm execution statistics.
      */
-    protected execStats: AlgorithmExecutionStats | undefined
+    protected execStats: AlgorithmExecutionStats | undefined;
 
     public constructor(graph: Graph) {
         this.graph = graph;

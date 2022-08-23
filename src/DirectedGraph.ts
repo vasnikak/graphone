@@ -1,5 +1,5 @@
-import Graph from './Graph'
-import { VertexLabelType } from './Vertex'
+import Graph from "./Graph";
+import { VertexLabelType } from "./Vertex";
 
 /**
  * A directed graph class.

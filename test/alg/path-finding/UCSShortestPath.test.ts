@@ -1,6 +1,6 @@
-import FindPathAlgorithmExecutionStats from '../../../src/alg/FindPathAlgorithmExecutionStats';
-import UCSShortestPath from '../../../src/alg/path-finding/UCSShortestPath';
-import Maze from '../../Maze';
+import { FindPathAlgorithmExecutionStats } from "../../../src/alg";
+import { UCSShortestPath } from "../../../src/alg/path-finding";
+import Maze from "../../Maze";
 
 describe('UCS shortest path test', () => {
     const maze = new Maze([
