@@ -8,3 +8,6 @@ export { default as Path } from "./Path";
 export * from "./heuristics/heuristics";
 
 export * from "./alg/GraphAlgorithm";
+
+export * from './alg/path-finding';
+export * from './alg/traversal';

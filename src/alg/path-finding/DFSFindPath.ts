@@ -19,7 +19,7 @@ export default class DFSFindPath extends FindPathGraphAlgorithm {
     /**
      * The name of the algorithm.
      */
-     public static readonly algorithmName: string = 'BFS shortest path';
+     public static readonly algorithmName: string = 'DFS shortest path';
 
     /**
      * Collision resolution function.

@@ -1,4 +1,4 @@
 node_modules/
-dist/
+export/
 test/test01.ts
 package-lock.json
