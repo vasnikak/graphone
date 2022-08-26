@@ -1,7 +1,7 @@
 import Graph from "../../Graph";
 import Path from "../../Path";
 import Vertex, { VertexLabelType } from "../../Vertex";
-import FindPathAlgorithmExecutionStats from "../FindPathAlgorithmExecutionStats";
+import FindPathAlgorithmExecutionStats from "./FindPathAlgorithmExecutionStats";
 import { CollisionResolutionFunc } from "../GraphAlgorithm";
 import FindPathGraphAlgorithm from "./FindPathGraphAlgorithm";
 
@@ -31,20 +31,20 @@ export default class BFSShortestPath extends FindPathGraphAlgorithm {
         this.collisionRes = collisionRes;
     }
 
-    /** {@inheritdoc} */
+    /** {@inheritDoc FindPathGraphAlgorithm.findPath} */
     public findPath(startLabel: VertexLabelType, endLabel: VertexLabelType): Path {
         // Exec stats
         this.execStats = new FindPathAlgorithmExecutionStats(BFSShortestPath.algorithmName);
         this.execStats.reset();
 
         // Find the corresponding vertices
-        const start = this.graph.getVertex(startLabel);
-        if (!start) {
+        const startVertex = this.graph.getVertex(startLabel);
+        if (!startVertex) {
             this.execStats.stopExecution();
             return new Path();
         }
-        const end = this.graph.getVertex(endLabel);
-        if (!end) {
+        const endVertex = this.graph.getVertex(endLabel);
+        if (!endVertex) {
             this.execStats.stopExecution();
             return new Path();
         }
@@ -54,8 +54,8 @@ export default class BFSShortestPath extends FindPathGraphAlgorithm {
         // We need an index to be able to extract the path after the execution of the algorithm
         const visited: Map<VertexLabelType, QueueItem> = new Map();
 
-        // Push the starting node into the queue
-        const first: QueueItem = { node: start, parent: null };
+        // Push the start node into the queue
+        const first: QueueItem = { node: startVertex, parent: null };
         queue.push(first);
         visited.set(startLabel, first);
         // We will assign the destination queue item to this variable
@@ -67,7 +67,7 @@ export default class BFSShortestPath extends FindPathGraphAlgorithm {
             // Exec stats
             this.execStats.incNodesVisitedNum();
             // If it is the destination, stop the iteration
-            if (current?.node.equals(end)) {
+            if (current?.node.equals(endVertex)) {
                 target = current;
                 break;
             }
@@ -86,7 +86,7 @@ export default class BFSShortestPath extends FindPathGraphAlgorithm {
             // If a collision resolution function was defined
             } else {
                 // Create a temporary list to resolve collisions
-                const children: QueueItem[] = []
+                const children: QueueItem[] = [];
                 current?.node.getOutEdges().forEach(edge => {
                     // If we haven't visited yet the child node
                     if (!visited.has(edge.getDestination().getLabel())) {
@@ -99,7 +99,7 @@ export default class BFSShortestPath extends FindPathGraphAlgorithm {
                 });
                 // Sort the list using the collision resolution comparator
                 children.sort((a: QueueItem, b: QueueItem): number => {
-                    return this.collisionRes ? this.collisionRes(a.node.getData(), b.node.getData()) : 0;
+                    return this.collisionRes!(a.node.getData(), b.node.getData());
                 });
                 // Push the list items into the queue
                 children.forEach(child => queue.unshift(child));

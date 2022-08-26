@@ -1,4 +1,4 @@
-import { FindPathAlgorithmExecutionStats } from "../../../src/alg";
+import { FindPathAlgorithmExecutionStats } from "../../../src/alg/path-finding";
 import { BFSShortestPath } from "../../../src/alg/path-finding";
 import Maze from "../../Maze";
 

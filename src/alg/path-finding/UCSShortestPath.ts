@@ -22,7 +22,7 @@ export default class UCSShortestPath extends AStarShortestPath {
         this.collisionRes = collisionRes;
     }
 
-    /** {@inheritdoc} */
+    /** {@inheritDoc FindPathGraphAlgorithm.findPath} */
     public findPath(startLabel: VertexLabelType, endLabel: VertexLabelType): Path {
         const path = super.findPath(startLabel, endLabel);
         this.execStats?.setAlgorithmName(UCSShortestPath.algorithmName);

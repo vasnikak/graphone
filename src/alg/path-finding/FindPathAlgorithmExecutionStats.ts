@@ -1,4 +1,4 @@
-import AlgorithmExecutionStats from "./AlgorithmExecutionStats";
+import AlgorithmExecutionStats from "../AlgorithmExecutionStats";
 
 export default class FindPathAlgorithmExecutionStats extends AlgorithmExecutionStats {
 
@@ -17,7 +17,7 @@ export default class FindPathAlgorithmExecutionStats extends AlgorithmExecutionS
         this.solutionFound = false;
     }
 
-    /** {@inheritDoc} */
+    /** {@inheritDoc AlgorithmExecutionStats.reset} */
     public reset(): AlgorithmExecutionStats {
         super.reset();
         this.pathLength = 0;

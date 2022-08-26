@@ -6,12 +6,12 @@ import { VertexLabelType } from "./Vertex";
  */
 export default class DirectedGraph extends Graph {
 
-    /** {@inheritdoc} */
+    /** {@inheritDoc Graph.constructor} */
     constructor(name?: string) {
         super(name);
     }
 
-    /** {@inheritdoc} */
+    /** {@inheritDoc Graph.addEdge} */
     public addEdge(label1: VertexLabelType, label2: VertexLabelType, weight: number = 1): Graph {
         const v1 = this.getVertex(label1);
         if (!v1)
@@ -24,7 +24,7 @@ export default class DirectedGraph extends Graph {
         return this;
     }
 
-    /** {@inheritdoc} */
+    /** {@inheritDoc Graph.removeEdge} */
     public removeEdge(label1: VertexLabelType, label2: VertexLabelType): Graph {
         const v1 = this.getVertex(label1);
         if (!v1)
@@ -37,7 +37,7 @@ export default class DirectedGraph extends Graph {
         return this;
     }
 
-    /** {@inheritdoc} */
+    /** {@inheritDoc Graph.getEdgesNum} */
     public getEdgesNum(): number {
         let edgesNum = 0;
         this.getVertices().forEach(vertex => edgesNum += vertex.getOutEdgesNum());

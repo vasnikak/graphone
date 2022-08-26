@@ -1,5 +1,5 @@
 import { AStarShortestPath } from "../../../src/alg/path-finding";
-import { FindPathAlgorithmExecutionStats } from "../../../src/alg";
+import { FindPathAlgorithmExecutionStats } from "../../../src/alg/path-finding";
 import Maze, { MazeCell } from "../../Maze";
 
 describe('A* shortest path test', () => {

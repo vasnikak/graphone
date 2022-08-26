@@ -1,7 +1,7 @@
 import Graph from "../../Graph";
 import Path from "../../Path";
 import Vertex, { VertexLabelType } from "../../Vertex";
-import FindPathAlgorithmExecutionStats from "../FindPathAlgorithmExecutionStats";
+import FindPathAlgorithmExecutionStats from "./FindPathAlgorithmExecutionStats";
 import { CollisionResolutionFunc } from "../GraphAlgorithm";
 import { HeuristicFunction, zeroHeuristicFunction } from "../../heuristics/heuristics";
 import FindPathGraphAlgorithm from "./FindPathGraphAlgorithm";
@@ -78,20 +78,20 @@ export default class AStarShortestPath extends FindPathGraphAlgorithm {
         this.collisionRes = collisionRes;
     }
 
-    /** {@inheritdoc} */
-     public findPath(startLabel: VertexLabelType, endLabel: VertexLabelType): Path {
+    /** {@inheritDoc FindPathGraphAlgorithm.findPath} */
+    public findPath(startLabel: VertexLabelType, endLabel: VertexLabelType): Path {
         // Exec stats
         this.execStats = new FindPathAlgorithmExecutionStats(AStarShortestPath.algorithmName);
         this.execStats.reset();
 
         // Find the corresponding vertices
-        const start = this.graph.getVertex(startLabel);
-        if (!start) {
+        const startVertex = this.graph.getVertex(startLabel);
+        if (!startVertex) {
             this.execStats.stopExecution();
             return new Path();
         }
-        const end = this.graph.getVertex(endLabel);
-        if (!end) {
+        const endVertex = this.graph.getVertex(endLabel);
+        if (!endVertex) {
             this.execStats.stopExecution();
             return new Path();
         }
@@ -106,8 +106,8 @@ export default class AStarShortestPath extends FindPathGraphAlgorithm {
         // We need an index to be able to extract the path after the execution of the algorithm
         const visited: Map<VertexLabelType, QueueItem> = new Map();
 
-        // Push the starting node into the queue
-        const first = new QueueItem(start, null, 0, this.heuristicFunc);
+        // Push the start node into the queue
+        const first = new QueueItem(startVertex, null, 0, this.heuristicFunc);
         queue.push(first);
         visited.set(startLabel, first);
         // We will assign the destination queue item to this variable
@@ -119,7 +119,7 @@ export default class AStarShortestPath extends FindPathGraphAlgorithm {
             // Exec stats
             this.execStats.incNodesVisitedNum();
             // If it is the destination, stop the iteration
-            if (current?.node.equals(end)) {
+            if (current?.node.equals(endVertex)) {
                 target = current;
                 break;
             }
