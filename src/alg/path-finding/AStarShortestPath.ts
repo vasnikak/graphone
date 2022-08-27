@@ -2,9 +2,8 @@ import Graph from "../../Graph";
 import Path from "../../Path";
 import Vertex, { VertexLabelType } from "../../Vertex";
 import FindPathAlgorithmExecutionStats from "./FindPathAlgorithmExecutionStats";
-import { CollisionResolutionFunc } from "../GraphAlgorithm";
 import { HeuristicFunction, zeroHeuristicFunction } from "../../heuristics/heuristics";
-import FindPathGraphAlgorithm from "./FindPathGraphAlgorithm";
+import HeuristicFindPathGraphAlgorithm, { HeuristicGraphAlgorithmOptions } from "./HeuristicFindPathGraphAlgorithm";
 
 class QueueItem {
 
@@ -56,33 +55,32 @@ class PriorityQueue {
  * It discovers the shortest path in a graph between two vertices using the
  * A* heuristic algorithm.
  */
-export default class AStarShortestPath extends FindPathGraphAlgorithm {
+export default class AStarShortestPath extends HeuristicFindPathGraphAlgorithm {
 
     /**
      * The name of the algorithm.
      */
      public static readonly algorithmName: string = 'A* shortest path';
 
-    /**
-     * Collision resolution function.
-     */
-    protected collisionRes: CollisionResolutionFunc | undefined;
-    /**
-     * Heuristic function.
-     */
-    private heuristicFunc: HeuristicFunction;
-
-    constructor(graph: Graph, heuristicFunc: HeuristicFunction = zeroHeuristicFunction, collisionRes?: CollisionResolutionFunc) {
-        super(graph);
-        this.heuristicFunc = heuristicFunc;
-        this.collisionRes = collisionRes;
+    constructor(graph: Graph, options?: HeuristicGraphAlgorithmOptions) {
+        super(graph, options);
+        if (!(this.options as HeuristicGraphAlgorithmOptions).heuristicFunc)
+            (this.options as HeuristicGraphAlgorithmOptions).heuristicFunc = zeroHeuristicFunction;
     }
 
-    /** {@inheritDoc FindPathGraphAlgorithm.findPath} */
+    /**
+     * Finds a path between two nodes in a graph using the A* algorithm.
+     * @param startLabel the label of the starting vertex
+     * @param endLabel the label of the destination vertex
+     * @return the shortest path from start to end
+     */
     public findPath(startLabel: VertexLabelType, endLabel: VertexLabelType): Path {
         // Exec stats
         this.execStats = new FindPathAlgorithmExecutionStats(AStarShortestPath.algorithmName);
         this.execStats.reset();
+
+        // The heuristic function
+        const heuristicFunc = (this.options as HeuristicGraphAlgorithmOptions).heuristicFunc;
 
         // Find the corresponding vertices
         const startVertex = this.graph.getVertex(startLabel);
@@ -98,16 +96,16 @@ export default class AStarShortestPath extends FindPathGraphAlgorithm {
         
         // We need a priority queue to store the nodes that wait to be examined
         const aStarComparator = (a: QueueItem, b: QueueItem) => {
-            return (a.eval !== b.eval || !this.collisionRes) ?
+            return (a.eval !== b.eval || !this.options.collisionRes) ?
                     (a.eval - b.eval) :
-                    this.collisionRes(a.node.getData(), b.node.getData());
+                    this.options.collisionRes(a.node.getData(), b.node.getData());
         };
         const queue = new PriorityQueue(aStarComparator);
         // We need an index to be able to extract the path after the execution of the algorithm
         const visited: Map<VertexLabelType, QueueItem> = new Map();
 
         // Push the start node into the queue
-        const first = new QueueItem(startVertex, null, 0, this.heuristicFunc);
+        const first = new QueueItem(startVertex, null, 0, heuristicFunc!);
         queue.push(first);
         visited.set(startLabel, first);
         // We will assign the destination queue item to this variable
@@ -131,7 +129,7 @@ export default class AStarShortestPath extends FindPathGraphAlgorithm {
                 const child = visited.get(edge.getDestination().getLabel());
                 if (!child) {
                      // Push the node into the queue
-                     const child = new QueueItem(edge.getDestination(), current.node, totalCost, this.heuristicFunc);
+                     const child = new QueueItem(edge.getDestination(), current.node, totalCost, heuristicFunc!);
                      queue.push(child);
                      // Mark the node as visited
                      visited.set(edge.getDestination().getLabel(), child);

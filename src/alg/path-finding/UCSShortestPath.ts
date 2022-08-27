@@ -1,30 +1,36 @@
 import Graph from "../../Graph";
-import { zeroHeuristicFunction } from "../../heuristics/heuristics";
 import Path from "../../Path";
 import { VertexLabelType } from "../../Vertex";
-import { CollisionResolutionFunc } from "../GraphAlgorithm";
+import { GraphAlgorithmOptions } from "../GraphAlgorithm";
 import AStarShortestPath from "./AStarShortestPath";
+import FindPathGraphAlgorithm from "./FindPathGraphAlgorithm";
 
 /**
  * UCS (Uniform Cost Search) algorithm. 
  * It discovers the shortest path in a graph between two vertices using the
  * UCS algorithm.
  */
-export default class UCSShortestPath extends AStarShortestPath {
+export default class UCSShortestPath extends FindPathGraphAlgorithm {
 
     /**
      * The name of the algorithm.
      */
      public static readonly algorithmName: string = 'UCS shortest path';
 
-    constructor(graph: Graph, collisionRes?: CollisionResolutionFunc) {
-        super(graph, zeroHeuristicFunction, collisionRes);
-        this.collisionRes = collisionRes;
+    constructor(graph: Graph, options?: GraphAlgorithmOptions) {
+        super(graph, options);
     }
 
-    /** {@inheritDoc FindPathGraphAlgorithm.findPath} */
+    /**
+     * Finds a path between two nodes in a graph using the UCS algorithm.
+     * @param startLabel the label of the starting vertex
+     * @param endLabel the label of the destination vertex
+     * @return the shortest path from start to end
+     */
     public findPath(startLabel: VertexLabelType, endLabel: VertexLabelType): Path {
-        const path = super.findPath(startLabel, endLabel);
+        const aStarShortestPath = new AStarShortestPath(this.graph, this.options);
+        const path = aStarShortestPath.findPath(startLabel, endLabel);
+        this.execStats = aStarShortestPath.getExecStats();
         this.execStats?.setAlgorithmName(UCSShortestPath.algorithmName);
         return path;
     }

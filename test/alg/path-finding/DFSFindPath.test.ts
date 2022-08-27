@@ -20,7 +20,7 @@ describe('DFS find path test', () => {
     it('should find a solution', () => {
         const startNode = '(0,0)';
         const endNode = '(9,9)';
-        const dfsFindPath = new DFSFindPath(graph, (a: MazeCell, b: MazeCell) => (a.x !== b.x) ? b.x - a.x : b.y - a.y);
+        const dfsFindPath = new DFSFindPath(graph, { collisionRes: (a: MazeCell, b: MazeCell) => (a.x !== b.x) ? b.x - a.x : b.y - a.y });
         dfsFindPath.findPath(startNode, endNode);
         const stats = dfsFindPath.getExecStats() as FindPathAlgorithmExecutionStats;
         expect(stats.wasSolutionFound()).toBe(true);

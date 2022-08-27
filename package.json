@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "del-cli -f ./dist && webpack && npm-dts generate -e ./src/index.ts -o ./dist/index.d.ts",
+    "build": "del-cli -f ./dist && webpack && npm-dts generate -e ./src/index.ts -o ./dist/index.d.ts --tsc --build tsconfig.build.json",
     "test": "jest"
   },
   "files": [

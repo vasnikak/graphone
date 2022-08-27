@@ -6,28 +6,28 @@ export default class AlgorithmExecutionStats {
     /**
      * Algorithm's name.
      */
-     private algorithmName: string | undefined;
-     /**
-      * Execution start timestamp.
-      */
-     private execStart: number;
-     /**
-      * Total execution time (ms).
-      */
-     private execTime: number;
-     /**
-      * Number of the vertices that the algorithm visited.
-      */
-     private nodesVisitedNum: number;
+    private algorithmName: string | undefined;
+    /**
+     * Execution start timestamp.
+     */
+    private execStart: number;
+    /**
+     * Total execution time (ms).
+     */
+    private execTime: number;
+    /**
+     * Number of the vertices that the algorithm visited.
+     */
+    private nodesVisitedNum: number;
 
-     constructor(algorithmName?: string) {
+    constructor(algorithmName?: string) {
         this.algorithmName = algorithmName;
         this.execStart = Date.now();
         this.execTime = 0;
         this.nodesVisitedNum = 0;
-     }
+    }
 
-     /**
+    /**
      * Resets the stats for the current object.
      * @returns the current stats instance
      */

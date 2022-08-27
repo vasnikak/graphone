@@ -27,7 +27,7 @@ describe('A* shortest path test', () => {
         const endNodeX = 9, endNodeY = 9;
         const endNode = '(' + endNodeX + ',' + endNodeY + ')';
         const heuristicFunc = manhattanDistanceFunc(endNodeX, endNodeY);
-        const aStarShortestPath = new AStarShortestPath(graph, heuristicFunc);
+        const aStarShortestPath = new AStarShortestPath(graph, { heuristicFunc });
         aStarShortestPath.findPath(startNode, endNode);
         const stats = aStarShortestPath.getExecStats() as FindPathAlgorithmExecutionStats;
         expect(stats.wasSolutionFound()).toBe(true);
@@ -39,7 +39,7 @@ describe('A* shortest path test', () => {
         const endNodeX = 0, endNodeY = 9;
         const endNode = '(' + endNodeX + ',' + endNodeY + ')';
         const heuristicFunc = manhattanDistanceFunc(endNodeX, endNodeY);
-        const aStarShortestPath = new AStarShortestPath(graph, heuristicFunc);
+        const aStarShortestPath = new AStarShortestPath(graph, { heuristicFunc });
         aStarShortestPath.findPath(startNode, endNode);
         const stats = aStarShortestPath.getExecStats() as FindPathAlgorithmExecutionStats;
         expect(stats.wasSolutionFound()).toBe(false);

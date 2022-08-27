@@ -19,7 +19,7 @@ describe('BFS traversal test', () => {
 
     it('should traverse the whole graph using BFS', () => {
         const startNode = '(0,0)';
-        const bfsTraversal = new BFSTraversal(graph, (a: MazeCell, b: MazeCell) => (a.x !== b.x) ? b.x - a.x : b.y - a.y);
+        const bfsTraversal = new BFSTraversal(graph, { collisionRes: (a: MazeCell, b: MazeCell) => (a.x !== b.x) ? b.x - a.x : b.y - a.y });
         bfsTraversal.traverse(startNode, (v: Vertex) => { });
         const stats = bfsTraversal.getExecStats();
         expect(stats?.getNodesVisitedNum()).toBe(79);
@@ -27,7 +27,7 @@ describe('BFS traversal test', () => {
 
     it('should traverse partially graph using BFS', () => {
         const startNode = '(0,0)';
-        const bfsTraversal = new BFSTraversal(graph, (a: MazeCell, b: MazeCell) => (a.x !== b.x) ? b.x - a.x : b.y - a.y);
+        const bfsTraversal = new BFSTraversal(graph, { collisionRes: (a: MazeCell, b: MazeCell) => (a.x !== b.x) ? b.x - a.x : b.y - a.y });
         bfsTraversal.traverse(startNode, (v: Vertex) => { return !(v.getLabel() === '(5,6)'); });
         const stats = bfsTraversal.getExecStats();
         expect(stats?.getNodesVisitedNum()).toBe(50);

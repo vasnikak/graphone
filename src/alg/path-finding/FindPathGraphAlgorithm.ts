@@ -1,15 +1,15 @@
 import Graph from "../../Graph";
 import Path from "../../Path";
 import { VertexLabelType } from "../../Vertex";
-import GraphAlgorithm from "../GraphAlgorithm";
+import GraphAlgorithm, { GraphAlgorithmOptions } from "../GraphAlgorithm";
 
 /**
  * The algorithms of this type discover a path between two nodes in a graph.
  */
 export default abstract class FindPathGraphAlgorithm extends GraphAlgorithm {
 
-    public constructor(graph: Graph) {
-        super(graph);
+    public constructor(graph: Graph, options?: GraphAlgorithmOptions) {
+        super(graph, options);
     }
 
     /**

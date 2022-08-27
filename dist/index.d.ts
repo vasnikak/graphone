@@ -5,13 +5,30 @@ declare module 'graphone/src/DirectedGraph' {
    * A directed graph class.
    */
   export default class DirectedGraph extends Graph {
-      /** {@inheritDoc Graph.constructor} */
+      /**
+       * Creates a named directed graph.
+       * @param name the name of the graph
+       */
       constructor(name?: string);
-      /** {@inheritDoc Graph.addEdge} */
+      /**
+       * Adds a directed edge between two vertices.
+       * @param label1 the label of the first vertex
+       * @param label2 the label of the second vertex
+       * @param weight the weight of the edge
+       * @return the current graph
+       */
       addEdge(label1: VertexLabelType, label2: VertexLabelType, weight?: number): Graph;
-      /** {@inheritDoc Graph.removeEdge} */
+      /**
+       * Removes an edge between two vertices.
+       * @param label1 the label of the first vertex
+       * @param label2 the label of the second vertex
+       * @return the current graph
+       */
       removeEdge(label1: VertexLabelType, label2: VertexLabelType): Graph;
-      /** {@inheritDoc Graph.getEdgesNum} */
+      /**
+       * Returns the number of edges of the graph.
+       * @return the number of edges of the graph
+       */
       getEdgesNum(): number;
   }
 
@@ -180,7 +197,7 @@ declare module 'graphone/src/Graph' {
 
 }
 declare module 'graphone/src/Path' {
-  import Vertex from "graphone/src/Vertex";
+  import Vertex, { VertexLabelType } from "graphone/src/Vertex";
   export default class Path {
       private path;
       constructor(path?: Vertex[]);
@@ -237,9 +254,19 @@ declare module 'graphone/src/Path' {
       /**
        * Calculates and returns the total cost of the path.
        * The total cost is defined as the sum of the weights of the path's edges.
-       * @returns the total cost of the path.
+       * @returns the total cost of the path
        */
       getTotalCost(): number;
+      /**
+       * Returns an array with the labels of the vertices in the path.
+       * @returns an array with the labels of the vertices
+       */
+      getLabels(): VertexLabelType[];
+      /**
+       * Returns an array with the data of the vertices in the path.
+       * @returns an array with the data of the vertices
+       */
+      getData(): any[];
       toString(): string;
       equals(obj: Path): boolean;
   }
@@ -252,13 +279,30 @@ declare module 'graphone/src/UndirectedGraph' {
    * An undirected graph class.
    */
   export default class UndirectedGraph extends Graph {
-      /** {@inheritDoc Graph.constructor} */
+      /**
+       * Creates a named undirected graph.
+       * @param name the name of the graph
+       */
       constructor(name?: string);
-      /** {@inheritDoc Graph.addEdge} */
+      /**
+       * Adds an undirected edge between two vertices.
+       * @param label1 the label of the first vertex
+       * @param label2 the label of the second vertex
+       * @param weight the weight of the edge
+       * @return the current graph
+       */
       addEdge(label1: VertexLabelType, label2: VertexLabelType, weight?: number): Graph;
-      /** {@inheritDoc Graph.removeEdge} */
+      /**
+       * Removes an edge between two vertices.
+       * @param label1 the label of the first vertex
+       * @param label2 the label of the second vertex
+       * @return the current graph
+       */
       removeEdge(label1: VertexLabelType, label2: VertexLabelType): Graph;
-      /** {@inheritDoc Graph.getEdgesNum} */
+      /**
+       * Returns the number of edges of the graph.
+       * @return the number of edges of the graph
+       */
       getEdgesNum(): number;
   }
 
@@ -442,9 +486,9 @@ declare module 'graphone/src/alg/AlgorithmExecutionStats' {
       private nodesVisitedNum;
       constructor(algorithmName?: string);
       /**
-      * Resets the stats for the current object.
-      * @returns the current stats instance
-      */
+       * Resets the stats for the current object.
+       * @returns the current stats instance
+       */
       reset(): AlgorithmExecutionStats;
       getAlgorithmName(): string | undefined;
       setAlgorithmName(algorithmName: string): this;
@@ -481,6 +525,20 @@ declare module 'graphone/src/alg/GraphAlgorithm' {
   import Graph from "graphone/src/Graph";
   import AlgorithmExecutionStats from "graphone/src/alg/AlgorithmExecutionStats";
   /**
+   * The type of a collision resolution function.
+   * The collision resolution function will be executed on the data of a vertex
+   * and it has to return a negative (a < b), 0 (a = b) or positive number (a > b), according to the
+   * result of the comparison between the two arguments.
+   */
+  export type CollisionResolutionFunc = (a: any, b: any) => number;
+  /**
+   * The options for each graph algorithms.
+   */
+  export interface GraphAlgorithmOptions {
+      /** The collision resolution function. */
+      collisionRes?: CollisionResolutionFunc;
+  }
+  /**
    * The base class for all graph algorithms.
    */
   export default abstract class GraphAlgorithm {
@@ -493,19 +551,17 @@ declare module 'graphone/src/alg/GraphAlgorithm' {
        */
       protected graph: Graph;
       /**
+       * The options of the graph algorithm.
+       */
+      protected options: GraphAlgorithmOptions;
+      /**
        * Algorithm execution statistics.
        */
       protected execStats: AlgorithmExecutionStats | undefined;
-      constructor(graph: Graph);
+      constructor(graph: Graph, options?: GraphAlgorithmOptions);
       getExecStats(): AlgorithmExecutionStats | undefined;
+      getOptions(): GraphAlgorithmOptions;
   }
-  /**
-   * The type of a collision resolution function.
-   * The collision resolution function will be executed on the data of a vertex
-   * and it has to return a negative (a < b), 0 (a = b) or positive number (a > b), according to the
-   * result of the comparison between the two arguments.
-   */
-  export type CollisionResolutionFunc = (a: any, b: any) => number;
 
 }
 declare module 'graphone/src/alg/index' {
@@ -517,29 +573,24 @@ declare module 'graphone/src/alg/path-finding/AStarShortestPath' {
   import Graph from "graphone/src/Graph";
   import Path from "graphone/src/Path";
   import { VertexLabelType } from "graphone/src/Vertex";
-  import { CollisionResolutionFunc } from "graphone/src/alg/GraphAlgorithm";
-  import { HeuristicFunction } from "graphone/src/heuristics/heuristics";
-  import FindPathGraphAlgorithm from "graphone/src/alg/path-finding/FindPathGraphAlgorithm";
+  import HeuristicFindPathGraphAlgorithm, { HeuristicGraphAlgorithmOptions } from "graphone/src/alg/path-finding/HeuristicFindPathGraphAlgorithm";
   /**
    * A* algorithm.
    * It discovers the shortest path in a graph between two vertices using the
    * A* heuristic algorithm.
    */
-  export default class AStarShortestPath extends FindPathGraphAlgorithm {
+  export default class AStarShortestPath extends HeuristicFindPathGraphAlgorithm {
       /**
        * The name of the algorithm.
        */
       static readonly algorithmName: string;
+      constructor(graph: Graph, options?: HeuristicGraphAlgorithmOptions);
       /**
-       * Collision resolution function.
+       * Finds a path between two nodes in a graph using the A* algorithm.
+       * @param startLabel the label of the starting vertex
+       * @param endLabel the label of the destination vertex
+       * @return the shortest path from start to end
        */
-      protected collisionRes: CollisionResolutionFunc | undefined;
-      /**
-       * Heuristic function.
-       */
-      private heuristicFunc;
-      constructor(graph: Graph, heuristicFunc?: HeuristicFunction, collisionRes?: CollisionResolutionFunc);
-      /** {@inheritDoc FindPathGraphAlgorithm.findPath} */
       findPath(startLabel: VertexLabelType, endLabel: VertexLabelType): Path;
   }
 
@@ -548,7 +599,7 @@ declare module 'graphone/src/alg/path-finding/BFSShortestPath' {
   import Graph from "graphone/src/Graph";
   import Path from "graphone/src/Path";
   import { VertexLabelType } from "graphone/src/Vertex";
-  import { CollisionResolutionFunc } from "graphone/src/alg/GraphAlgorithm";
+  import { GraphAlgorithmOptions } from "graphone/src/alg/GraphAlgorithm";
   import FindPathGraphAlgorithm from "graphone/src/alg/path-finding/FindPathGraphAlgorithm";
   /**
    * BFS (Breadth First Search) algorithm.
@@ -559,12 +610,13 @@ declare module 'graphone/src/alg/path-finding/BFSShortestPath' {
        * The name of the algorithm.
        */
       static readonly algorithmName: string;
+      constructor(graph: Graph, options?: GraphAlgorithmOptions);
       /**
-       * Collision resolution function.
+       * Finds a path between two nodes in a graph using the BFS algorithm.
+       * @param startLabel the label of the starting vertex
+       * @param endLabel the label of the destination vertex
+       * @return the shortest path from start to end
        */
-      private collisionRes;
-      constructor(graph: Graph, collisionRes?: CollisionResolutionFunc);
-      /** {@inheritDoc FindPathGraphAlgorithm.findPath} */
       findPath(startLabel: VertexLabelType, endLabel: VertexLabelType): Path;
   }
 
@@ -573,7 +625,7 @@ declare module 'graphone/src/alg/path-finding/DFSFindPath' {
   import Graph from "graphone/src/Graph";
   import Path from "graphone/src/Path";
   import { VertexLabelType } from "graphone/src/Vertex";
-  import { CollisionResolutionFunc } from "graphone/src/alg/GraphAlgorithm";
+  import { GraphAlgorithmOptions } from "graphone/src/alg/GraphAlgorithm";
   import FindPathGraphAlgorithm from "graphone/src/alg/path-finding/FindPathGraphAlgorithm";
   /**
    * DFS (Depth First Search) algorithm.
@@ -584,12 +636,13 @@ declare module 'graphone/src/alg/path-finding/DFSFindPath' {
        * The name of the algorithm.
        */
       static readonly algorithmName: string;
+      constructor(graph: Graph, options?: GraphAlgorithmOptions);
       /**
-       * Collision resolution function.
+       * Finds a path between two nodes in a graph using the DFS algorithm.
+       * @param startLabel the label of the starting vertex
+       * @param endLabel the label of the destination vertex
+       * @return the shortest path from start to end
        */
-      private collisionRes;
-      constructor(graph: Graph, collisionRes?: CollisionResolutionFunc);
-      /** {@inheritDoc FindPathGraphAlgorithm.findPath} */
       findPath(startLabel: VertexLabelType, endLabel: VertexLabelType): Path;
   }
 
@@ -606,7 +659,10 @@ declare module 'graphone/src/alg/path-finding/FindPathAlgorithmExecutionStats' {
        */
       private solutionFound;
       constructor(algorithmName?: string);
-      /** {@inheritDoc AlgorithmExecutionStats.reset} */
+      /**
+       * Resets the stats for the current object.
+       * @returns the current stats instance
+       */
       reset(): AlgorithmExecutionStats;
       getPathLength(): number;
       setPathLength(pathLength: number): FindPathAlgorithmExecutionStats;
@@ -620,12 +676,42 @@ declare module 'graphone/src/alg/path-finding/FindPathGraphAlgorithm' {
   import Graph from "graphone/src/Graph";
   import Path from "graphone/src/Path";
   import { VertexLabelType } from "graphone/src/Vertex";
-  import GraphAlgorithm from "graphone/src/alg/GraphAlgorithm";
+  import GraphAlgorithm, { GraphAlgorithmOptions } from "graphone/src/alg/GraphAlgorithm";
   /**
    * The algorithms of this type discover a path between two nodes in a graph.
    */
   export default abstract class FindPathGraphAlgorithm extends GraphAlgorithm {
-      constructor(graph: Graph);
+      constructor(graph: Graph, options?: GraphAlgorithmOptions);
+      /**
+       * Finds a path between two nodes in a graph.
+       * @param startLabel the label of the starting vertex
+       * @param endLabel the label of the destination vertex
+       * @return the shortest path from start to end
+       */
+      abstract findPath(startLabel: VertexLabelType, endLabel: VertexLabelType): Path;
+  }
+
+}
+declare module 'graphone/src/alg/path-finding/HeuristicFindPathGraphAlgorithm' {
+  import Graph from "graphone/src/Graph";
+  import { HeuristicFunction } from "graphone/src/heuristics/heuristics";
+  import Path from "graphone/src/Path";
+  import { VertexLabelType } from "graphone/src/Vertex";
+  import { GraphAlgorithmOptions } from "graphone/src/alg/GraphAlgorithm";
+  import FindPathGraphAlgorithm from "graphone/src/alg/path-finding/FindPathGraphAlgorithm";
+  /**
+   * The available options for a heuristic path finding algorithm.
+   */
+  export interface HeuristicGraphAlgorithmOptions extends GraphAlgorithmOptions {
+      /** The heuristic function. If non is provided, it will be ignored. */
+      heuristicFunc?: HeuristicFunction;
+  }
+  /**
+   * The algorithms of this type discover a path between two nodes in a graph,
+   * by using a heuristic function.
+   */
+  export default abstract class HeuristicFindPathGraphAlgorithm extends FindPathGraphAlgorithm {
+      constructor(graph: Graph, options?: HeuristicGraphAlgorithmOptions);
       /**
        * Finds a path between two nodes in a graph.
        * @param startLabel the label of the starting vertex
@@ -640,20 +726,25 @@ declare module 'graphone/src/alg/path-finding/UCSShortestPath' {
   import Graph from "graphone/src/Graph";
   import Path from "graphone/src/Path";
   import { VertexLabelType } from "graphone/src/Vertex";
-  import { CollisionResolutionFunc } from "graphone/src/alg/GraphAlgorithm";
-  import AStarShortestPath from "graphone/src/alg/path-finding/AStarShortestPath";
+  import { GraphAlgorithmOptions } from "graphone/src/alg/GraphAlgorithm";
+  import FindPathGraphAlgorithm from "graphone/src/alg/path-finding/FindPathGraphAlgorithm";
   /**
    * UCS (Uniform Cost Search) algorithm.
    * It discovers the shortest path in a graph between two vertices using the
    * UCS algorithm.
    */
-  export default class UCSShortestPath extends AStarShortestPath {
+  export default class UCSShortestPath extends FindPathGraphAlgorithm {
       /**
        * The name of the algorithm.
        */
       static readonly algorithmName: string;
-      constructor(graph: Graph, collisionRes?: CollisionResolutionFunc);
-      /** {@inheritDoc FindPathGraphAlgorithm.findPath} */
+      constructor(graph: Graph, options?: GraphAlgorithmOptions);
+      /**
+       * Finds a path between two nodes in a graph using the UCS algorithm.
+       * @param startLabel the label of the starting vertex
+       * @param endLabel the label of the destination vertex
+       * @return the shortest path from start to end
+       */
       findPath(startLabel: VertexLabelType, endLabel: VertexLabelType): Path;
   }
 
@@ -670,7 +761,7 @@ declare module 'graphone/src/alg/path-finding/index' {
 declare module 'graphone/src/alg/traversal/BFSTraversal' {
   import Graph from "graphone/src/Graph";
   import Vertex, { VertexLabelType } from "graphone/src/Vertex";
-  import { CollisionResolutionFunc } from "graphone/src/alg/GraphAlgorithm";
+  import { GraphAlgorithmOptions } from "graphone/src/alg/GraphAlgorithm";
   import TraversalGraphAlgorithm from "graphone/src/alg/traversal/TraversalGraphAlgorithm";
   /**
    * Traverses a graph using BFS.
@@ -680,8 +771,14 @@ declare module 'graphone/src/alg/traversal/BFSTraversal' {
        * The name of the algorithm.
        */
       static readonly algorithmName: string;
-      constructor(graph: Graph, collisionRes?: CollisionResolutionFunc);
-      /** {@inheritDoc TraversalGraphAlgorithm.traverse} */
+      constructor(graph: Graph, options?: GraphAlgorithmOptions);
+      /**
+       * Traverses the nodes of the graph using the BFS algorithm.
+       * The second argument is the action that will be executed on each vertex of the graph during the traversal.
+       * In case that the function returns false, the traversal will stop.
+       * @param startLabel the label of the starting vertex
+       * @param traverseAction the action that will executed on each vertex during the traversal
+       */
       traverse(startLabel: VertexLabelType, traverseAction: (vertex: Vertex) => any): void;
   }
 
@@ -689,7 +786,7 @@ declare module 'graphone/src/alg/traversal/BFSTraversal' {
 declare module 'graphone/src/alg/traversal/DFSTraversal' {
   import Graph from "graphone/src/Graph";
   import Vertex, { VertexLabelType } from "graphone/src/Vertex";
-  import { CollisionResolutionFunc } from "graphone/src/alg/GraphAlgorithm";
+  import { GraphAlgorithmOptions } from "graphone/src/alg/GraphAlgorithm";
   import TraversalGraphAlgorithm from "graphone/src/alg/traversal/TraversalGraphAlgorithm";
   /**
    * Traverses a graph using DFS.
@@ -699,8 +796,14 @@ declare module 'graphone/src/alg/traversal/DFSTraversal' {
        * The name of the algorithm.
        */
       static readonly algorithmName: string;
-      constructor(graph: Graph, collisionRes?: CollisionResolutionFunc);
-      /** {@inheritDoc TraversalGraphAlgorithm.traverse} */
+      constructor(graph: Graph, options?: GraphAlgorithmOptions);
+      /**
+       * Traverses the nodes of the graph using the DFS algorithm.
+       * The second argument is the action that will be executed on each vertex of the graph during the traversal.
+       * In case that the function returns false, the traversal will stop.
+       * @param startLabel the label of the starting vertex
+       * @param traverseAction the action that will executed on each vertex during the traversal
+       */
       traverse(startLabel: VertexLabelType, traverseAction: (vertex: Vertex) => any): void;
   }
 
@@ -708,18 +811,15 @@ declare module 'graphone/src/alg/traversal/DFSTraversal' {
 declare module 'graphone/src/alg/traversal/TraversalGraphAlgorithm' {
   import Graph from "graphone/src/Graph";
   import Vertex, { VertexLabelType } from "graphone/src/Vertex";
-  import GraphAlgorithm, { CollisionResolutionFunc } from "graphone/src/alg/GraphAlgorithm";
+  import GraphAlgorithm, { GraphAlgorithmOptions } from "graphone/src/alg/GraphAlgorithm";
   /**
    * The algorithms of this type traverse all nodes of a graph.
    */
   export default abstract class TraversalGraphAlgorithm extends GraphAlgorithm {
+      constructor(graph: Graph, options?: GraphAlgorithmOptions);
       /**
-       * Collision resolution function.
-       */
-      protected collisionRes: CollisionResolutionFunc | undefined;
-      constructor(graph: Graph, collisionRes?: CollisionResolutionFunc);
-      /**
-       * The action that will be executed on each vertex of the graph during the traversal.
+       * Traverses the nodes of the graph.
+       * The second argument is the action that will be executed on each vertex of the graph during the traversal.
        * In case that the function returns false, the traversal will stop.
        * @param startLabel the label of the starting vertex
        * @param traverseAction the action that will executed on each vertex during the traversal

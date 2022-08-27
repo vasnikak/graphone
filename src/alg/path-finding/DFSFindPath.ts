@@ -2,7 +2,7 @@ import Graph from "../../Graph";
 import Path from "../../Path";
 import Vertex, { VertexLabelType } from "../../Vertex";
 import FindPathAlgorithmExecutionStats from "./FindPathAlgorithmExecutionStats";
-import { CollisionResolutionFunc } from "../GraphAlgorithm";
+import { GraphAlgorithmOptions } from "../GraphAlgorithm";
 import FindPathGraphAlgorithm from "./FindPathGraphAlgorithm";
 
 interface StackItem {
@@ -21,17 +21,16 @@ export default class DFSFindPath extends FindPathGraphAlgorithm {
      */
      public static readonly algorithmName: string = 'DFS shortest path';
 
-    /**
-     * Collision resolution function.
-     */
-    private collisionRes: CollisionResolutionFunc | undefined;
-
-    constructor(graph: Graph, collisionRes?: CollisionResolutionFunc) {
-        super(graph);
-        this.collisionRes = collisionRes;
+    constructor(graph: Graph, options?: GraphAlgorithmOptions) {
+        super(graph, options);
     }
 
-    /** {@inheritDoc FindPathGraphAlgorithm.findPath} */
+    /**
+     * Finds a path between two nodes in a graph using the DFS algorithm.
+     * @param startLabel the label of the starting vertex
+     * @param endLabel the label of the destination vertex
+     * @return the shortest path from start to end
+     */
     public findPath(startLabel: VertexLabelType, endLabel: VertexLabelType): Path {
         // Exec stats
         this.execStats = new FindPathAlgorithmExecutionStats(DFSFindPath.algorithmName);
@@ -72,7 +71,7 @@ export default class DFSFindPath extends FindPathGraphAlgorithm {
                 break;
             }
             // If no collision resolution function was defined
-            if (!this.collisionRes) {
+            if (!this.options.collisionRes) {
                 current?.node.getOutEdges().forEach(edge => {
                     // If we haven't visited yet the child node
                     if (!visited.has(edge.getDestination().getLabel())) {
@@ -99,7 +98,7 @@ export default class DFSFindPath extends FindPathGraphAlgorithm {
                 });
                 // Sort the list using the collision resolution comparator
                 children.sort((a: StackItem, b: StackItem): number => {
-                    return this.collisionRes!(a.node.getData(), b.node.getData());
+                    return this.options.collisionRes!(a.node.getData(), b.node.getData());
                 });
                 // Push the list items in the stack in a reverse order
                 // (we are pushing the items in a stack)

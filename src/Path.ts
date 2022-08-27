@@ -1,4 +1,4 @@
-import Vertex from "./Vertex"
+import Vertex, { VertexLabelType } from "./Vertex"
 
 export default class Path {
 
@@ -103,7 +103,7 @@ export default class Path {
     /**
      * Calculates and returns the total cost of the path.
      * The total cost is defined as the sum of the weights of the path's edges.
-     * @returns the total cost of the path.
+     * @returns the total cost of the path
      */
     public getTotalCost(): number {
         let totalCost = 0;
@@ -114,6 +114,22 @@ export default class Path {
             totalCost += edge.getWeight();
         }
         return totalCost;
+    }
+
+    /**
+     * Returns an array with the labels of the vertices in the path.
+     * @returns an array with the labels of the vertices
+     */
+    public getLabels(): VertexLabelType[] {
+        return this.path.map(vertex => vertex.getLabel());
+    }
+
+    /**
+     * Returns an array with the data of the vertices in the path.
+     * @returns an array with the data of the vertices
+     */
+    public getData(): any[] {
+        return this.path.map(vertex => vertex.getData());
     }
 
      public toString(): string {

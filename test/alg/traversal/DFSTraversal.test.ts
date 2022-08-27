@@ -19,7 +19,7 @@ describe('DFS traversal test', () => {
 
     it('should traverse the whole graph using DFS', () => {
         const startNode = '(0,0)';
-        const dfsTraversal = new DFSTraversal(graph, (a: MazeCell, b: MazeCell) => (a.x !== b.x) ? b.x - a.x : b.y - a.y);
+        const dfsTraversal = new DFSTraversal(graph, { collisionRes: (a: MazeCell, b: MazeCell) => (a.x !== b.x) ? b.x - a.x : b.y - a.y });
         dfsTraversal.traverse(startNode, (v: Vertex) => { });
         const stats = dfsTraversal.getExecStats();
         expect(stats?.getNodesVisitedNum()).toBe(79);
@@ -27,7 +27,7 @@ describe('DFS traversal test', () => {
 
     it('should traverse partially graph using DFS', () => {
         const startNode = '(0,0)';
-        const dfsTraversal = new DFSTraversal(graph, (a: MazeCell, b: MazeCell) => (a.x !== b.x) ? b.x - a.x : b.y - a.y);
+        const dfsTraversal = new DFSTraversal(graph, { collisionRes: (a: MazeCell, b: MazeCell) => (a.x !== b.x) ? b.x - a.x : b.y - a.y });
         dfsTraversal.traverse(startNode, (v: Vertex) => { return !(v.getLabel() === '(1,9)'); });
         const stats = dfsTraversal.getExecStats();
         expect(stats?.getNodesVisitedNum()).toBe(50);
