@@ -25,7 +25,7 @@ export default abstract class Graph {
      * Creates a named graph.
      * @param name the name of the graph
      */
-    public constructor(name?: string) {
+    constructor(name?: string) {
         if (!name)
             name = Graph.DEFAULT_GRAPH_NAME;
         this.name = name;
@@ -110,8 +110,19 @@ export default abstract class Graph {
      * @param label the label of the vertex
      * @return true or false
      */
-    public contains(label: VertexLabelType): boolean {
+    public hasVertex(label: VertexLabelType): boolean {
         return this.vertices[label] ? true : false;
+    }
+
+    /**
+     * Updates the data of an existing vertex of the graph. If the vertex doesn't
+     * exist, it is added.
+     * @param label the label of the vertex
+     * @param data the data of the vertex
+     * @return the current graph
+     */
+    public updateVertex(label: VertexLabelType, data?: any): Graph {
+        return this.addVertex(label, data);
     }
 
     /**
@@ -130,6 +141,21 @@ export default abstract class Graph {
      */
     public getVertexData(label: VertexLabelType): any {
         return this.vertices[label] ? this.vertices[label].getData() : undefined;
+    }
+
+    /**
+     * Returns an array of vertices that corresponds to an array of labels
+     * @param labels the labels of the vertices
+     * @returns the corresponding vertices of the given labels
+     */
+    public getVerticesByLabels(labels: VertexLabelType[]): Vertex[] {
+        const vertices: Vertex[] = [];
+        labels.forEach(label => {
+            const vertex = this.getVertex(label);
+            if (vertex)
+                vertices.push(vertex);
+        });
+        return vertices;
     }
 
     /**
@@ -197,6 +223,22 @@ export default abstract class Graph {
      */
     public clear(): Graph {
         this.vertices = {};
+        return this;
+    }
+
+    /**
+     * Removes all edges from the graph.
+     * @return the current graph
+     */
+    public clearEdges(): Graph {
+        this.getVertices().forEach(vertex => {
+            vertex.getInEdges().forEach(edge => {
+                this.removeEdge(edge.getOrigin().getLabel(), edge.getDestination().getLabel());
+            });
+            vertex.getOutEdges().forEach(edge => {
+                this.removeEdge(edge.getOrigin().getLabel(), edge.getDestination().getLabel());
+            });
+        });
         return this;
     }
 

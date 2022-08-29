@@ -29,7 +29,7 @@ export default class Vertex {
      */
     private outEdges: { [label in VertexLabelType]: Edge };
 
-    public constructor(label: VertexLabelType, data?: any) {
+    constructor(label: VertexLabelType, data?: any) {
         this.label = label;
         this.data = data;
         this.inEdges = {};

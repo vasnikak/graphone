@@ -3,7 +3,7 @@ import Path from "../../Path";
 import Vertex, { VertexLabelType } from "../../Vertex";
 import FindPathAlgorithmExecutionStats from "./FindPathAlgorithmExecutionStats";
 import { GraphAlgorithmOptions } from "../GraphAlgorithm";
-import FindPathGraphAlgorithm from "./FindPathGraphAlgorithm";
+import FindSinglePathGraphAlgorithm from "./FindSinglePathGraphAlgorithm";
 
 interface QueueItem {
     node: Vertex;
@@ -14,7 +14,7 @@ interface QueueItem {
  * BFS (Breadth First Search) algorithm. 
  * It discovers at path in a graph between two vertices using the BFS algorithm.
  */
-export default class BFSShortestPath extends FindPathGraphAlgorithm {
+export default class BFSShortestPath extends FindSinglePathGraphAlgorithm {
 
     /**
      * The name of the algorithm.

@@ -127,7 +127,15 @@ declare module 'graphone/src/Graph' {
        * @param label the label of the vertex
        * @return true or false
        */
-      contains(label: VertexLabelType): boolean;
+      hasVertex(label: VertexLabelType): boolean;
+      /**
+       * Updates the data of an existing vertex of the graph. If the vertex doesn't
+       * exist, it is added.
+       * @param label the label of the vertex
+       * @param data the data of the vertex
+       * @return the current graph
+       */
+      updateVertex(label: VertexLabelType, data?: any): Graph;
       /**
        * Returns the corresponding vertex for a specific label.
        * @param label the label of the vertex
@@ -140,6 +148,12 @@ declare module 'graphone/src/Graph' {
        * @returns the corresponding data or undefined if the label doesn't exist
        */
       getVertexData(label: VertexLabelType): any;
+      /**
+       * Returns an array of vertices that corresponds to an array of labels
+       * @param labels the labels of the vertices
+       * @returns the corresponding vertices of the given labels
+       */
+      getVerticesByLabels(labels: VertexLabelType[]): Vertex[];
       /**
        * Checks if two vertices are connected.
        * @param label1 the label of the first vertex
@@ -185,6 +199,11 @@ declare module 'graphone/src/Graph' {
        * @return the current graph
        */
       clear(): Graph;
+      /**
+       * Removes all edges from the graph.
+       * @return the current graph
+       */
+      clearEdges(): Graph;
       /**
        * Returns a path with the corresponding vertices.
        * @param labels a list with the vertices' labels
@@ -600,12 +619,12 @@ declare module 'graphone/src/alg/path-finding/BFSShortestPath' {
   import Path from "graphone/src/Path";
   import { VertexLabelType } from "graphone/src/Vertex";
   import { GraphAlgorithmOptions } from "graphone/src/alg/GraphAlgorithm";
-  import FindPathGraphAlgorithm from "graphone/src/alg/path-finding/FindPathGraphAlgorithm";
+  import FindSinglePathGraphAlgorithm from "graphone/src/alg/path-finding/FindSinglePathGraphAlgorithm";
   /**
    * BFS (Breadth First Search) algorithm.
    * It discovers at path in a graph between two vertices using the BFS algorithm.
    */
-  export default class BFSShortestPath extends FindPathGraphAlgorithm {
+  export default class BFSShortestPath extends FindSinglePathGraphAlgorithm {
       /**
        * The name of the algorithm.
        */
@@ -626,7 +645,7 @@ declare module 'graphone/src/alg/path-finding/DFSFindPath' {
   import Path from "graphone/src/Path";
   import { VertexLabelType } from "graphone/src/Vertex";
   import { GraphAlgorithmOptions } from "graphone/src/alg/GraphAlgorithm";
-  import FindPathGraphAlgorithm from "graphone/src/alg/path-finding/FindPathGraphAlgorithm";
+  import FindPathGraphAlgorithm from "graphone/src/alg/path-finding/FindSinglePathGraphAlgorithm";
   /**
    * DFS (Depth First Search) algorithm.
    * It discovers at path in a graph between two vertices using the DFS algorithm.
@@ -644,6 +663,44 @@ declare module 'graphone/src/alg/path-finding/DFSFindPath' {
        * @return the shortest path from start to end
        */
       findPath(startLabel: VertexLabelType, endLabel: VertexLabelType): Path;
+  }
+
+}
+declare module 'graphone/src/alg/path-finding/DjikstraShortestPaths' {
+  import Graph from "graphone/src/Graph";
+  import Path from "graphone/src/Path";
+  import { VertexLabelType } from "graphone/src/Vertex";
+  import { GraphAlgorithmOptions } from "graphone/src/alg/GraphAlgorithm";
+  import FindMultiplePathsGraphAlgorithm from "graphone/src/alg/path-finding/FindMultiplePathsGraphAlgorithm";
+  /**
+   * Dijkstra algorithm.
+   * It discovers the shortest paths in a graph between a source vertex and
+   * all the rest.
+   */
+  export default class DjiktraShortestPaths extends FindMultiplePathsGraphAlgorithm {
+      /**
+       * The name of the algorithm.
+       */
+      static readonly algorithmName: string;
+      constructor(graph: Graph, options?: GraphAlgorithmOptions);
+      /**
+       * Finds the shortest paths from a vertex to every other vertex in the graph.
+       * @param startLabel the label of the starting vertex
+       * @returns a Map with the path for each vertex
+       */
+      findShortestPaths(startLabel: VertexLabelType): Map<VertexLabelType, Path>;
+  }
+
+}
+declare module 'graphone/src/alg/path-finding/FindMultiplePathsGraphAlgorithm' {
+  import Graph from "graphone/src/Graph";
+  import GraphAlgorithm, { GraphAlgorithmOptions } from "graphone/src/alg/GraphAlgorithm";
+  /**
+   * The algorithms of this type discover multiple paths from a start vertex to other
+   * vertices of the graph.
+   */
+  export default abstract class FindMultiplePathsGraphAlgorithm extends GraphAlgorithm {
+      constructor(graph: Graph, options?: GraphAlgorithmOptions);
   }
 
 }
@@ -672,7 +729,7 @@ declare module 'graphone/src/alg/path-finding/FindPathAlgorithmExecutionStats' {
   }
 
 }
-declare module 'graphone/src/alg/path-finding/FindPathGraphAlgorithm' {
+declare module 'graphone/src/alg/path-finding/FindSinglePathGraphAlgorithm' {
   import Graph from "graphone/src/Graph";
   import Path from "graphone/src/Path";
   import { VertexLabelType } from "graphone/src/Vertex";
@@ -698,7 +755,7 @@ declare module 'graphone/src/alg/path-finding/HeuristicFindPathGraphAlgorithm' {
   import Path from "graphone/src/Path";
   import { VertexLabelType } from "graphone/src/Vertex";
   import { GraphAlgorithmOptions } from "graphone/src/alg/GraphAlgorithm";
-  import FindPathGraphAlgorithm from "graphone/src/alg/path-finding/FindPathGraphAlgorithm";
+  import FindSinglePathGraphAlgorithm from "graphone/src/alg/path-finding/FindSinglePathGraphAlgorithm";
   /**
    * The available options for a heuristic path finding algorithm.
    */
@@ -710,7 +767,7 @@ declare module 'graphone/src/alg/path-finding/HeuristicFindPathGraphAlgorithm' {
    * The algorithms of this type discover a path between two nodes in a graph,
    * by using a heuristic function.
    */
-  export default abstract class HeuristicFindPathGraphAlgorithm extends FindPathGraphAlgorithm {
+  export default abstract class HeuristicFindPathGraphAlgorithm extends FindSinglePathGraphAlgorithm {
       constructor(graph: Graph, options?: HeuristicGraphAlgorithmOptions);
       /**
        * Finds a path between two nodes in a graph.
@@ -727,13 +784,13 @@ declare module 'graphone/src/alg/path-finding/UCSShortestPath' {
   import Path from "graphone/src/Path";
   import { VertexLabelType } from "graphone/src/Vertex";
   import { GraphAlgorithmOptions } from "graphone/src/alg/GraphAlgorithm";
-  import FindPathGraphAlgorithm from "graphone/src/alg/path-finding/FindPathGraphAlgorithm";
+  import FindSinglePathGraphAlgorithm from "graphone/src/alg/path-finding/FindSinglePathGraphAlgorithm";
   /**
    * UCS (Uniform Cost Search) algorithm.
    * It discovers the shortest path in a graph between two vertices using the
    * UCS algorithm.
    */
-  export default class UCSShortestPath extends FindPathGraphAlgorithm {
+  export default class UCSShortestPath extends FindSinglePathGraphAlgorithm {
       /**
        * The name of the algorithm.
        */
@@ -753,8 +810,10 @@ declare module 'graphone/src/alg/path-finding/index' {
   export { default as AStarShortestPath } from "graphone/src/alg/path-finding/AStarShortestPath";
   export { default as BFSShortestPath } from "graphone/src/alg/path-finding/BFSShortestPath";
   export { default as DFSFindPath } from "graphone/src/alg/path-finding/DFSFindPath";
-  export { default as FindPathGraphAlgorithm } from "graphone/src/alg/path-finding/FindPathGraphAlgorithm";
+  export { default as DjikstraShortestPaths } from "graphone/src/alg/path-finding/DjikstraShortestPaths";
+  export { default as FindSinglePathGraphAlgorithm } from "graphone/src/alg/path-finding/FindSinglePathGraphAlgorithm";
   export { default as FindPathAlgorithmExecutionStats } from "graphone/src/alg/path-finding/FindPathAlgorithmExecutionStats";
+  export { default as HeuristicFindPathGraphAlgorithm } from "graphone/src/alg/path-finding/HeuristicFindPathGraphAlgorithm";
   export { default as UCSShortestPath } from "graphone/src/alg/path-finding/UCSShortestPath";
 
 }
@@ -834,6 +893,23 @@ declare module 'graphone/src/alg/traversal/index' {
   export { default as TraversalGraphAlgorithm } from "graphone/src/alg/traversal/TraversalGraphAlgorithm";
 
 }
+declare module 'graphone/src/common/PriorityQueue' {
+  /**
+   * Implements a priority queue.
+   */
+  export default class PriorityQueue<V> {
+      private queue;
+      private comparator;
+      constructor(comparator: (a: any, b: any) => number);
+      isEmpty(): boolean;
+      push(item: V): void;
+      peek(): V | undefined;
+      pop(): V | undefined;
+      getItems(): V[];
+      rearrange(): void;
+  }
+
+}
 declare module 'graphone/src/heuristics/heuristics' {
   /**
    * Each heuristic function returns a value that is greater or equal to zero.
@@ -847,7 +923,7 @@ declare module 'graphone/src/heuristics/heuristics' {
 }
 declare module 'graphone/src/index' {
   export { default as Edge } from "graphone/src/Edge";
-  export { default as Vertex } from "graphone/src/Vertex";
+  export { default as Vertex, VertexLabelType } from "graphone/src/Vertex";
   export { default as Graph } from "graphone/src/Graph";
   export { default as UndirectedGraph } from "graphone/src/UndirectedGraph";
   export { default as DirectedGraph } from "graphone/src/DirectedGraph";

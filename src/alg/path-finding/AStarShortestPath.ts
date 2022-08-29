@@ -4,6 +4,7 @@ import Vertex, { VertexLabelType } from "../../Vertex";
 import FindPathAlgorithmExecutionStats from "./FindPathAlgorithmExecutionStats";
 import { HeuristicFunction, zeroHeuristicFunction } from "../../heuristics/heuristics";
 import HeuristicFindPathGraphAlgorithm, { HeuristicGraphAlgorithmOptions } from "./HeuristicFindPathGraphAlgorithm";
+import PriorityQueue from "../../common/PriorityQueue";
 
 class QueueItem {
 
@@ -23,33 +24,6 @@ class QueueItem {
 
 }
 
-type PriorityQueueComparator = (a: QueueItem, b: QueueItem) => number;
-
-// TODO: implement the priority queue with a more performant data structure
-class PriorityQueue {
-
-    private queue: QueueItem[];
-    private comparator: PriorityQueueComparator;
-
-    constructor(comparator: PriorityQueueComparator) {
-        this.queue = [];
-        this.comparator = comparator;
-    }
-
-    public isEmpty() {
-        return (this.queue.length === 0);
-    }
-
-    public push(item: QueueItem) {
-        this.queue.push(item);
-        this.queue.sort(this.comparator);
-    }
-
-    public pop(): QueueItem | undefined {
-        return this.queue.shift();
-    }
-}
-
 /**
  * A* algorithm. 
  * It discovers the shortest path in a graph between two vertices using the
@@ -60,7 +34,7 @@ export default class AStarShortestPath extends HeuristicFindPathGraphAlgorithm {
     /**
      * The name of the algorithm.
      */
-     public static readonly algorithmName: string = 'A* shortest path';
+    public static readonly algorithmName: string = 'A* shortest path';
 
     constructor(graph: Graph, options?: HeuristicGraphAlgorithmOptions) {
         super(graph, options);
@@ -100,7 +74,7 @@ export default class AStarShortestPath extends HeuristicFindPathGraphAlgorithm {
                     (a.eval - b.eval) :
                     this.options.collisionRes(a.node.getData(), b.node.getData());
         };
-        const queue = new PriorityQueue(aStarComparator);
+        const queue = new PriorityQueue<QueueItem>(aStarComparator);
         // We need an index to be able to extract the path after the execution of the algorithm
         const visited: Map<VertexLabelType, QueueItem> = new Map();
 

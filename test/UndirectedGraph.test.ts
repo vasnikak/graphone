@@ -18,4 +18,12 @@ describe('UndirectedGraph tests', () => {
             .removeEdges([['A', 'B'], ['A', 'D']]);
         expect(g.getEdgesNum()).toBe(1);
     });
+
+    it ('should remove all edges from the graph', () => {
+        const g = new UndirectedGraph();
+        g.addVertices(['A', 'B', 'C'])
+            .addEdges([['A', 'B'], ['A', 'B'], ['A', 'D'], ['A', 'C']])
+            .clearEdges();
+        expect(g.getEdgesNum()).toBe(0);
+    });
 });

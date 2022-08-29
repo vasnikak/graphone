@@ -7,7 +7,7 @@ import GraphAlgorithm, { CollisionResolutionFunc, GraphAlgorithmOptions } from "
  */
 export default abstract class TraversalGraphAlgorithm extends GraphAlgorithm {
 
-    public constructor(graph: Graph, options?: GraphAlgorithmOptions) {
+    constructor(graph: Graph, options?: GraphAlgorithmOptions) {
         super(graph, options);
     }
 

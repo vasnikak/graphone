@@ -3,7 +3,7 @@ import Path from "../../Path";
 import Vertex, { VertexLabelType } from "../../Vertex";
 import FindPathAlgorithmExecutionStats from "./FindPathAlgorithmExecutionStats";
 import { GraphAlgorithmOptions } from "../GraphAlgorithm";
-import FindPathGraphAlgorithm from "./FindPathGraphAlgorithm";
+import FindPathGraphAlgorithm from "./FindSinglePathGraphAlgorithm";
 
 interface StackItem {
     node: Vertex;

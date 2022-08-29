@@ -20,7 +20,7 @@ export default class Edge {
      */
     private weight: number;
 
-    public constructor(origin: Vertex, destination: Vertex, weight: number = 1) {
+    constructor(origin: Vertex, destination: Vertex, weight: number = 1) {
         this.origin = origin;
         this.destination = destination;
         this.weight = weight;

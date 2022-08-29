@@ -8,7 +8,7 @@ import GraphAlgorithm, { GraphAlgorithmOptions } from "../GraphAlgorithm";
  */
 export default abstract class FindPathGraphAlgorithm extends GraphAlgorithm {
 
-    public constructor(graph: Graph, options?: GraphAlgorithmOptions) {
+    constructor(graph: Graph, options?: GraphAlgorithmOptions) {
         super(graph, options);
     }
 

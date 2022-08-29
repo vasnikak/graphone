@@ -3,14 +3,14 @@ import Path from "../../Path";
 import { VertexLabelType } from "../../Vertex";
 import { GraphAlgorithmOptions } from "../GraphAlgorithm";
 import AStarShortestPath from "./AStarShortestPath";
-import FindPathGraphAlgorithm from "./FindPathGraphAlgorithm";
+import FindSinglePathGraphAlgorithm from "./FindSinglePathGraphAlgorithm";
 
 /**
  * UCS (Uniform Cost Search) algorithm. 
  * It discovers the shortest path in a graph between two vertices using the
  * UCS algorithm.
  */
-export default class UCSShortestPath extends FindPathGraphAlgorithm {
+export default class UCSShortestPath extends FindSinglePathGraphAlgorithm {
 
     /**
      * The name of the algorithm.

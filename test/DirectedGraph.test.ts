@@ -25,4 +25,12 @@ describe('DirectedGraph tests', () => {
         expect(b?.getInEdgesNum()).toBe(2);
         expect(b?.getOutEdgesNum()).toBe(1);
     });
+
+    it ('should remove all edges from the graph', () => {
+        const g = new DirectedGraph();
+        g.addVertices(['A', 'B', 'C'])
+            .addEdges([['A', 'B'], ['A', 'B'], ['A', 'D'], ['A', 'C']])
+            .clearEdges();
+        expect(g.getEdgesNum()).toBe(0);
+    });
 });

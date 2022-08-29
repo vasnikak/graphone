@@ -40,7 +40,7 @@ export default abstract class GraphAlgorithm {
      */
     protected execStats: AlgorithmExecutionStats | undefined;
 
-    public constructor(graph: Graph, options?: GraphAlgorithmOptions) {
+    constructor(graph: Graph, options?: GraphAlgorithmOptions) {
         this.graph = graph;
         this.options = options ? options : {};
     }
