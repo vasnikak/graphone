@@ -1,3 +1,4 @@
+import Edge from "./Edge";
 import Vertex, { VertexLabelType } from "./Vertex"
 
 export default class Path {
@@ -8,60 +9,72 @@ export default class Path {
         this.path = path;
     }
 
+    /**
+     * Returns a list with the vertices in the path.
+     * @returns a list with the vertices in the path
+     */
     public getPath() {
         return this.path;
     }
 
+    /**
+     * Returns the number of vertices in the path.
+     * @returns the number of vertices in the path
+     */
     public length(): number {
         return this.path.length;
     }
 
+    /**
+     * Checks if the path is empty.
+     * @returns true if the path is empty
+     */
     public isEmpty(): boolean {
         return (this.path.length === 0);
     }
 
     /**
-     * Appends a node in the path.
-     * @param node the node
+     * Appends a vertex in the path.
+     * @param vertex the vertex
      * @returns the current path
      */
-     public add(node: Vertex): Path {
-        this.path.push(node);
+     public add(vertex: Vertex): Path {
+        this.path.push(vertex);
         return this;
     }
     
     /**
-     * Append a list of nodes in the path.
-     * @param nodes the list of nodes
+     * Append a list of vertices in the path.
+     * @param vertices the list of vertices
      * @returns the current path
      */
-    public addAll(nodes: Vertex[]): Path {
-        nodes.forEach(node => this.path.push(node));
+    public addAll(vertices: Vertex[]): Path {
+        vertices.forEach(vertex => this.path.push(vertex));
         return this;
     }
     
     /**
      * A synonym of {@link Path#add}.
-     * @param node the node
+     * @param vertex the vertex
      * @returns the current path
      */
-    public push(node: Vertex): Path {
-        this.path.push(node);
+    public push(vertex: Vertex): Path {
+        this.path.push(vertex);
         return this;
     }
 
     /**
-     * Inserts a node at the start of the path.
-     * @param node the node
+     * Inserts a vertex at the start of the path.
+     * @param vertex the vertex
      * @returns the current path
      */
-     public prepend(node: Vertex): Path {
-        this.path.unshift(node);
+     public prepend(vertex: Vertex): Path {
+        this.path.unshift(vertex);
         return this;
     }
     
     /**
-     * Reverses the nodes in the path.
+     * Reverses the vertices in the path.
      * @returns the current path
      */
     public reverse(): Path {
@@ -70,21 +83,21 @@ export default class Path {
     }
 
     /**
-     * Checks if the path starts with a specific node.
-     * @param node the node
+     * Checks if the path starts with a specific vertex.
+     * @param vertex the vertex
      * @returns true or false
      */
-     public startsWith(node: Vertex): boolean {
-        return (this.path.length > 0 && this.path[0].equals(node));
+     public startsWith(vertex: Vertex): boolean {
+        return (this.path.length > 0 && this.path[0].equals(vertex));
     }
     
     /**
-     * Checks if the path ends with a specific node.
-     * @param node the node
+     * Checks if the path ends with a specific vertex.
+     * @param vertex the vertex
      * @returns true or false
      */
-    public endsWith(node: Vertex): boolean {
-        return (this.path.length > 0 && this.path[this.path.length - 1].equals(node));
+    public endsWith(vertex: Vertex): boolean {
+        return (this.path.length > 0 && this.path[this.path.length - 1].equals(vertex));
     }
 
     /**
@@ -132,12 +145,28 @@ export default class Path {
         return this.path.map(vertex => vertex.getData());
     }
 
+    /**
+     * Returns the edges of the path.
+     * @returns the edges of the path
+     */
+    public getEdges(): Edge[] {
+        const edges: Edge[] = [];
+        for (let i = 0; i < this.path.length - 1; i++) {
+            const edge = this.path[i].getOutEdgeWith(this.path[i + 1]);
+            if (edge)
+                edges.push(edge);
+            else
+                return [];
+        }
+        return edges;
+    }
+
      public toString(): string {
          let str = '';
-         this.path.forEach((node: Vertex, i: number) => {
+         this.path.forEach((vertex: Vertex, i: number) => {
             if (i > 0)
                 str += ' -> ';
-            str += node.toString();
+            str += vertex.toString();
          });
          return str;
      }

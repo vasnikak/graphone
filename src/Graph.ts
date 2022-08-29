@@ -164,7 +164,7 @@ export default abstract class Graph {
      * @param label2 the label of the second vertex
      * @return true or false according to if the two vertices are connected
      */
-    public hasEdge(label1: VertexLabelType, label2: VertexLabelType): boolean {
+    public areNeighbors(label1: VertexLabelType, label2: VertexLabelType): boolean {
         const v1 = this.getVertex(label1);
         if (!v1)
             return false;
@@ -257,6 +257,31 @@ export default abstract class Graph {
         }
         return path;
     }
+
+    /**
+     * Checks if the graph has self loops.
+     * @returns true or false according to if the graph has self loops
+     */
+    public hasSelfLoops(): boolean {
+        for (let vertex of this.getVertices()) {
+            if (vertex.hasSelfLoop())
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     * Returns the number of self loops of the graph.
+     * @returns the number of sels loops
+     */
+     public getSelfLoopCount(): number {
+        let selfLoopCount = 0;
+        for (let vertex of this.getVertices()) {
+            if (vertex.hasSelfLoop())
+                selfLoopCount++;
+        }
+        return selfLoopCount;
+     }
 
     public toString(): string {
         const vertexNum = this.getVerticesNum();

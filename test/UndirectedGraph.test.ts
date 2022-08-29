@@ -26,4 +26,13 @@ describe('UndirectedGraph tests', () => {
             .clearEdges();
         expect(g.getEdgesNum()).toBe(0);
     });
+
+    it ('should count correctly the self loops', () => {
+        const g = new UndirectedGraph();
+        g.addVertices(['A', 'B', 'C', 'D'])
+            .addEdges([['A', 'A'], ['A', 'B'], ['A', 'C'], ['B', 'B'], ['B', 'C'], ['C', 'B'], ['C', 'C'], ['D', 'B']])
+            .removeEdge('C', 'C');
+        expect(g.hasSelfLoops()).toBe(true);
+        expect(g.getSelfLoopCount()).toBe(2);
+    });
 });

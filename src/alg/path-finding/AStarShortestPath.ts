@@ -8,18 +8,18 @@ import PriorityQueue from "../../common/PriorityQueue";
 
 class QueueItem {
 
-    node: Vertex;
+    vertex: Vertex;
     parent: Vertex | null;
     totalCost: number;
     eval: number;
     heuristicFunc: HeuristicFunction;
 
-    constructor(node: Vertex, parent: Vertex | null, totalCost: number, heuristicFunc: HeuristicFunction) {
-        this.node = node;
+    constructor(vertex: Vertex, parent: Vertex | null, totalCost: number, heuristicFunc: HeuristicFunction) {
+        this.vertex = vertex;
         this.parent = parent;
         this.totalCost = totalCost;
         this.heuristicFunc = heuristicFunc;
-        this.eval = this.totalCost + this.heuristicFunc(this.node.getData());
+        this.eval = this.totalCost + this.heuristicFunc(this.vertex.getData());
     }
 
 }
@@ -43,7 +43,7 @@ export default class AStarShortestPath extends HeuristicFindPathGraphAlgorithm {
     }
 
     /**
-     * Finds a path between two nodes in a graph using the A* algorithm.
+     * Finds a path between two vertices in a graph using the A* algorithm.
      * @param startLabel the label of the starting vertex
      * @param endLabel the label of the destination vertex
      * @return the shortest path from start to end
@@ -68,17 +68,17 @@ export default class AStarShortestPath extends HeuristicFindPathGraphAlgorithm {
             return new Path();
         }
         
-        // We need a priority queue to store the nodes that wait to be examined
+        // We need a priority queue to store the vertices that wait to be examined
         const aStarComparator = (a: QueueItem, b: QueueItem) => {
             return (a.eval !== b.eval || !this.options.collisionRes) ?
                     (a.eval - b.eval) :
-                    this.options.collisionRes(a.node.getData(), b.node.getData());
+                    this.options.collisionRes(a.vertex.getData(), b.vertex.getData());
         };
         const queue = new PriorityQueue<QueueItem>(aStarComparator);
         // We need an index to be able to extract the path after the execution of the algorithm
         const visited: Map<VertexLabelType, QueueItem> = new Map();
 
-        // Push the start node into the queue
+        // Push the starting vertex into the queue
         const first = new QueueItem(startVertex, null, 0, heuristicFunc!);
         queue.push(first);
         visited.set(startLabel, first);
@@ -86,34 +86,34 @@ export default class AStarShortestPath extends HeuristicFindPathGraphAlgorithm {
         let target: QueueItem | null = null;
         // While the queue is not empty
         while (!queue.isEmpty()) {
-            // Get the queue's first node
+            // Get the queue's first vertex
             const current = queue.pop();
             // Exec stats
-            this.execStats.incNodesVisitedNum();
+            this.execStats.incVerticesVisitedNum();
             // If it is the destination, stop the iteration
-            if (current?.node.equals(endVertex)) {
+            if (current?.vertex.equals(endVertex)) {
                 target = current;
                 break;
             }
             // Add the neighbors of all outgoing edges in the queue
-            current?.node.getOutEdges().forEach(edge => {
+            current?.vertex.getOutEdges().forEach(edge => {
                 // Calculate the total cost
                 const totalCost = current.totalCost + edge.getWeight();
-                // If we haven't visited yet the child node
+                // If we haven't visited yet the child vertex
                 const child = visited.get(edge.getDestination().getLabel());
                 if (!child) {
-                     // Push the node into the queue
-                     const child = new QueueItem(edge.getDestination(), current.node, totalCost, heuristicFunc!);
+                     // Push the vertex into the queue
+                     const child = new QueueItem(edge.getDestination(), current.vertex, totalCost, heuristicFunc!);
                      queue.push(child);
-                     // Mark the node as visited
+                     // Mark the vertex as visited
                      visited.set(edge.getDestination().getLabel(), child);
-                // If we have already visited the child node, we have to
-                // check if its path from the root node has to be updated
+                // If we have already visited the child vertex, we have to
+                // check if its path from the root vertex has to be updated
                 } else {
                     // If the new total cost is less than the existing one
                     if (totalCost < child.totalCost)
                         // Update child's path from the root
-                        child.parent = current.node;
+                        child.parent = current.vertex;
                 }
             });
         }
@@ -122,7 +122,7 @@ export default class AStarShortestPath extends HeuristicFindPathGraphAlgorithm {
         const path = new Path();
         let run = target;
         while (run) {
-            path.prepend(run.node);
+            path.prepend(run.vertex);
             run = run.parent ? visited.get(run.parent.getLabel()) as QueueItem : null;
         }
 

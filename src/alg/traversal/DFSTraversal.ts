@@ -19,7 +19,7 @@ export default class DFSTraversal extends TraversalGraphAlgorithm {
     }
 
     /**
-     * Traverses the nodes of the graph using the DFS algorithm.
+     * Traverses the vertices of the graph using the DFS algorithm.
      * The second argument is the action that will be executed on each vertex of the graph during the traversal.
      * In case that the function returns false, the traversal will stop.
      * @param startLabel the label of the starting vertex
@@ -37,21 +37,21 @@ export default class DFSTraversal extends TraversalGraphAlgorithm {
             return;
         }
 
-        // We need a stack to store the nodes that wait to be examined
+        // We need a stack to store the vertices that wait to be examined
         const stack: Vertex[] = [];
         // We need an index to store the already visited verticies
         const visited: Map<VertexLabelType, Vertex> = new Map();
 
-        // Push the start node in the stack
+        // Push the start vertex in the stack
         stack.push(startVertex);
         visited.set(startLabel, startVertex);
         // While the stack is not empty
         while (stack.length > 0) {
-            // Get the stack's first node
+            // Get the stack's first vertex
             const current = stack.shift() as Vertex;
             // Exec stats
-            this.execStats.incNodesVisitedNum();
-            // Visit the node
+            this.execStats.incVerticesVisitedNum();
+            // Visit the vertex
             const traverseRet = traverseAction(current);
             // If the return value is false, terminate the iteration
             if (traverseRet === false)
@@ -59,12 +59,12 @@ export default class DFSTraversal extends TraversalGraphAlgorithm {
             // If no collision resolution function was defined
             if (!this.options.collisionRes) {
                 current.getOutEdges().forEach(edge => {
-                    // If we haven't visited yet the child node
+                    // If we haven't visited yet the child vertex
                     if (!visited.has(edge.getDestination().getLabel())) {
                         const child = edge.getDestination();
-                        // Push the node in the stack
+                        // Push the vertex in the stack
                         stack.unshift(child);
-                        // Mark the node as visited
+                        // Mark the vertex as visited
                         visited.set(edge.getDestination().getLabel(), child);
                     }
                 });
@@ -73,12 +73,12 @@ export default class DFSTraversal extends TraversalGraphAlgorithm {
                 // Create a temporary list to resolve collisions
                 const children: Vertex[] = [];
                 current.getOutEdges().forEach(edge => {
-                    // If we haven't visited yet the child node
+                    // If we haven't visited yet the child vertex
                     if (!visited.has(edge.getDestination().getLabel())) {
                         const child = edge.getDestination();
-                        // Add the node in the temporary list
+                        // Add the vertex in the temporary list
                         children.push(child);
-                        // Mark the node as visited
+                        // Mark the vertex as visited
                         visited.set(edge.getDestination().getLabel(), child);
                     }
                 });

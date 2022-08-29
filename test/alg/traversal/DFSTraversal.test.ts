@@ -18,18 +18,18 @@ describe('DFS traversal test', () => {
     const graph = maze.generateGraph();
 
     it('should traverse the whole graph using DFS', () => {
-        const startNode = '(0,0)';
+        const startLabel = '(0,0)';
         const dfsTraversal = new DFSTraversal(graph, { collisionRes: (a: MazeCell, b: MazeCell) => (a.x !== b.x) ? b.x - a.x : b.y - a.y });
-        dfsTraversal.traverse(startNode, (v: Vertex) => { });
+        dfsTraversal.traverse(startLabel, (v: Vertex) => { });
         const stats = dfsTraversal.getExecStats();
-        expect(stats?.getNodesVisitedNum()).toBe(79);
+        expect(stats?.getVerticesVisitedNum()).toBe(79);
     });
 
     it('should traverse partially graph using DFS', () => {
-        const startNode = '(0,0)';
+        const startLabel = '(0,0)';
         const dfsTraversal = new DFSTraversal(graph, { collisionRes: (a: MazeCell, b: MazeCell) => (a.x !== b.x) ? b.x - a.x : b.y - a.y });
-        dfsTraversal.traverse(startNode, (v: Vertex) => { return !(v.getLabel() === '(1,9)'); });
+        dfsTraversal.traverse(startLabel, (v: Vertex) => { return !(v.getLabel() === '(1,9)'); });
         const stats = dfsTraversal.getExecStats();
-        expect(stats?.getNodesVisitedNum()).toBe(50);
+        expect(stats?.getVerticesVisitedNum()).toBe(50);
     });
 });

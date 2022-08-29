@@ -29,7 +29,7 @@ describe('Djikstra shortest paths test', () => {
         for (const [vertexLabel, path] of paths.entries()) {
             const correctPath = correctPaths.get(vertexLabel);
             if (!correctPath || !path.equals(correctPath))
-                fail('Path to destination node ' + vertexLabel + ' is not correct');
+                fail('Path to destination vertex ' + vertexLabel + ' is not correct');
         }
     });
 });

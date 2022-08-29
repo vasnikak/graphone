@@ -160,7 +160,7 @@ declare module 'graphone/src/Graph' {
        * @param label2 the label of the second vertex
        * @return true or false according to if the two vertices are connected
        */
-      hasEdge(label1: VertexLabelType, label2: VertexLabelType): boolean;
+      areNeighbors(label1: VertexLabelType, label2: VertexLabelType): boolean;
       /**
        * Adds an edge between two vertices.
        * @param label1 the label of the first vertex
@@ -210,60 +210,83 @@ declare module 'graphone/src/Graph' {
        * @returns the corresponding path
        */
       getPath(labels: VertexLabelType[]): Path;
+      /**
+       * Checks if the graph has self loops.
+       * @returns true or false according to if the graph has self loops
+       */
+      hasSelfLoops(): boolean;
+      /**
+       * Returns the number of self loops of the graph.
+       * @returns the number of sels loops
+       */
+      getSelfLoopCount(): number;
       toString(): string;
       equals(obj: any): boolean;
   }
 
 }
 declare module 'graphone/src/Path' {
+  import Edge from "graphone/src/Edge";
   import Vertex, { VertexLabelType } from "graphone/src/Vertex";
   export default class Path {
       private path;
       constructor(path?: Vertex[]);
+      /**
+       * Returns a list with the vertices in the path.
+       * @returns a list with the vertices in the path
+       */
       getPath(): Vertex[];
+      /**
+       * Returns the number of vertices in the path.
+       * @returns the number of vertices in the path
+       */
       length(): number;
+      /**
+       * Checks if the path is empty.
+       * @returns true if the path is empty
+       */
       isEmpty(): boolean;
       /**
-       * Appends a node in the path.
-       * @param node the node
+       * Appends a vertex in the path.
+       * @param vertex the vertex
        * @returns the current path
        */
-      add(node: Vertex): Path;
+      add(vertex: Vertex): Path;
       /**
-       * Append a list of nodes in the path.
-       * @param nodes the list of nodes
+       * Append a list of vertices in the path.
+       * @param vertices the list of vertices
        * @returns the current path
        */
-      addAll(nodes: Vertex[]): Path;
+      addAll(vertices: Vertex[]): Path;
       /**
        * A synonym of {@link Path#add}.
-       * @param node the node
+       * @param vertex the vertex
        * @returns the current path
        */
-      push(node: Vertex): Path;
+      push(vertex: Vertex): Path;
       /**
-       * Inserts a node at the start of the path.
-       * @param node the node
+       * Inserts a vertex at the start of the path.
+       * @param vertex the vertex
        * @returns the current path
        */
-      prepend(node: Vertex): Path;
+      prepend(vertex: Vertex): Path;
       /**
-       * Reverses the nodes in the path.
+       * Reverses the vertices in the path.
        * @returns the current path
        */
       reverse(): Path;
       /**
-       * Checks if the path starts with a specific node.
-       * @param node the node
+       * Checks if the path starts with a specific vertex.
+       * @param vertex the vertex
        * @returns true or false
        */
-      startsWith(node: Vertex): boolean;
+      startsWith(vertex: Vertex): boolean;
       /**
-       * Checks if the path ends with a specific node.
-       * @param node the node
+       * Checks if the path ends with a specific vertex.
+       * @param vertex the vertex
        * @returns true or false
        */
-      endsWith(node: Vertex): boolean;
+      endsWith(vertex: Vertex): boolean;
       /**
        * Checks if the current path is valid.
        * A valid path has a connection between every two consecutive vertices.
@@ -286,6 +309,11 @@ declare module 'graphone/src/Path' {
        * @returns an array with the data of the vertices
        */
       getData(): any[];
+      /**
+       * Returns the edges of the path.
+       * @returns the edges of the path
+       */
+      getEdges(): Edge[];
       toString(): string;
       equals(obj: Path): boolean;
   }
@@ -329,7 +357,7 @@ declare module 'graphone/src/UndirectedGraph' {
 declare module 'graphone/src/Vertex' {
   import Edge from "graphone/src/Edge";
   /**
-   * The key of a node is a string.
+   * The key of a vertex is a string.
    * Strict type checking will be applied in all operations.
    */
   export type VertexLabelType = string;
@@ -406,12 +434,12 @@ declare module 'graphone/src/Vertex' {
       hasInEdgeWith(vertex: Vertex): boolean;
       /**
        * Returns an array with the neighbor vertices of all incoming edges.
-       * @return the neighbor vertices of all incoming edges.
+       * @return the neighbor vertices of all incoming edges
        */
       getInNeighbors(): Vertex[];
       /**
        * Returns the number of neighbor vertices of all incoming edges.
-       * @return the number of neighbor vertices of all incoming edges.
+       * @return the number of neighbor vertices of all incoming edges
        */
       getInNeighborsNum(): number;
       /**
@@ -469,14 +497,19 @@ declare module 'graphone/src/Vertex' {
       getOutEdgeWith(vertex: Vertex): Edge | undefined;
       /**
        * Returns an array with the neighbor vertices of all outgoing edges.
-       * @return the neighbor vertices of all outgoing edges.
+       * @return the neighbor vertices of all outgoing edges
        */
       getOutNeighbors(): Vertex[];
       /**
        * Returns the number of neighbor vertices of all outgoing edges.
-       * @return the number of neighbor vertices of all outgoing edges.
+       * @return the number of neighbor vertices of all outgoing edges
        */
       getOutNeighborsNum(): number;
+      /**
+       * Checks if the current vertex has a self loop.
+       * @returns true or false according to if the current vertex has a self loop
+       */
+      hasSelfLoop(): boolean;
       toString(): string;
       equals(obj: any): boolean;
   }
@@ -502,7 +535,7 @@ declare module 'graphone/src/alg/AlgorithmExecutionStats' {
       /**
        * Number of the vertices that the algorithm visited.
        */
-      private nodesVisitedNum;
+      private verticesVisitedNum;
       constructor(algorithmName?: string);
       /**
        * Resets the stats for the current object.
@@ -525,17 +558,17 @@ declare module 'graphone/src/alg/AlgorithmExecutionStats' {
       /**
        * @returns the number of vertices that the algorithm visited
        */
-      getNodesVisitedNum(): number;
+      getVerticesVisitedNum(): number;
       /**
-       * @param nodesVisitedNum the number of vertices that the algorithm visited
+       * @param verticesVisitedNum the number of vertices that the algorithm visited
        * @returns the current stats instance
        */
-      setNodesVisitedNum(nodesVisitedNum: number): AlgorithmExecutionStats;
+      setVerticesVisitedNum(verticesVisitedNum: number): AlgorithmExecutionStats;
       /**
        * Increases the number of the vertices that the algorithm visited by one.
        * @returns the current stats instance
        */
-      incNodesVisitedNum(): AlgorithmExecutionStats;
+      incVerticesVisitedNum(): AlgorithmExecutionStats;
       toString(): string;
   }
 
@@ -605,7 +638,7 @@ declare module 'graphone/src/alg/path-finding/AStarShortestPath' {
       static readonly algorithmName: string;
       constructor(graph: Graph, options?: HeuristicGraphAlgorithmOptions);
       /**
-       * Finds a path between two nodes in a graph using the A* algorithm.
+       * Finds a path between two vertices in a graph using the A* algorithm.
        * @param startLabel the label of the starting vertex
        * @param endLabel the label of the destination vertex
        * @return the shortest path from start to end
@@ -631,7 +664,7 @@ declare module 'graphone/src/alg/path-finding/BFSShortestPath' {
       static readonly algorithmName: string;
       constructor(graph: Graph, options?: GraphAlgorithmOptions);
       /**
-       * Finds a path between two nodes in a graph using the BFS algorithm.
+       * Finds a path between two vertices in a graph using the BFS algorithm.
        * @param startLabel the label of the starting vertex
        * @param endLabel the label of the destination vertex
        * @return the shortest path from start to end
@@ -657,7 +690,7 @@ declare module 'graphone/src/alg/path-finding/DFSFindPath' {
       static readonly algorithmName: string;
       constructor(graph: Graph, options?: GraphAlgorithmOptions);
       /**
-       * Finds a path between two nodes in a graph using the DFS algorithm.
+       * Finds a path between two vertices in a graph using the DFS algorithm.
        * @param startLabel the label of the starting vertex
        * @param endLabel the label of the destination vertex
        * @return the shortest path from start to end
@@ -735,12 +768,12 @@ declare module 'graphone/src/alg/path-finding/FindSinglePathGraphAlgorithm' {
   import { VertexLabelType } from "graphone/src/Vertex";
   import GraphAlgorithm, { GraphAlgorithmOptions } from "graphone/src/alg/GraphAlgorithm";
   /**
-   * The algorithms of this type discover a path between two nodes in a graph.
+   * The algorithms of this type discover a path between two vertices in a graph.
    */
   export default abstract class FindPathGraphAlgorithm extends GraphAlgorithm {
       constructor(graph: Graph, options?: GraphAlgorithmOptions);
       /**
-       * Finds a path between two nodes in a graph.
+       * Finds a path between two vertices in a graph.
        * @param startLabel the label of the starting vertex
        * @param endLabel the label of the destination vertex
        * @return the shortest path from start to end
@@ -764,13 +797,13 @@ declare module 'graphone/src/alg/path-finding/HeuristicFindPathGraphAlgorithm' {
       heuristicFunc?: HeuristicFunction;
   }
   /**
-   * The algorithms of this type discover a path between two nodes in a graph,
+   * The algorithms of this type discover a path between two vertices in a graph,
    * by using a heuristic function.
    */
   export default abstract class HeuristicFindPathGraphAlgorithm extends FindSinglePathGraphAlgorithm {
       constructor(graph: Graph, options?: HeuristicGraphAlgorithmOptions);
       /**
-       * Finds a path between two nodes in a graph.
+       * Finds a path between two vertices in a graph.
        * @param startLabel the label of the starting vertex
        * @param endLabel the label of the destination vertex
        * @return the shortest path from start to end
@@ -797,7 +830,7 @@ declare module 'graphone/src/alg/path-finding/UCSShortestPath' {
       static readonly algorithmName: string;
       constructor(graph: Graph, options?: GraphAlgorithmOptions);
       /**
-       * Finds a path between two nodes in a graph using the UCS algorithm.
+       * Finds a path between two vertices in a graph using the UCS algorithm.
        * @param startLabel the label of the starting vertex
        * @param endLabel the label of the destination vertex
        * @return the shortest path from start to end
@@ -832,7 +865,7 @@ declare module 'graphone/src/alg/traversal/BFSTraversal' {
       static readonly algorithmName: string;
       constructor(graph: Graph, options?: GraphAlgorithmOptions);
       /**
-       * Traverses the nodes of the graph using the BFS algorithm.
+       * Traverses the vertices of the graph using the BFS algorithm.
        * The second argument is the action that will be executed on each vertex of the graph during the traversal.
        * In case that the function returns false, the traversal will stop.
        * @param startLabel the label of the starting vertex
@@ -857,7 +890,7 @@ declare module 'graphone/src/alg/traversal/DFSTraversal' {
       static readonly algorithmName: string;
       constructor(graph: Graph, options?: GraphAlgorithmOptions);
       /**
-       * Traverses the nodes of the graph using the DFS algorithm.
+       * Traverses the vertices of the graph using the DFS algorithm.
        * The second argument is the action that will be executed on each vertex of the graph during the traversal.
        * In case that the function returns false, the traversal will stop.
        * @param startLabel the label of the starting vertex
@@ -872,12 +905,12 @@ declare module 'graphone/src/alg/traversal/TraversalGraphAlgorithm' {
   import Vertex, { VertexLabelType } from "graphone/src/Vertex";
   import GraphAlgorithm, { GraphAlgorithmOptions } from "graphone/src/alg/GraphAlgorithm";
   /**
-   * The algorithms of this type traverse all nodes of a graph.
+   * The algorithms of this type traverse all vertices of a graph.
    */
   export default abstract class TraversalGraphAlgorithm extends GraphAlgorithm {
       constructor(graph: Graph, options?: GraphAlgorithmOptions);
       /**
-       * Traverses the nodes of the graph.
+       * Traverses the vertices of the graph.
        * The second argument is the action that will be executed on each vertex of the graph during the traversal.
        * In case that the function returns false, the traversal will stop.
        * @param startLabel the label of the starting vertex

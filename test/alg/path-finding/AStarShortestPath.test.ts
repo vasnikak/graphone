@@ -16,33 +16,33 @@ describe('A* shortest path test', () => {
         [0,0,0,1,0,0,0,0,0,0]
     ]);
     const graph = maze.generateGraph();
-    const manhattanDistanceFunc = (endNodeX: number, endNodeY: number) => {
+    const manhattanDistanceFunc = (targetX: number, targetY: number) => {
         return (cellData: MazeCell) => {
-            return Math.abs(cellData.x - endNodeX) + Math.abs(cellData.x - endNodeY);
+            return Math.abs(cellData.x - targetX) + Math.abs(cellData.y - targetY);
         };
     };
 
     it('should find a solution', () => {
-        const startNode = '(0,0)';
-        const endNodeX = 9, endNodeY = 9;
-        const endNode = '(' + endNodeX + ',' + endNodeY + ')';
-        const heuristicFunc = manhattanDistanceFunc(endNodeX, endNodeY);
+        const startLabel = '(0,0)';
+        const endX = 9, endY = 9;
+        const endLabel = '(' + endX + ',' + endY + ')';
+        const heuristicFunc = manhattanDistanceFunc(endX, endY);
         const aStarShortestPath = new AStarShortestPath(graph, { heuristicFunc });
-        aStarShortestPath.findPath(startNode, endNode);
+        aStarShortestPath.findPath(startLabel, endLabel);
         const stats = aStarShortestPath.getExecStats() as FindPathAlgorithmExecutionStats;
         expect(stats.wasSolutionFound()).toBe(true);
         expect(stats.getPathLength()).toBe(19);
     });
 
     it('should not find a solution', () => {
-        const startNode = '(0,0)';
-        const endNodeX = 0, endNodeY = 9;
-        const endNode = '(' + endNodeX + ',' + endNodeY + ')';
-        const heuristicFunc = manhattanDistanceFunc(endNodeX, endNodeY);
+        const startLabel = '(0,0)';
+        const endX = 0, endY = 9;
+        const endLabel = '(' + endX + ',' + endY + ')';
+        const heuristicFunc = manhattanDistanceFunc(endX, endY);
         const aStarShortestPath = new AStarShortestPath(graph, { heuristicFunc });
-        aStarShortestPath.findPath(startNode, endNode);
+        aStarShortestPath.findPath(startLabel, endLabel);
         const stats = aStarShortestPath.getExecStats() as FindPathAlgorithmExecutionStats;
         expect(stats.wasSolutionFound()).toBe(false);
-        expect(stats.getNodesVisitedNum()).toBe(79);
+        expect(stats.getVerticesVisitedNum()).toBe(79);
     });
 });

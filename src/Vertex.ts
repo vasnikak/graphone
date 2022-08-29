@@ -1,7 +1,7 @@
 import Edge from "./Edge";
 
 /**
- * The key of a node is a string.
+ * The key of a vertex is a string.
  * Strict type checking will be applied in all operations.
  */
 export type VertexLabelType = string;
@@ -131,7 +131,7 @@ export default class Vertex {
 
     /**
      * Returns an array with the neighbor vertices of all incoming edges.
-     * @return the neighbor vertices of all incoming edges.
+     * @return the neighbor vertices of all incoming edges
      */
      public getInNeighbors(): Vertex[] {
         const neighbors: Vertex[] = [];
@@ -144,7 +144,7 @@ export default class Vertex {
 
     /**
      * Returns the number of neighbor vertices of all incoming edges.
-     * @return the number of neighbor vertices of all incoming edges.
+     * @return the number of neighbor vertices of all incoming edges
      */
     public getInNeighborsNum(): number {
         let neighborsNum = 0;
@@ -251,7 +251,7 @@ export default class Vertex {
 
     /**
      * Returns an array with the neighbor vertices of all outgoing edges.
-     * @return the neighbor vertices of all outgoing edges.
+     * @return the neighbor vertices of all outgoing edges
      */
     public getOutNeighbors(): Vertex[] {
         const neighbors: Vertex[] = [];
@@ -264,7 +264,7 @@ export default class Vertex {
 
     /**
      * Returns the number of neighbor vertices of all outgoing edges.
-     * @return the number of neighbor vertices of all outgoing edges.
+     * @return the number of neighbor vertices of all outgoing edges
      */
     public getOutNeighborsNum(): number {
         let neighborsNum = 0;
@@ -273,6 +273,19 @@ export default class Vertex {
                 neighborsNum++;
         }
         return neighborsNum;
+    }
+
+    /**
+     * Checks if the current vertex has a self loop.
+     * @returns true or false according to if the current vertex has a self loop
+     */
+    public hasSelfLoop(): boolean {
+        const outEdges = this.getOutEdges();
+        for (let edge of outEdges) {
+            if (edge.getDestination().equals(this))
+                return true;
+        }
+        return false;
     }
 
     public toString(): string {

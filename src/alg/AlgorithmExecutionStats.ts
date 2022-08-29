@@ -18,13 +18,13 @@ export default class AlgorithmExecutionStats {
     /**
      * Number of the vertices that the algorithm visited.
      */
-    private nodesVisitedNum: number;
+    private verticesVisitedNum: number;
 
     constructor(algorithmName?: string) {
         this.algorithmName = algorithmName;
         this.execStart = Date.now();
         this.execTime = 0;
-        this.nodesVisitedNum = 0;
+        this.verticesVisitedNum = 0;
     }
 
     /**
@@ -34,7 +34,7 @@ export default class AlgorithmExecutionStats {
     public reset(): AlgorithmExecutionStats {
         this.execStart = Date.now();
         this.execTime = 0;
-        this.nodesVisitedNum = 0;
+        this.verticesVisitedNum = 0;
         return this;
     }
 
@@ -76,16 +76,16 @@ export default class AlgorithmExecutionStats {
     /**
      * @returns the number of vertices that the algorithm visited
      */
-    public getNodesVisitedNum() {
-        return this.nodesVisitedNum;
+    public getVerticesVisitedNum() {
+        return this.verticesVisitedNum;
     }
 
     /**
-     * @param nodesVisitedNum the number of vertices that the algorithm visited
+     * @param verticesVisitedNum the number of vertices that the algorithm visited
      * @returns the current stats instance
      */
-    public setNodesVisitedNum(nodesVisitedNum: number): AlgorithmExecutionStats {
-        this.nodesVisitedNum = nodesVisitedNum;
+    public setVerticesVisitedNum(verticesVisitedNum: number): AlgorithmExecutionStats {
+        this.verticesVisitedNum = verticesVisitedNum;
         return this;
     }
     
@@ -93,8 +93,8 @@ export default class AlgorithmExecutionStats {
      * Increases the number of the vertices that the algorithm visited by one.
      * @returns the current stats instance
      */
-    public incNodesVisitedNum(): AlgorithmExecutionStats {
-        this.nodesVisitedNum++;
+    public incVerticesVisitedNum(): AlgorithmExecutionStats {
+        this.verticesVisitedNum++;
         return this;
     }
 
@@ -104,7 +104,7 @@ export default class AlgorithmExecutionStats {
             str += ' for ' + this.algorithmName;
         str += ':\n';
         str += 'Execution time: ' + this.getExectimeReadableFormat() + '\n';
-        str += 'Nodes visited: ' + this.nodesVisitedNum + '\n';
+        str += 'Vertices visited: ' + this.verticesVisitedNum + '\n';
         return str;
     }
 

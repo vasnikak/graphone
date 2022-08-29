@@ -8,12 +8,12 @@ import FindPathAlgorithmExecutionStats from "./FindPathAlgorithmExecutionStats";
 
 class QueueItem {
 
-    node: Vertex;
+    vertex: Vertex;
     parent: Vertex | null;
     totalCost: number;
 
-    constructor(node: Vertex, parent: Vertex | null, totalCost: number) {
-        this.node = node;
+    constructor(vertex: Vertex, parent: Vertex | null, totalCost: number) {
+        this.vertex = vertex;
         this.parent = parent;
         this.totalCost = totalCost;
     }
@@ -59,7 +59,7 @@ export default class DjiktraShortestPaths extends FindMultiplePathsGraphAlgorith
         const djikstraComparator = (a: QueueItem, b: QueueItem) => {
             return (a.totalCost !== b.totalCost || !this.options.collisionRes) ?
                     (a.totalCost - b.totalCost) :
-                    this.options.collisionRes(a.node.getData(), b.node.getData());
+                    this.options.collisionRes(a.vertex.getData(), b.vertex.getData());
         };
         const queue = new PriorityQueue<QueueItem>(djikstraComparator);
         // The closed set will be a map
@@ -79,11 +79,11 @@ export default class DjiktraShortestPaths extends FindMultiplePathsGraphAlgorith
             // Get the item with the smallest total cost
             const current = queue.peek() as QueueItem;
             // Mark the current item as visited
-            visited.set(current.node.getLabel(), current);
+            visited.set(current.vertex.getLabel(), current);
             // Exec stats
-            this.execStats.incNodesVisitedNum();
+            this.execStats.incVerticesVisitedNum();
             // Iterate over its direct neighbors
-            current.node.getOutEdges().forEach(edge => {
+            current.vertex.getOutEdges().forEach(edge => {
                 // We need only those that they are still in the open set
                 if (!visited.get(edge.getDestination().getLabel())) {
                     // Calculate the new cost
@@ -91,9 +91,9 @@ export default class DjiktraShortestPaths extends FindMultiplePathsGraphAlgorith
                     // If the new cost is less than the actual one, we have to update it
                     const qItems = queue.getItems();
                     for (let i = 0; i < qItems.length; i++) {
-                        if (qItems[i].node.equals(edge.getDestination())) {
+                        if (qItems[i].vertex.equals(edge.getDestination())) {
                             if (newCost < qItems[i].totalCost) {
-                                qItems[i].parent = current.node;
+                                qItems[i].parent = current.vertex;
                                 qItems[i].totalCost = newCost;
                             }
                             break;
@@ -113,16 +113,16 @@ export default class DjiktraShortestPaths extends FindMultiplePathsGraphAlgorith
             const path = new Path();
             let run: QueueItem | null = qItem;
             while (run) {
-                path.prepend(run.node);
+                path.prepend(run.vertex);
                 run = run.parent ? visited.get(run.parent.getLabel()) as QueueItem : null;
             }
             // If the path starts with the start vertex
             if (path.startsWith(startVertex))
                 // Insert its path in the map
-                pathMap.set(qItem.node.getLabel(), path);
+                pathMap.set(qItem.vertex.getLabel(), path);
             // Else, insert an empty path
             else
-                pathMap.set(qItem.node.getLabel(), new Path());
+                pathMap.set(qItem.vertex.getLabel(), new Path());
         }
 
         // Exec stats

@@ -4,7 +4,7 @@ import { VertexLabelType } from "../../Vertex";
 import GraphAlgorithm, { GraphAlgorithmOptions } from "../GraphAlgorithm";
 
 /**
- * The algorithms of this type discover a path between two nodes in a graph.
+ * The algorithms of this type discover a path between two vertices in a graph.
  */
 export default abstract class FindPathGraphAlgorithm extends GraphAlgorithm {
 
@@ -13,7 +13,7 @@ export default abstract class FindPathGraphAlgorithm extends GraphAlgorithm {
     }
 
     /**
-     * Finds a path between two nodes in a graph.
+     * Finds a path between two vertices in a graph.
      * @param startLabel the label of the starting vertex
      * @param endLabel the label of the destination vertex
      * @return the shortest path from start to end

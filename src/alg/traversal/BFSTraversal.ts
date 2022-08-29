@@ -19,7 +19,7 @@ export default class BFSTraversal extends TraversalGraphAlgorithm {
     }
 
     /**
-     * Traverses the nodes of the graph using the BFS algorithm.
+     * Traverses the vertices of the graph using the BFS algorithm.
      * The second argument is the action that will be executed on each vertex of the graph during the traversal.
      * In case that the function returns false, the traversal will stop.
      * @param startLabel the label of the starting vertex
@@ -37,21 +37,21 @@ export default class BFSTraversal extends TraversalGraphAlgorithm {
             return;
         }
 
-        // We need a queue to store the nodes that wait to be examined
+        // We need a queue to store the vertices that wait to be examined
         const queue: Vertex[] = [];
         // We need an index to store the already visited verticies
         const visited: Map<VertexLabelType, Vertex> = new Map();
 
-        // Push the start node in the queue
+        // Push the start vertex in the queue
         queue.push(startVertex);
         visited.set(startLabel, startVertex);
         // While the queue is not empty
         while (queue.length > 0) {
-            // Get the queue's first node
+            // Get the queue's first vertex
             const current = queue.pop() as Vertex;
             // Exec stats
-            this.execStats.incNodesVisitedNum();
-            // Visit the node
+            this.execStats.incVerticesVisitedNum();
+            // Visit the vertex
             const traverseRet = traverseAction(current);
             // If the return value is false, terminate the iteration
             if (traverseRet === false)
@@ -59,12 +59,12 @@ export default class BFSTraversal extends TraversalGraphAlgorithm {
             // If no collision resolution function was defined
             if (!this.options.collisionRes) {
                 current.getOutEdges().forEach(edge => {
-                    // If we haven't visited yet the child node
+                    // If we haven't visited yet the child vertex
                     if (!visited.has(edge.getDestination().getLabel())) {
                         const child = edge.getDestination();
-                        // Push the node in the queue
+                        // Push the vertex in the queue
                         queue.unshift(child);
-                        // Mark the node as visited
+                        // Mark the vertex as visited
                         visited.set(edge.getDestination().getLabel(), child);
                     }
                 });
@@ -73,12 +73,12 @@ export default class BFSTraversal extends TraversalGraphAlgorithm {
                 // Create a temporary list to resolve collisions
                 const children: Vertex[] = [];
                 current.getOutEdges().forEach(edge => {
-                    // If we haven't visited yet the child node
+                    // If we haven't visited yet the child vertex
                     if (!visited.has(edge.getDestination().getLabel())) {
                         const child = edge.getDestination();
-                        // Add the node in the temporary list
+                        // Add the vertex in the temporary list
                         children.push(child);
-                        // Mark the node as visited
+                        // Mark the vertex as visited
                         visited.set(edge.getDestination().getLabel(), child);
                     }
                 });

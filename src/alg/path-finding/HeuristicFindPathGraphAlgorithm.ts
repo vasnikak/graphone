@@ -14,7 +14,7 @@ export interface HeuristicGraphAlgorithmOptions extends GraphAlgorithmOptions {
 };
 
 /**
- * The algorithms of this type discover a path between two nodes in a graph,
+ * The algorithms of this type discover a path between two vertices in a graph,
  * by using a heuristic function.
  */
 export default abstract class HeuristicFindPathGraphAlgorithm extends FindSinglePathGraphAlgorithm {
@@ -24,7 +24,7 @@ export default abstract class HeuristicFindPathGraphAlgorithm extends FindSingle
     }
 
     /**
-     * Finds a path between two nodes in a graph.
+     * Finds a path between two vertices in a graph.
      * @param startLabel the label of the starting vertex
      * @param endLabel the label of the destination vertex
      * @return the shortest path from start to end

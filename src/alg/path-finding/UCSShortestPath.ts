@@ -22,7 +22,7 @@ export default class UCSShortestPath extends FindSinglePathGraphAlgorithm {
     }
 
     /**
-     * Finds a path between two nodes in a graph using the UCS algorithm.
+     * Finds a path between two vertices in a graph using the UCS algorithm.
      * @param startLabel the label of the starting vertex
      * @param endLabel the label of the destination vertex
      * @return the shortest path from start to end
