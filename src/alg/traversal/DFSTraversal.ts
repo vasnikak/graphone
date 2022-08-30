@@ -1,8 +1,8 @@
-import Graph from "../../Graph";
-import Vertex, { VertexLabelType } from "../../Vertex";
-import AlgorithmExecutionStats from "../AlgorithmExecutionStats";
-import { CollisionResolutionFunc, GraphAlgorithmOptions } from "../GraphAlgorithm";
-import TraversalGraphAlgorithm from "./TraversalGraphAlgorithm";
+import Graph from '../../Graph';
+import Vertex, { VertexLabelType } from '../../Vertex';
+import AlgorithmExecutionStats from '../AlgorithmExecutionStats';
+import { CollisionResolutionFunc, GraphAlgorithmOptions } from '../GraphAlgorithm';
+import TraversalGraphAlgorithm from './TraversalGraphAlgorithm';
 
 /**
  * Traverses a graph using DFS.

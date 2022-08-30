@@ -1,10 +1,10 @@
-import PriorityQueue from "../../common/PriorityQueue";
-import Graph from "../../Graph";
-import Path from "../../Path";
-import Vertex, { VertexLabelType } from "../../Vertex";
-import { GraphAlgorithmOptions } from "../GraphAlgorithm";
-import FindMultiplePathsGraphAlgorithm from "./FindMultiplePathsGraphAlgorithm";
-import FindPathAlgorithmExecutionStats from "./FindPathAlgorithmExecutionStats";
+import PriorityQueue from '../../common/PriorityQueue';
+import Graph from '../../Graph';
+import Path from '../../Path';
+import Vertex, { VertexLabelType } from '../../Vertex';
+import { GraphAlgorithmOptions } from '../GraphAlgorithm';
+import FindMultiplePathsGraphAlgorithm from './FindMultiplePathsGraphAlgorithm';
+import FindPathAlgorithmExecutionStats from './FindPathAlgorithmExecutionStats';
 
 class QueueItem {
 

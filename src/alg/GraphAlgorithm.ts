@@ -1,5 +1,5 @@
-import Graph from "../Graph";
-import AlgorithmExecutionStats from "./AlgorithmExecutionStats";
+import Graph from '../Graph';
+import AlgorithmExecutionStats from './AlgorithmExecutionStats';
 
 /**
  * The type of a collision resolution function.

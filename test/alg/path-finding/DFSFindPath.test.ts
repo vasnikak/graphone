@@ -1,6 +1,6 @@
-import { DFSFindPath } from "../../../src/alg/path-finding/";
-import { FindPathAlgorithmExecutionStats } from "../../../src/alg/path-finding";
-import Maze, { MazeCell } from "../../Maze";
+import { DFSFindPath } from '../../../src/alg/path-finding/';
+import { FindPathAlgorithmExecutionStats } from '../../../src/alg/path-finding';
+import Maze, { MazeCell } from '../../Maze';
 
 describe('DFS find path test', () => {
     const maze = new Maze([

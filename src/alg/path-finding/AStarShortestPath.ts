@@ -1,10 +1,10 @@
-import Graph from "../../Graph";
-import Path from "../../Path";
-import Vertex, { VertexLabelType } from "../../Vertex";
-import FindPathAlgorithmExecutionStats from "./FindPathAlgorithmExecutionStats";
-import { HeuristicFunction, zeroHeuristicFunction } from "../../heuristics/heuristics";
-import HeuristicFindPathGraphAlgorithm, { HeuristicGraphAlgorithmOptions } from "./HeuristicFindPathGraphAlgorithm";
-import PriorityQueue from "../../common/PriorityQueue";
+import Graph from '../../Graph';
+import Path from '../../Path';
+import Vertex, { VertexLabelType } from '../../Vertex';
+import FindPathAlgorithmExecutionStats from './FindPathAlgorithmExecutionStats';
+import { HeuristicFunction, zeroHeuristicFunction } from '../../heuristics/heuristics';
+import HeuristicFindPathGraphAlgorithm, { HeuristicGraphAlgorithmOptions } from './HeuristicFindPathGraphAlgorithm';
+import PriorityQueue from '../../common/PriorityQueue';
 
 class QueueItem {
 

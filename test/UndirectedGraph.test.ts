@@ -1,4 +1,4 @@
-import UndirectedGraph from "../src/UndirectedGraph";
+import UndirectedGraph from '../src/UndirectedGraph';
 
 describe('UndirectedGraph tests', () => {
     it('should create an undirected graph with 3 edges', () => {
@@ -38,15 +38,15 @@ describe('UndirectedGraph tests', () => {
 
     it('should detect a cycle', () => {
         const g = new UndirectedGraph();
-        g.addVertices(["A", "B", "C", "D", "E"])
-            .addEdges([["A", "B"], ["A", "C"], ["B", "C"], ["C", "D"], ["D", "E"]]);
+        g.addVertices(['A', 'B', 'C', 'D', 'E'])
+            .addEdges([['A', 'B'], ['A', 'C'], ['B', 'C'], ['C', 'D'], ['D', 'E']]);
         expect(g.hasCycles()).toBe(true);
     });
 
     it('should not detect any cycles', () => {
         const g = new UndirectedGraph();
-        g.addVertices(["A", "B", "C", "D", "E"])
-            .addEdges([["A", "B"], ["B", "C"], ["C", "D"], ["D", "E"]]);
+        g.addVertices(['A', 'B', 'C', 'D', 'E'])
+            .addEdges([['A', 'B'], ['B', 'C'], ['C', 'D'], ['D', 'E']]);
         expect(g.hasCycles()).toBe(false);
     });
 });

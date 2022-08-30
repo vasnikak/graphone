@@ -1,5 +1,5 @@
-import Graph from "../../Graph";
-import GraphAlgorithm, { GraphAlgorithmOptions } from "../GraphAlgorithm";
+import Graph from '../../Graph';
+import GraphAlgorithm, { GraphAlgorithmOptions } from '../GraphAlgorithm';
 
 /**
  * The algorithms of this type discover multiple paths from a start vertex to other

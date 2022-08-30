@@ -1,5 +1,5 @@
-import Edge from "./Edge";
-import Vertex, { VertexLabelType } from "./Vertex";
+import Edge from './Edge';
+import Vertex, { VertexLabelType } from './Vertex';
 
 export default class Path {
 

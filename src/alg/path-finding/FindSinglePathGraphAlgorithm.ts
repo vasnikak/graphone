@@ -1,7 +1,7 @@
-import Graph from "../../Graph";
-import Path from "../../Path";
-import { VertexLabelType } from "../../Vertex";
-import GraphAlgorithm, { GraphAlgorithmOptions } from "../GraphAlgorithm";
+import Graph from '../../Graph';
+import Path from '../../Path';
+import { VertexLabelType } from '../../Vertex';
+import GraphAlgorithm, { GraphAlgorithmOptions } from '../GraphAlgorithm';
 
 /**
  * The algorithms of this type discover a path between two vertices in a graph.

@@ -1,6 +1,6 @@
-import { FindPathAlgorithmExecutionStats } from "../../../src/alg/path-finding";
-import { BFSShortestPath } from "../../../src/alg/path-finding";
-import Maze from "../../Maze";
+import { FindPathAlgorithmExecutionStats } from '../../../src/alg/path-finding';
+import { BFSShortestPath } from '../../../src/alg/path-finding';
+import Maze from '../../Maze';
 
 describe('BFS shortest path test', () => {
     const maze = new Maze([

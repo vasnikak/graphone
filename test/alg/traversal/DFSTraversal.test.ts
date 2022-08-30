@@ -1,6 +1,6 @@
-import { DFSTraversal } from "../../../src/alg/traversal";
-import Maze, { MazeCell } from "../../Maze";
-import Vertex from "../../../src/Vertex";
+import { DFSTraversal } from '../../../src/alg/traversal';
+import Maze, { MazeCell } from '../../Maze';
+import Vertex from '../../../src/Vertex';
 
 describe('DFS traversal test', () => {
     const maze = new Maze([

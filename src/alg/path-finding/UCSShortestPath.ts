@@ -1,9 +1,9 @@
-import Graph from "../../Graph";
-import Path from "../../Path";
-import { VertexLabelType } from "../../Vertex";
-import { GraphAlgorithmOptions } from "../GraphAlgorithm";
-import AStarShortestPath from "./AStarShortestPath";
-import FindSinglePathGraphAlgorithm from "./FindSinglePathGraphAlgorithm";
+import Graph from '../../Graph';
+import Path from '../../Path';
+import { VertexLabelType } from '../../Vertex';
+import { GraphAlgorithmOptions } from '../GraphAlgorithm';
+import AStarShortestPath from './AStarShortestPath';
+import FindSinglePathGraphAlgorithm from './FindSinglePathGraphAlgorithm';
 
 /**
  * UCS (Uniform Cost Search) algorithm. 

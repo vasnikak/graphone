@@ -1,6 +1,6 @@
-import Graph from "../../Graph";
-import Vertex, { VertexLabelType } from "../../Vertex";
-import GraphAlgorithm, { CollisionResolutionFunc, GraphAlgorithmOptions } from "../GraphAlgorithm";
+import Graph from '../../Graph';
+import Vertex, { VertexLabelType } from '../../Vertex';
+import GraphAlgorithm, { CollisionResolutionFunc, GraphAlgorithmOptions } from '../GraphAlgorithm';
 
 /**
  * The algorithms of this type traverse all vertices of a graph.

@@ -1,4 +1,4 @@
-import Edge from "./Edge";
+import Edge from './Edge';
 
 /**
  * The key of a vertex is a string.

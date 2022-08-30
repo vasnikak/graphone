@@ -1,4 +1,4 @@
-import DirectedGraph from "../src/DirectedGraph";
+import DirectedGraph from '../src/DirectedGraph';
 
 describe('DirectedGraph tests', () => {
     it('should create a directed graph with 2 edges', () => {
@@ -45,15 +45,15 @@ describe('DirectedGraph tests', () => {
 
     it('should detect a cycle', () => {
         const g = new DirectedGraph();
-        g.addVertices(["A", "B", "C", "D", "E"])
-            .addEdges([["A", "B"], ["B", "C"], ["C", "A"], ["C", "D"], ["D", "E"]]);
+        g.addVertices(['A', 'B', 'C', 'D', 'E'])
+            .addEdges([['A', 'B'], ['B', 'C'], ['C', 'A'], ['C', 'D'], ['D', 'E']]);
         expect(g.hasCycles()).toBe(true);
     });
 
     it('should not detect any cycles', () => {
         const g = new DirectedGraph();
-        g.addVertices(["A", "B", "C", "D", "E"])
-            .addEdges([["A", "B"], ["A", "C"], ["B", "C"], ["C", "D"], ["D", "E"]]);
+        g.addVertices(['A', 'B', 'C', 'D', 'E'])
+            .addEdges([['A', 'B'], ['A', 'C'], ['B', 'C'], ['C', 'D'], ['D', 'E']]);
         expect(g.hasCycles()).toBe(false);
     });
 });

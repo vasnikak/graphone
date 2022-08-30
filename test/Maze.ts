@@ -1,4 +1,4 @@
-import UndirectedGraph from "../src/UndirectedGraph";
+import UndirectedGraph from '../src/UndirectedGraph';
 
 export interface MazeCell {
     x: number;

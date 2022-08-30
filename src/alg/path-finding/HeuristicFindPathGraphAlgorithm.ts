@@ -1,9 +1,9 @@
-import Graph from "../../Graph";
-import { HeuristicFunction } from "../../heuristics/heuristics";
-import Path from "../../Path";
-import { VertexLabelType } from "../../Vertex";
-import { GraphAlgorithmOptions } from "../GraphAlgorithm";
-import FindSinglePathGraphAlgorithm from "./FindSinglePathGraphAlgorithm";
+import Graph from '../../Graph';
+import { HeuristicFunction } from '../../heuristics/heuristics';
+import Path from '../../Path';
+import { VertexLabelType } from '../../Vertex';
+import { GraphAlgorithmOptions } from '../GraphAlgorithm';
+import FindSinglePathGraphAlgorithm from './FindSinglePathGraphAlgorithm';
 
 /**
  * The available options for a heuristic path finding algorithm.

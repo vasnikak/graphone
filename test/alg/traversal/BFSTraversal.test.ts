@@ -1,6 +1,6 @@
-import { BFSTraversal } from "../../../src/alg/traversal";
-import Maze, { MazeCell } from "../../Maze";
-import Vertex from "../../../src/Vertex";
+import { BFSTraversal } from '../../../src/alg/traversal';
+import Maze, { MazeCell } from '../../Maze';
+import Vertex from '../../../src/Vertex';
 
 describe('BFS traversal test', () => {
     const maze = new Maze([

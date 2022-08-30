@@ -1,9 +1,9 @@
-import Graph from "../../Graph";
-import Path from "../../Path";
-import Vertex, { VertexLabelType } from "../../Vertex";
-import FindPathAlgorithmExecutionStats from "./FindPathAlgorithmExecutionStats";
-import { GraphAlgorithmOptions } from "../GraphAlgorithm";
-import FindPathGraphAlgorithm from "./FindSinglePathGraphAlgorithm";
+import Graph from '../../Graph';
+import Path from '../../Path';
+import Vertex, { VertexLabelType } from '../../Vertex';
+import FindPathAlgorithmExecutionStats from './FindPathAlgorithmExecutionStats';
+import { GraphAlgorithmOptions } from '../GraphAlgorithm';
+import FindPathGraphAlgorithm from './FindSinglePathGraphAlgorithm';
 
 interface StackItem {
     vertex: Vertex;
