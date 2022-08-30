@@ -1,5 +1,5 @@
-import Path from "./Path"
-import Vertex, { VertexLabelType } from "./Vertex"
+import Path from "./Path";
+import Vertex, { VertexLabelType } from "./Vertex";
 
 /**
  * Base class for each graph class.
@@ -67,10 +67,18 @@ export default abstract class Graph {
     }
 
     /**
+     * Returns the number of vertices of the graph.
+     * @returns the number of vertices
+     */
+    public getOrder(): number {
+        return this.getVerticesNum();
+    }
+
+    /**
      * Returns the number of edges of the graph.
      * @return the number of edges of the graph
      */
-     public abstract getEdgesNum(): number;
+    public abstract getEdgesNum(): number;
 
     /**
      * Adds a new vertex to the graph.
@@ -281,7 +289,14 @@ export default abstract class Graph {
                 selfLoopCount++;
         }
         return selfLoopCount;
-     }
+    }
+
+    /**
+     * Checks if the graph has cycles.
+     * @param ignoreSelfLoops true if self loops are to be ignored
+     * @returns true or false according to if the graph has cycle
+     */
+    public abstract hasCycles(ignoreSelfLoops: boolean): boolean;
 
     public toString(): string {
         const vertexNum = this.getVerticesNum();

@@ -1,5 +1,5 @@
 import Graph from "./Graph";
-import { VertexLabelType } from "./Vertex";
+import Vertex, { VertexLabelType } from "./Vertex";
 
 /**
  * A directed graph class.
@@ -59,6 +59,51 @@ export default class DirectedGraph extends Graph {
         let edgesNum = 0;
         this.getVertices().forEach(vertex => edgesNum += vertex.getOutEdgesNum());
         return edgesNum;
+    }
+
+    /**
+     * Checks if the graph has cycles.
+     * @param ignoreSelfLoops true if self loops are to be ignored
+     * @returns true or false according to if the graph has cycle
+     */
+    public hasCycles(ignoreSelfLoops: boolean = true): boolean {
+        const visited = new Map<VertexLabelType, boolean>();
+        const recStack = new Map<VertexLabelType, boolean>();
+        const vertices = this.getVertices();
+        vertices.forEach(v => {
+            visited.set(v.getLabel(), false);
+            recStack.set(v.getLabel(), false);
+        });
+        const hasCyclesHelper = (v: Vertex) => {
+            if (recStack.get(v.getLabel()))
+                return true;
+            if (visited.get(v.getLabel()))
+                return false;
+            visited.set(v.getLabel(), true);
+            recStack.set(v.getLabel(), true);
+
+            if (!ignoreSelfLoops && v.hasSelfLoop())
+                return true;
+            
+            const children = v.getOutNeighbors();
+            for (let child of children) {
+                if (child.equals(v))
+                    continue;
+                if (hasCyclesHelper(child))
+                    return true;
+            }
+
+            recStack.set(v.getLabel(), false);
+
+            return false;
+        };
+        
+        for (let v of vertices) {
+            if (!visited.get(v.getLabel()) && hasCyclesHelper(v))
+                return true;
+        }
+
+        return false;
     }
 
 }

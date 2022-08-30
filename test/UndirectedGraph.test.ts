@@ -35,4 +35,18 @@ describe('UndirectedGraph tests', () => {
         expect(g.hasSelfLoops()).toBe(true);
         expect(g.getSelfLoopCount()).toBe(2);
     });
+
+    it('should detect a cycle', () => {
+        const g = new UndirectedGraph();
+        g.addVertices(["A", "B", "C", "D", "E"])
+            .addEdges([["A", "B"], ["A", "C"], ["B", "C"], ["C", "D"], ["D", "E"]]);
+        expect(g.hasCycles()).toBe(true);
+    });
+
+    it('should not detect any cycles', () => {
+        const g = new UndirectedGraph();
+        g.addVertices(["A", "B", "C", "D", "E"])
+            .addEdges([["A", "B"], ["B", "C"], ["C", "D"], ["D", "E"]]);
+        expect(g.hasCycles()).toBe(false);
+    });
 });

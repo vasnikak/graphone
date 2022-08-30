@@ -30,6 +30,12 @@ declare module 'graphone/src/DirectedGraph' {
        * @return the number of edges of the graph
        */
       getEdgesNum(): number;
+      /**
+       * Checks if the graph has cycles.
+       * @param ignoreSelfLoops true if self loops are to be ignored
+       * @returns true or false according to if the graph has cycle
+       */
+      hasCycles(ignoreSelfLoops?: boolean): boolean;
   }
 
 }
@@ -101,6 +107,11 @@ declare module 'graphone/src/Graph' {
        * @returns the number of vertices
        */
       getVerticesNum(): number;
+      /**
+       * Returns the number of vertices of the graph.
+       * @returns the number of vertices
+       */
+      getOrder(): number;
       /**
        * Returns the number of edges of the graph.
        * @return the number of edges of the graph
@@ -220,6 +231,12 @@ declare module 'graphone/src/Graph' {
        * @returns the number of sels loops
        */
       getSelfLoopCount(): number;
+      /**
+       * Checks if the graph has cycles.
+       * @param ignoreSelfLoops true if self loops are to be ignored
+       * @returns true or false according to if the graph has cycle
+       */
+      abstract hasCycles(ignoreSelfLoops: boolean): boolean;
       toString(): string;
       equals(obj: any): boolean;
   }
@@ -351,6 +368,12 @@ declare module 'graphone/src/UndirectedGraph' {
        * @return the number of edges of the graph
        */
       getEdgesNum(): number;
+      /**
+       * Checks if the graph has cycles.
+       * @param ignoreSelfLoops true if self loops are to be ignored
+       * @returns true or false according to if the graph has cycle
+       */
+      hasCycles(ignoreSelfLoops?: boolean): boolean;
   }
 
 }

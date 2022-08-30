@@ -1,5 +1,5 @@
 import Edge from "./Edge";
-import Vertex, { VertexLabelType } from "./Vertex"
+import Vertex, { VertexLabelType } from "./Vertex";
 
 export default class Path {
 
@@ -169,7 +169,7 @@ export default class Path {
             str += vertex.toString();
          });
          return str;
-     }
+    }
 
     public equals(obj: Path): boolean {
         if (this === obj)
