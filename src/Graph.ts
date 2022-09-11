@@ -1,3 +1,4 @@
+import Edge from './Edge';
 import Path from './Path';
 import Vertex, { VertexLabelType } from './Vertex';
 
@@ -205,6 +206,44 @@ export default abstract class Graph {
     }
 
     /**
+     * Returns the directed edge between two vertices.
+     * @param v1 The origin vertex
+     * @param v2 The destination vertex
+     * @returns true or false according to if the the origin has a directed edge with the destination
+     */
+    public getEdge(v1: Vertex | VertexLabelType, v2: Vertex | VertexLabelType): Edge | undefined {
+        let vertex1: Vertex;
+        if (v1 instanceof Vertex)
+            vertex1 = v1;
+        else {
+            if (!this.hasVertex(v1))
+                return undefined;
+            vertex1 = this.getVertex(v1) as Vertex;
+        }
+
+        let vertex2: Vertex;
+        if (v2 instanceof Vertex)
+            vertex2 = v2;
+        else {
+            if (!this.hasVertex(v2))
+                return undefined;
+            vertex2 = this.getVertex(v2) as Vertex;
+        }
+
+        return vertex1.getOutEdgeWith(vertex2);
+    }
+
+    /**
+     * Checks if a vertex has a directed edge with another vertex.
+     * @param v1 The origin vertex
+     * @param v2 The destination vertex
+     * @returns true or false according to if the the origin has a directed edge with the destination
+     */
+    public hasEdge(v1: Vertex | VertexLabelType, v2: Vertex | VertexLabelType): boolean {
+        return this.getEdge(v1, v2) ? true : false;
+    }
+
+    /**
      * Removes an edge between two vertices.
      * @param label1 the label of the first vertex
      * @param label2 the label of the second vertex
@@ -298,6 +337,22 @@ export default abstract class Graph {
      */
     public abstract hasCycles(ignoreSelfLoops: boolean): boolean;
 
+    /**
+     * Returns the density of the graph.
+     * The density of a graph represents the ratio between the edges present
+     * in a graph and the maximum number of edges that the graph can contain.
+     * @returns the density of the graph
+     */
+    public abstract getDensity(): number;
+
+    /**
+     * Executes an action on each vertex of the graph.
+     * @param action The action to be executed
+     */
+    public forEachVertex(action: (v: Vertex) => any) {
+        this.getVertices().forEach(v => action(v));
+    }
+
     public toString(): string {
         const vertexNum = this.getVerticesNum();
         let str = 'Graph ' + this.name + ' (' + vertexNum + ' vertices)\n\n';
@@ -306,9 +361,9 @@ export default abstract class Graph {
             str += vertex.toString() + '\n';
             vertex.getOutEdges().forEach(edge => {
                 str += '   ' + edge.toString() + '\n';
-                if (++vertexCount < vertexNum)
-                    str += '\n';
             });
+            if (++vertexCount < vertexNum)
+                str += '\n';
         });
         return str;
     }

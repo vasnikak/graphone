@@ -110,4 +110,16 @@ export default class UndirectedGraph extends Graph {
         return false;
     }
 
+    /**
+     * Returns the density of the graph.
+     * The density of a graph represents the ratio between the edges present
+     * in a graph and the maximum number of edges that the graph can contain.
+     * @returns the density of the graph
+     */
+     public getDensity(): number {
+        const edgesNum = this.getEdgesNum();
+        const verticesNum = this.getVerticesNum();
+        return (2 * edgesNum) / (verticesNum * (verticesNum - 1));
+     }
+
 }

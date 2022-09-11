@@ -36,6 +36,13 @@ declare module 'graphone/src/DirectedGraph' {
        * @returns true or false according to if the graph has cycle
        */
       hasCycles(ignoreSelfLoops?: boolean): boolean;
+      /**
+       * Returns the density of the graph.
+       * The density of a graph represents the ratio between the edges present
+       * in a graph and the maximum number of edges that the graph can contain.
+       * @returns the density of the graph
+       */
+      getDensity(): number;
   }
 
 }
@@ -69,6 +76,7 @@ declare module 'graphone/src/Edge' {
 
 }
 declare module 'graphone/src/Graph' {
+  import Edge from 'graphone/src/Edge';
   import Path from 'graphone/src/Path';
   import Vertex, { VertexLabelType } from 'graphone/src/Vertex';
   /**
@@ -190,6 +198,20 @@ declare module 'graphone/src/Graph' {
        */
       addEdges(edgeData: [VertexLabelType, VertexLabelType, number?][]): Graph;
       /**
+       * Returns the directed edge between two vertices.
+       * @param v1 The origin vertex
+       * @param v2 The destination vertex
+       * @returns true or false according to if the the origin has a directed edge with the destination
+       */
+      getEdge(v1: Vertex | VertexLabelType, v2: Vertex | VertexLabelType): Edge | undefined;
+      /**
+       * Checks if a vertex has a directed edge with another vertex.
+       * @param v1 The origin vertex
+       * @param v2 The destination vertex
+       * @returns true or false according to if the the origin has a directed edge with the destination
+       */
+      hasEdge(v1: Vertex | VertexLabelType, v2: Vertex | VertexLabelType): boolean;
+      /**
        * Removes an edge between two vertices.
        * @param label1 the label of the first vertex
        * @param label2 the label of the second vertex
@@ -237,6 +259,18 @@ declare module 'graphone/src/Graph' {
        * @returns true or false according to if the graph has cycle
        */
       abstract hasCycles(ignoreSelfLoops: boolean): boolean;
+      /**
+       * Returns the density of the graph.
+       * The density of a graph represents the ratio between the edges present
+       * in a graph and the maximum number of edges that the graph can contain.
+       * @returns the density of the graph
+       */
+      abstract getDensity(): number;
+      /**
+       * Executes an action on each vertex of the graph.
+       * @param action The action to be executed
+       */
+      forEachVertex(action: (v: Vertex) => any): void;
       toString(): string;
       equals(obj: any): boolean;
   }
@@ -374,6 +408,13 @@ declare module 'graphone/src/UndirectedGraph' {
        * @returns true or false according to if the graph has cycle
        */
       hasCycles(ignoreSelfLoops?: boolean): boolean;
+      /**
+       * Returns the density of the graph.
+       * The density of a graph represents the ratio between the edges present
+       * in a graph and the maximum number of edges that the graph can contain.
+       * @returns the density of the graph
+       */
+      getDensity(): number;
   }
 
 }
@@ -988,6 +1029,30 @@ declare module 'graphone/src/index' {
   export * from 'graphone/src/alg/GraphAlgorithm';
   export * from 'graphone/src/alg/path-finding/index';
   export * from 'graphone/src/alg/traversal/index';
+
+}
+declare module 'graphone/src/operators/index' {
+  export { reverse, subgraph } from 'graphone/src/operators/operators';
+
+}
+declare module 'graphone/src/operators/operators' {
+  import DirectedGraph from "graphone/src/DirectedGraph";
+  import Graph from "graphone/src/Graph";
+  import Vertex, { VertexLabelType } from "graphone/src/Vertex";
+  /**
+   * Constructs a subgraph of an already existing graph.
+   * @param graph the origin graph
+   * @param filteredVertices a list of the vertex labels that the subgraph will contain or a filter function
+   * @returns the subgraph
+   */
+  export const subgraph: (graph: Graph, filteredVertices: string[] | ((v: Vertex) => boolean)) => Graph;
+  /**
+   * Constructs a directed graph that has the same vertices but the reversed edges
+   * of the original graph.
+   * @param graph the original graph
+   * @returns the reversed graph
+   */
+  export const reverse: (graph: DirectedGraph) => DirectedGraph;
 
 }
 declare module 'graphone/test/Maze' {

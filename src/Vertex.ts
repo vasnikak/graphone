@@ -304,7 +304,8 @@ export default class Vertex {
             return false;
         const outEdges = this.getOutEdges();
         for (let edge of outEdges) {
-            if (!vertex.outEdges[edge.getDestination().getLabel()])
+            const otherEdge = vertex.outEdges[edge.getDestination().getLabel()];
+            if (!otherEdge || edge.getWeight() !== otherEdge.getWeight())
                 return false;
         }
         return true;
