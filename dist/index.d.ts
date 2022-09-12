@@ -1032,7 +1032,7 @@ declare module 'graphone/src/index' {
 
 }
 declare module 'graphone/src/operators/index' {
-  export { reverse, subgraph, toUndirected } from 'graphone/src/operators/operators';
+  export { reverse, subgraph, toUndirected, union } from 'graphone/src/operators/operators';
 
 }
 declare module 'graphone/src/operators/operators' {
@@ -1060,6 +1060,17 @@ declare module 'graphone/src/operators/operators' {
    * @returns the undirected version of the directed graph
    */
   export const toUndirected: (graph: DirectedGraph) => UndirectedGraph;
+  /**
+   * Returns the union of two graphs.
+   * If at least one of the graph is undirected, an undirected graph is returned.
+   * If both graphs are directed, a directed graph is returned.
+   * The union contains all vertices and edges of the two graph, with precedence given
+   * to the second graph.
+   * @param g1 the first graph
+   * @param g2 the second graph
+   * @returns the union of the two graphs
+   */
+  export const union: (g1: Graph, g2: Graph) => Graph;
 
 }
 declare module 'graphone/test/Maze' {

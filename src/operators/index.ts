@@ -1,5 +1,6 @@
 export {
     reverse,
     subgraph,
-    toUndirected
+    toUndirected,
+    union
 } from './operators';
