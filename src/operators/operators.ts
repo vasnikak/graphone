@@ -1,7 +1,7 @@
-import DirectedGraph from "../DirectedGraph";
-import Graph from "../Graph";
-import UndirectedGraph from "../UndirectedGraph";
-import Vertex, { VertexLabelType } from "../Vertex";
+import DirectedGraph from '../DirectedGraph';
+import Graph from '../Graph';
+import UndirectedGraph from '../UndirectedGraph';
+import Vertex, { VertexLabelType } from '../Vertex';
 
 /**
  * Constructs a subgraph of an already existing graph.
@@ -26,7 +26,7 @@ export const subgraph = (graph: Graph, filteredVertices: VertexLabelType[] | ((v
         newGraph.addVertex(newVertices[i].getLabel(), newVertices[i].getData());
 
     for (let i = 0; i < newVertices.length; i++) {
-        for (let j = i; j < newVertices.length; j++) {
+        for (let j = 0; j < newVertices.length; j++) {
             const edge = graph.getEdge(newVertices[i], newVertices[j]);
             if (edge)
                 newGraph.addEdge(newVertices[i].getLabel(), newVertices[j].getLabel(), edge.getWeight());
@@ -51,7 +51,7 @@ export const subgraph = (graph: Graph, filteredVertices: VertexLabelType[] | ((v
     });
 
     for (let i = 0; i < vertices.length; i++) {
-        for (let j = i; j < vertices.length; j++) {
+        for (let j = 0; j < vertices.length; j++) {
             const edge = graph.getEdge(vertices[i], vertices[j]);
             if (edge)
                 reversedGraph.addEdge(vertices[j].getLabel(), vertices[i].getLabel(), edge.getWeight());
@@ -59,4 +59,28 @@ export const subgraph = (graph: Graph, filteredVertices: VertexLabelType[] | ((v
     }
 
     return reversedGraph;
-}
+};
+
+/**
+ * Returns the undirected version of a directed graph.
+ * @param graph the original directed graph
+ * @returns the undirected version of the directed graph
+ */
+export const toUndirected = (graph: DirectedGraph): UndirectedGraph => {
+    const uGraph = new UndirectedGraph(graph.getName());
+
+    const vertices = graph.getVertices();
+    vertices.forEach(v => {
+        uGraph.addVertex(v.getLabel(), v.getData());
+    });
+
+    for (let i = 0; i < vertices.length; i++) {
+        for (let j = 0; j < vertices.length; j++) {
+            const edge = graph.getEdge(vertices[i], vertices[j]);
+            if (edge)
+                uGraph.addEdge(vertices[i].getLabel(), vertices[j].getLabel(), edge.getWeight());
+        }
+    }
+
+    return uGraph;
+};

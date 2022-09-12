@@ -1,6 +1,6 @@
 import DirectedGraph from '../../src/DirectedGraph';
 import UndirectedGraph from '../../src/UndirectedGraph';
-import { reverse, subgraph } from '../../src/operators';
+import { reverse, subgraph, toUndirected } from '../../src/operators';
 
 describe('Operators tests', () => {
     it('should return a subgraph of an undirected graph', () => {
@@ -17,22 +17,33 @@ describe('Operators tests', () => {
     it('should return a subgraph of a directed graph', () => {
         const g = new DirectedGraph();
         g.addVertices(['A', 'B', 'C', 'D', 'E'])
-            .addEdges([['A', 'A'], ['A', 'B'], ['A', 'C'], ['C', 'D'], ['D', 'E']]);
+            .addEdges([['A', 'A'], ['B', 'A'], ['A', 'C'], ['C', 'D'], ['D', 'E']]);
         const sg = subgraph(g, ['A', 'B', 'C']);
         const expectedSg = new DirectedGraph();
         expectedSg.addVertices(['A', 'B', 'C'])
-            .addEdges([['A', 'A'], ['A', 'B'], ['A', 'C']]);
+            .addEdges([['A', 'A'], ['B', 'A'], ['A', 'C']]);
         expect(expectedSg.equals(sg)).toBe(true);
     });
 
     it('should reverse a directed graph', () => {
         const g = new DirectedGraph();
         g.addVertices(['A', 'B', 'C', 'D', 'E'])
-            .addEdges([['A', 'A'], ['A', 'B'], ['A', 'C'], ['C', 'D'], ['D', 'E']]);
+            .addEdges([['A', 'A'], ['B', 'A'], ['A', 'C'], ['C', 'D'], ['D', 'E']]);
         const rg = reverse(g);
         const expectedRg = new DirectedGraph();
         expectedRg.addVertices(['A', 'B', 'C', 'D', 'E'])
-            .addEdges([['A', 'A'], ['B', 'A'], ['C', 'A'], ['D', 'C'], ['E', 'D']]);
+            .addEdges([['A', 'A'], ['A', 'B'], ['C', 'A'], ['D', 'C'], ['E', 'D']]);
         expect(expectedRg.equals(rg)).toBe(true);
+    });
+
+    it('should return the equivalent undirected graph', () => {
+        const g = new DirectedGraph();
+        g.addVertices(['A', 'B', 'C', 'D', 'E'])
+            .addEdges([['A', 'A'], ['A', 'B'], ['A', 'C'], ['C', 'D'], ['D', 'E']]);
+        const ug = toUndirected(g);
+        const expectedUg = new UndirectedGraph();
+        expectedUg.addVertices(['A', 'B', 'C', 'D', 'E'])
+            .addEdges([['A', 'A'], ['A', 'B'], ['A', 'C'], ['C', 'D'], ['D', 'E']]);
+        expect(expectedUg.equals(ug)).toBe(true);
     });
 });

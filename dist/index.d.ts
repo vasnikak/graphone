@@ -1032,13 +1032,14 @@ declare module 'graphone/src/index' {
 
 }
 declare module 'graphone/src/operators/index' {
-  export { reverse, subgraph } from 'graphone/src/operators/operators';
+  export { reverse, subgraph, toUndirected } from 'graphone/src/operators/operators';
 
 }
 declare module 'graphone/src/operators/operators' {
-  import DirectedGraph from "graphone/src/DirectedGraph";
-  import Graph from "graphone/src/Graph";
-  import Vertex, { VertexLabelType } from "graphone/src/Vertex";
+  import DirectedGraph from 'graphone/src/DirectedGraph';
+  import Graph from 'graphone/src/Graph';
+  import UndirectedGraph from 'graphone/src/UndirectedGraph';
+  import Vertex, { VertexLabelType } from 'graphone/src/Vertex';
   /**
    * Constructs a subgraph of an already existing graph.
    * @param graph the origin graph
@@ -1053,6 +1054,12 @@ declare module 'graphone/src/operators/operators' {
    * @returns the reversed graph
    */
   export const reverse: (graph: DirectedGraph) => DirectedGraph;
+  /**
+   * Returns the undirected version of a directed graph.
+   * @param graph the original directed graph
+   * @returns the undirected version of the directed graph
+   */
+  export const toUndirected: (graph: DirectedGraph) => UndirectedGraph;
 
 }
 declare module 'graphone/test/Maze' {
