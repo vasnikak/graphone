@@ -15,7 +15,7 @@ export default class UCSShortestPath extends FindSinglePathGraphAlgorithm {
     /**
      * The name of the algorithm.
      */
-     public static readonly algorithmName: string = 'UCS shortest path';
+     public static readonly ALGORITHM_NAME: string = 'UCS shortest path';
 
     constructor(graph: Graph, options?: GraphAlgorithmOptions) {
         super(graph, options);
@@ -31,7 +31,7 @@ export default class UCSShortestPath extends FindSinglePathGraphAlgorithm {
         const aStarShortestPath = new AStarShortestPath(this.graph, this.options);
         const path = aStarShortestPath.findPath(startLabel, endLabel);
         this.execStats = aStarShortestPath.getExecStats();
-        this.execStats?.setAlgorithmName(UCSShortestPath.algorithmName);
+        this.execStats?.setAlgorithmName(UCSShortestPath.ALGORITHM_NAME);
         return path;
     }
 

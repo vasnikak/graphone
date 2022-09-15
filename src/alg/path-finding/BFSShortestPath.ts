@@ -19,7 +19,7 @@ export default class BFSShortestPath extends FindSinglePathGraphAlgorithm {
     /**
      * The name of the algorithm.
      */
-     public static readonly algorithmName: string = 'BFS shortest path';
+     public static readonly ALGORITHM_NAME: string = 'BFS shortest path';
 
     constructor(graph: Graph, options?: GraphAlgorithmOptions) {
         super(graph, options);
@@ -33,7 +33,7 @@ export default class BFSShortestPath extends FindSinglePathGraphAlgorithm {
      */
     public findPath(startLabel: VertexLabelType, endLabel: VertexLabelType): Path {
         // Exec stats
-        this.execStats = new FindPathAlgorithmExecutionStats(BFSShortestPath.algorithmName);
+        this.execStats = new FindPathAlgorithmExecutionStats(BFSShortestPath.ALGORITHM_NAME);
         this.execStats.reset();
 
         // Find the corresponding vertices

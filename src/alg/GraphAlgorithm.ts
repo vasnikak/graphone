@@ -25,7 +25,7 @@ export default abstract class GraphAlgorithm {
     /**
      * The name of the algorithm.
      */
-    public static readonly algorithmName: string;
+    public static readonly ALGORITHM_NAME: string;
 
     /**
      * The graph that the algorithm will be executed on.

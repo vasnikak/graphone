@@ -19,7 +19,7 @@ export default class DFSFindPath extends FindPathGraphAlgorithm {
     /**
      * The name of the algorithm.
      */
-     public static readonly algorithmName: string = 'DFS shortest path';
+     public static readonly ALGORITHM_NAME: string = 'DFS shortest path';
 
     constructor(graph: Graph, options?: GraphAlgorithmOptions) {
         super(graph, options);
@@ -33,7 +33,7 @@ export default class DFSFindPath extends FindPathGraphAlgorithm {
      */
     public findPath(startLabel: VertexLabelType, endLabel: VertexLabelType): Path {
         // Exec stats
-        this.execStats = new FindPathAlgorithmExecutionStats(DFSFindPath.algorithmName);
+        this.execStats = new FindPathAlgorithmExecutionStats(DFSFindPath.ALGORITHM_NAME);
         this.execStats.reset();
 
         // Find the corresponding vertices

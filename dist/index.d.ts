@@ -661,7 +661,7 @@ declare module 'graphone/src/alg/GraphAlgorithm' {
       /**
        * The name of the algorithm.
        */
-      static readonly algorithmName: string;
+      static readonly ALGORITHM_NAME: string;
       /**
        * The graph that the algorithm will be executed on.
        */
@@ -699,7 +699,7 @@ declare module 'graphone/src/alg/path-finding/AStarShortestPath' {
       /**
        * The name of the algorithm.
        */
-      static readonly algorithmName: string;
+      static readonly ALGORITHM_NAME: string;
       constructor(graph: Graph, options?: HeuristicGraphAlgorithmOptions);
       /**
        * Finds a path between two vertices in a graph using the A* algorithm.
@@ -725,7 +725,7 @@ declare module 'graphone/src/alg/path-finding/BFSShortestPath' {
       /**
        * The name of the algorithm.
        */
-      static readonly algorithmName: string;
+      static readonly ALGORITHM_NAME: string;
       constructor(graph: Graph, options?: GraphAlgorithmOptions);
       /**
        * Finds a path between two vertices in a graph using the BFS algorithm.
@@ -751,7 +751,7 @@ declare module 'graphone/src/alg/path-finding/DFSFindPath' {
       /**
        * The name of the algorithm.
        */
-      static readonly algorithmName: string;
+      static readonly ALGORITHM_NAME: string;
       constructor(graph: Graph, options?: GraphAlgorithmOptions);
       /**
        * Finds a path between two vertices in a graph using the DFS algorithm.
@@ -778,7 +778,7 @@ declare module 'graphone/src/alg/path-finding/DjikstraShortestPaths' {
       /**
        * The name of the algorithm.
        */
-      static readonly algorithmName: string;
+      static readonly ALGORITHM_NAME: string;
       constructor(graph: Graph, options?: GraphAlgorithmOptions);
       /**
        * Finds the shortest paths from a vertex to every other vertex in the graph.
@@ -891,7 +891,7 @@ declare module 'graphone/src/alg/path-finding/UCSShortestPath' {
       /**
        * The name of the algorithm.
        */
-      static readonly algorithmName: string;
+      static readonly ALGORITHM_NAME: string;
       constructor(graph: Graph, options?: GraphAlgorithmOptions);
       /**
        * Finds a path between two vertices in a graph using the UCS algorithm.
@@ -926,7 +926,7 @@ declare module 'graphone/src/alg/traversal/BFSTraversal' {
       /**
        * The name of the algorithm.
        */
-      static readonly algorithmName: string;
+      static readonly ALGORITHM_NAME: string;
       constructor(graph: Graph, options?: GraphAlgorithmOptions);
       /**
        * Traverses the vertices of the graph using the BFS algorithm.
@@ -951,10 +951,49 @@ declare module 'graphone/src/alg/traversal/DFSTraversal' {
       /**
        * The name of the algorithm.
        */
-      static readonly algorithmName: string;
+      static readonly ALGORITHM_NAME: string;
       constructor(graph: Graph, options?: GraphAlgorithmOptions);
       /**
        * Traverses the vertices of the graph using the DFS algorithm.
+       * The second argument is the action that will be executed on each vertex of the graph during the traversal.
+       * In case that the function returns false, the traversal will stop.
+       * @param startLabel the label of the starting vertex
+       * @param traverseAction the action that will executed on each vertex during the traversal
+       */
+      traverse(startLabel: VertexLabelType, traverseAction: (vertex: Vertex) => any): void;
+  }
+
+}
+declare module 'graphone/src/alg/traversal/RandomWalkTraversal' {
+  import Graph from 'graphone/src/Graph';
+  import Vertex, { VertexLabelType } from 'graphone/src/Vertex';
+  import { GraphAlgorithmOptions } from 'graphone/src/alg/GraphAlgorithm';
+  import TraversalGraphAlgorithm from 'graphone/src/alg/traversal/TraversalGraphAlgorithm';
+  /**
+   * Traverses a graph using random walk traversal.
+   */
+  export default class RandomWalkTraversal extends TraversalGraphAlgorithm {
+      /**
+       * The name of the algorithm.
+       */
+      static readonly ALGORITHM_NAME: string;
+      /**
+       * Default number of maximum hops.
+       */
+      static readonly DEFAULT_MAX_HOPS = 100;
+      /**
+       * The maximum number of hops.
+       */
+      private maxHops;
+      /**
+       * Random Walk graversal.
+       * @param graph the graph
+       * @param options the options
+       * @param maxHops the maximum number of steps
+       */
+      constructor(graph: Graph, options?: GraphAlgorithmOptions, maxHops?: number);
+      /**
+       * Traverses the vertices of the graph using random walk traversal.
        * The second argument is the action that will be executed on each vertex of the graph during the traversal.
        * In case that the function returns false, the traversal will stop.
        * @param startLabel the label of the starting vertex
@@ -987,6 +1026,7 @@ declare module 'graphone/src/alg/traversal/TraversalGraphAlgorithm' {
 declare module 'graphone/src/alg/traversal/index' {
   export { default as BFSTraversal } from 'graphone/src/alg/traversal/BFSTraversal';
   export { default as DFSTraversal } from 'graphone/src/alg/traversal/DFSTraversal';
+  export { default as RandomWalkTraversal } from 'graphone/src/alg/traversal/RandomWalkTraversal';
   export { default as TraversalGraphAlgorithm } from 'graphone/src/alg/traversal/TraversalGraphAlgorithm';
 
 }
@@ -1005,6 +1045,10 @@ declare module 'graphone/src/common/PriorityQueue' {
       getItems(): V[];
       rearrange(): void;
   }
+
+}
+declare module 'graphone/src/common/utils' {
+  export const randomInt: (min: number, max: number) => number;
 
 }
 declare module 'graphone/src/heuristics/heuristics' {

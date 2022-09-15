@@ -12,7 +12,7 @@ export default class BFSTraversal extends TraversalGraphAlgorithm {
     /**
      * The name of the algorithm.
      */
-    public static readonly algorithmName: string = 'BFS traversal';
+    public static readonly ALGORITHM_NAME: string = 'BFS traversal';
 
     constructor(graph: Graph, options?: GraphAlgorithmOptions) {
         super(graph, options);
@@ -27,7 +27,7 @@ export default class BFSTraversal extends TraversalGraphAlgorithm {
      */
     public traverse(startLabel: VertexLabelType, traverseAction: (vertex: Vertex) => any) {
         // Exec stats
-        this.execStats = new AlgorithmExecutionStats(BFSTraversal.algorithmName);
+        this.execStats = new AlgorithmExecutionStats(BFSTraversal.ALGORITHM_NAME);
         this.execStats.reset();
 
         // Find the start vertex

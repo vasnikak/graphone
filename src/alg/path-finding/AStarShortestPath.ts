@@ -34,7 +34,7 @@ export default class AStarShortestPath extends HeuristicFindPathGraphAlgorithm {
     /**
      * The name of the algorithm.
      */
-    public static readonly algorithmName: string = 'A* shortest path';
+    public static readonly ALGORITHM_NAME: string;
 
     constructor(graph: Graph, options?: HeuristicGraphAlgorithmOptions) {
         super(graph, options);
@@ -50,7 +50,7 @@ export default class AStarShortestPath extends HeuristicFindPathGraphAlgorithm {
      */
     public findPath(startLabel: VertexLabelType, endLabel: VertexLabelType): Path {
         // Exec stats
-        this.execStats = new FindPathAlgorithmExecutionStats(AStarShortestPath.algorithmName);
+        this.execStats = new FindPathAlgorithmExecutionStats(AStarShortestPath.ALGORITHM_NAME);
         this.execStats.reset();
 
         // The heuristic function

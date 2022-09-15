@@ -1,7 +1,7 @@
 import Graph from '../../Graph';
 import Vertex, { VertexLabelType } from '../../Vertex';
 import AlgorithmExecutionStats from '../AlgorithmExecutionStats';
-import { CollisionResolutionFunc, GraphAlgorithmOptions } from '../GraphAlgorithm';
+import { GraphAlgorithmOptions } from '../GraphAlgorithm';
 import TraversalGraphAlgorithm from './TraversalGraphAlgorithm';
 
 /**
@@ -12,7 +12,7 @@ export default class DFSTraversal extends TraversalGraphAlgorithm {
     /**
      * The name of the algorithm.
      */
-    public static readonly algorithmName: string = 'DFS traversal';
+    public static readonly ALGORITHM_NAME: string = 'DFS traversal';
 
     constructor(graph: Graph, options?: GraphAlgorithmOptions) {
         super(graph, options);
@@ -27,7 +27,7 @@ export default class DFSTraversal extends TraversalGraphAlgorithm {
      */
     public traverse(startLabel: VertexLabelType, traverseAction: (vertex: Vertex) => any) {
         // Exec stats
-        this.execStats = new AlgorithmExecutionStats(DFSTraversal.algorithmName);
+        this.execStats = new AlgorithmExecutionStats(DFSTraversal.ALGORITHM_NAME);
         this.execStats.reset();
 
         // Find the start vertex

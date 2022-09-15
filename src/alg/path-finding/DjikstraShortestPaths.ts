@@ -30,7 +30,7 @@ export default class DjiktraShortestPaths extends FindMultiplePathsGraphAlgorith
     /**
      * The name of the algorithm.
      */
-    public static readonly algorithmName: string = 'Djikstra shortest paths';
+    public static readonly ALGORITHM_NAME: string = 'Djikstra shortest paths';
 
     constructor(graph: Graph, options?: GraphAlgorithmOptions) {
         super(graph, options);
@@ -43,7 +43,7 @@ export default class DjiktraShortestPaths extends FindMultiplePathsGraphAlgorith
      */
     public findShortestPaths(startLabel: VertexLabelType): Map<VertexLabelType, Path> {
         // Exec stats
-        this.execStats = new FindPathAlgorithmExecutionStats(DjiktraShortestPaths.algorithmName);
+        this.execStats = new FindPathAlgorithmExecutionStats(DjiktraShortestPaths.ALGORITHM_NAME);
         this.execStats.reset();
 
         const pathMap = new Map<VertexLabelType, Path>();
