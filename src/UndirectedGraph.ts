@@ -56,6 +56,24 @@ export default class UndirectedGraph extends Graph {
     }
 
     /**
+     * Updates the weight of the edge between two vertices.
+     * @param label1 the label of the first vertex
+     * @param label2 the label of the second vertex
+     * @param weight the weight of the edge
+     * @return the current graph
+     */
+     public setEdgeWeight(label1: VertexLabelType, label2: VertexLabelType, weight: number): Graph {
+        const edge1 = this.getEdge(label1, label2);
+        if (edge1) {
+            edge1.setWeight(weight);
+            const edge2 = this.getEdge(label2, label1);
+            if (edge2)
+                edge2.setWeight(weight);
+        }
+        return this;
+     }
+
+    /**
      * Returns the number of edges of the graph.
      * @return the number of edges of the graph
      */

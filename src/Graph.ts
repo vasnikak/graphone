@@ -206,6 +206,15 @@ export default abstract class Graph {
     }
 
     /**
+     * Updates the weight of the edge between two vertices.
+     * @param label1 the label of the first vertex
+     * @param label2 the label of the second vertex
+     * @param weight the weight of the edge
+     * @return the current graph
+     */
+     public abstract setEdgeWeight(label1: VertexLabelType, label2: VertexLabelType, weight: number): Graph;
+
+    /**
      * Returns the directed edge between two vertices.
      * @param v1 The origin vertex
      * @param v2 The destination vertex

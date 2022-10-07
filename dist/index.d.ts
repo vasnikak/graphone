@@ -26,6 +26,14 @@ declare module 'graphone/src/DirectedGraph' {
        */
       removeEdge(label1: VertexLabelType, label2: VertexLabelType): Graph;
       /**
+       * Updates the weight of the edge between two vertices.
+       * @param label1 the label of the first vertex
+       * @param label2 the label of the second vertex
+       * @param weight the weight of the edge
+       * @return the current graph
+       */
+      setEdgeWeight(label1: VertexLabelType, label2: VertexLabelType, weight: number): Graph;
+      /**
        * Returns the number of edges of the graph.
        * @return the number of edges of the graph
        */
@@ -197,6 +205,14 @@ declare module 'graphone/src/Graph' {
        * @return the current graph
        */
       addEdges(edgeData: [VertexLabelType, VertexLabelType, number?][]): Graph;
+      /**
+       * Updates the weight of the edge between two vertices.
+       * @param label1 the label of the first vertex
+       * @param label2 the label of the second vertex
+       * @param weight the weight of the edge
+       * @return the current graph
+       */
+      abstract setEdgeWeight(label1: VertexLabelType, label2: VertexLabelType, weight: number): Graph;
       /**
        * Returns the directed edge between two vertices.
        * @param v1 The origin vertex
@@ -397,6 +413,14 @@ declare module 'graphone/src/UndirectedGraph' {
        * @return the current graph
        */
       removeEdge(label1: VertexLabelType, label2: VertexLabelType): Graph;
+      /**
+       * Updates the weight of the edge between two vertices.
+       * @param label1 the label of the first vertex
+       * @param label2 the label of the second vertex
+       * @param weight the weight of the edge
+       * @return the current graph
+       */
+      setEdgeWeight(label1: VertexLabelType, label2: VertexLabelType, weight: number): Graph;
       /**
        * Returns the number of edges of the graph.
        * @return the number of edges of the graph
@@ -1049,6 +1073,27 @@ declare module 'graphone/src/common/PriorityQueue' {
 }
 declare module 'graphone/src/common/utils' {
   export const randomInt: (min: number, max: number) => number;
+
+}
+declare module 'graphone/src/generators/generators' {
+  import DirectedGraph from "graphone/src/DirectedGraph";
+  import UndirectedGraph from "graphone/src/UndirectedGraph";
+  /**
+   * Constructs and returns a complete undirected graph.
+   * @param graphType the graph type
+   * @param verticesNum the number of vertices
+   * @param includeSelfLoops true in case self loops would be included
+   * @returns the complete undirected graph
+   */
+  export const completeUndirectedGraph: (verticesNum: number, includeSelfLoops?: boolean) => UndirectedGraph;
+  /**
+   * Constructs and returns a complete directed graph.
+   * @param graphType the graph type
+   * @param verticesNum the number of vertices
+   * @param includeSelfLoops true in case self loops would be included
+   * @returns the complete directed graph
+   */
+  export const completeDirectedGraph: (verticesNum: number, includeSelfLoops?: boolean) => DirectedGraph;
 
 }
 declare module 'graphone/src/heuristics/heuristics' {
