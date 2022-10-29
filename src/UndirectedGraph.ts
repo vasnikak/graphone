@@ -78,9 +78,16 @@ export default class UndirectedGraph extends Graph {
      * @return the number of edges of the graph
      */
     public getEdgesNum(): number {
-        let edgesNum = 0;
-        this.getVertices().forEach(vertex => edgesNum += vertex.getOutEdgesNum());
-        return edgesNum / 2;
+        let selfEdgesNum = 0;
+        let outEdgesNum = 0;
+        this.getVertices().forEach(vertex => {
+            if (vertex.hasSelfLoop()) {
+                selfEdgesNum++;
+                outEdgesNum += vertex.getOutEdgesNum() - 1;
+            } else
+                outEdgesNum += vertex.getOutEdgesNum();
+        });
+        return (selfEdgesNum + outEdgesNum / 2);
     }
 
     /**

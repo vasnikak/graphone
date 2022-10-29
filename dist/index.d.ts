@@ -1096,6 +1096,10 @@ declare module 'graphone/src/generators/generators' {
   export const completeDirectedGraph: (verticesNum: number, includeSelfLoops?: boolean) => DirectedGraph;
 
 }
+declare module 'graphone/src/generators/index' {
+  export { completeDirectedGraph, completeUndirectedGraph } from 'graphone/src/generators/generators';
+
+}
 declare module 'graphone/src/heuristics/heuristics' {
   /**
    * Each heuristic function returns a value that is greater or equal to zero.
